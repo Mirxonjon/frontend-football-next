@@ -1,0 +1,34 @@
+.wrapper {
+  width: 100%;
+  border-radius: 20px;
+  background: #eef1f2;
+  align-items: start;
+  height: max-content;
+  padding: 24px;
+  max-width: 350px;
+  margin: 0 auto;
+}
+.title {
+  color: #000;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px; /* 120% */
+}
+.list a {
+  display: block;
+  color: #181818;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 6px;
+  margin: 10px auto;
+  line-height: 14px; /* 87.5% */
+  &.active {
+    border-radius: 10px;
+    background: #fff;
+    color: #65926b;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 14px; /* 87.5% */
+  }
+}
+

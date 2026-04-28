@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 100px;
+}
+.item {
+  width: 268px;
+  height: 268px;
+  border-radius: 50%;
+  border: 8px solid #709775;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.number {
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 32px; 
+}
+.string {
+  font-size: 20px;
+  line-height: 32px;
+}
+

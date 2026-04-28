@@ -1,0 +1,54 @@
+.wrapper {
+  width: 100%;
+  border-radius: 20px;
+  background: #eef1f2;
+  align-items: start;
+  height: max-content;
+  padding: 24px;
+  flex: 1 0 100%;
+}
+.title {
+  color: #000;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px; /* 120% */
+  margin-bottom: 24px;
+}
+.item {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  background: #fff;
+  width: 100%;
+  padding: 10px;
+  margin: 16px 0;
+}
+.name {
+  margin-left: 10px;
+  width: 100%;
+  text-align: left;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+}
+.time {
+  justify-items: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.time_number {
+  color: #5e5e5e;
+  font-size: 14px;
+}
+.time_icon{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+@media (max-width: 850px) {
+  .wrapper {
+    width: 100%;
+  }
+}
+

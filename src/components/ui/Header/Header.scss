@@ -1,0 +1,142 @@
+@import "../../../assets/scss/variables.scss";
+.header_container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1480px;
+  padding-top: 20px;
+  align-items: center;
+  gap: 10px;
+}
+.header_logo {
+  display: block;
+  max-width: 140px;
+  flex: 1 0 auto;
+}
+.header_layout {
+  height: 48px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #eef1f2;
+  border-radius: 10px;
+  align-items: center;
+  padding: 8px 12px;
+}
+.header_layout_link {
+  color: $black;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 32px;
+  text-decoration: none;
+  padding: 4px 16px;
+  display: block;
+  border-radius: 10px;
+  &:hover {
+    background: #ffffff60;
+  }
+  &.active {
+    background: #fff;
+  }
+}
+
+.container_signIn {
+  max-width: 130px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  align-items: center;
+}
+.header_account {
+  width: 15px;
+  height: 15px;
+  box-sizing: content-box;
+  padding: 6px;
+  background: #c2b7b7;
+  border-radius: 50%;
+  img {
+    width: 100%;
+  }
+}
+.header_singin {
+  color: $lightGreen;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 10px;
+  text-decoration: none;
+}
+.header_singin:hover {
+  text-decoration: underline;
+}
+.hamburger_menu {
+  display: none;
+}
+.hemburger_layout {
+  display: none;
+}
+
+.hemburger_layout :last-child {
+  border-bottom: none;
+}
+.hamburger_menu_close {
+  padding: 22px 10px 20px;
+}
+@media only screen and (max-width: 1050px) {
+  .header_container {
+    position: relative;
+    z-index: 10;
+  }
+
+  .header_layout {
+    display: none;
+  }
+  .hamburger_menu {
+    display: block;
+  }
+
+  .hemburger_layout {
+    position: relative;
+    z-index: 10;
+    .header_layout_link {
+      width: 100%;
+      border-bottom: 1px solid black;
+      margin: 0;
+      background: #fff;
+      padding: 10px 20px;
+    }
+    .header_layout_link:hover {
+      text-decoration: underline;
+      color: $lightGreen;
+    }
+    .hamburger_menu_close {
+      display: inline-block;
+      max-width: max-content;
+      margin-left: auto;
+      background: #fff;
+      padding-right: 0;
+    }
+    .hamburger_list {
+      border: 1px solid $black;
+      width: 100%;
+      background-color: $lightGray;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    height: fit-content;
+    width: 100%;
+    max-width: 340px;
+    flex-direction: column;
+    position: absolute;
+    top: 10px;
+    right: 0;
+    z-index: 10;
+    .header_layout_link {
+      padding: 5px 20px;
+      margin: 10px 0;
+      border: none;
+    }
+  }
+
+  .container_signIn {
+    max-width: 230px;
+  }
+}

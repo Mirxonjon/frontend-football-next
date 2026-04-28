@@ -1,0 +1,90 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 50px 0;
+}
+.title {
+  color: #181818;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+.hero {
+  margin-bottom: 50px;
+}
+.img {
+  display: block;
+  width: 100%;
+  border-radius: 20px;
+  background: #d9d9d9;
+  max-height: 588px;
+  overflow: hidden;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+.role {
+  color: #65926b;
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 22px;
+  margin-top: 10px;
+}
+.name {
+  color: #181818;
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+.about {
+  color: #181818;
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+.treners_list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+.trener_img {
+  margin-bottom: 10px;
+  border-radius: 20px;
+  background: #d9d9d9;
+  overflow: hidden;
+  max-height: 280px;
+
+  img {
+    object-fit: cover;
+    width: 100%;
+  }
+}
+.trener_role {
+  color: #65926b;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.trener_name {
+  color: #181818;
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+@media (max-width: 720px) {
+  .wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 450px) {
+  .treners_list {
+    grid-template-columns: repeat(1, minmax(auto, 320px));
+    justify-content: center;
+  }
+}
+

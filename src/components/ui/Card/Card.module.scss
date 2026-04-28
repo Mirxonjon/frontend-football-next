@@ -1,0 +1,45 @@
+.item {
+  display: block;
+  border-radius: 20px;
+  background: #eef1f2;
+  max-width: 190px;
+  width: 100%;
+  padding: 16px;
+  text-decoration: none;
+}
+.img {
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+.name {
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  margin-top: 16px;
+  text-transform: capitalize;
+}
+.price {
+  margin-top: 8px;
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}
+.item  button {
+  margin-top: 16px;
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 10px;
+}
+

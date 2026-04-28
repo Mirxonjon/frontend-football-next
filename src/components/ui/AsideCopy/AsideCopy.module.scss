@@ -1,0 +1,34 @@
+.wrapper {
+  border-radius: 20px;
+  background: #eef1f2;
+  max-width: 270px;
+  width: 100%;
+  padding: 24px;
+  height: max-content;
+}
+.title {
+  color: #aeb1b1;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  margin-bottom: 16px;
+}
+.item {
+  &:not(:last-child){
+    margin-bottom: 12px;
+  }
+  display: block;
+  color: #181818;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 6px;
+  line-height: 14px; 
+  &.active {
+    border-radius: 10px;
+    background: #fff;
+    color: #65926b;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 14px; 
+  }
+}
