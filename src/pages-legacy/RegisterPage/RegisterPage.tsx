@@ -7,10 +7,29 @@ import img from "./../../assets/img/bg1.png";
 import { Link, useNavigate } from "@/lib/router-compat";
 import { useState } from "react";
 import { Input, message } from "antd";
-import moment from "moment";
 import FT_API from "../../api/api";
 import { useLocalizedText } from "../../hook/useLocalizedText";
 import { Helmet } from "@/lib/helmet-compat";
+import GoogleAuthButton from "@/components/ui/GoogleAuthButton/GoogleAuthButton";
+import g from "@/components/ui/GoogleAuthButton/GoogleAuthButton.module.scss";
+
+type RegisterResponse = {
+  status_code: number;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+    expiresIn: number;
+    user: {
+      id: number;
+      phone: string | null;
+      email: string;
+      firstName: string;
+      lastName: string;
+      avatarUrl: string | null;
+      isVerified: boolean;
+    };
+  };
+};
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -18,35 +37,47 @@ const RegisterPage = () => {
 
   const changaLang = useLocalizedText();
   const [userData, setUserData] = useState({
-    name: "",
-    surname: "",
-    was_born: "",
-    number: "",
-    gmail: "",
+    firstName: "",
+    lastName: "",
+    email: "",
     password: "",
   });
 
-  async function RegisterFunc(e) {
+  async function RegisterFunc(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const res = await FT_API.post("/Auth/register", {
-      ...userData,
-    }).catch((err) => {
+    try {
+      const res = await FT_API.post<RegisterResponse>(
+        "/auth/email/register",
+        userData
+      );
+      const accessToken = res.data?.data?.accessToken;
+      const refreshToken = res.data?.data?.refreshToken;
+
+      if (accessToken) {
+        localStorage.setItem("token", accessToken);
+        if (refreshToken) {
+          localStorage.setItem("refreshToken", refreshToken);
+        }
+        window.location.href = "/";
+      } else {
+        messageApi.open({
+          type: "error",
+          content: "Token kelmadi — backend javobini tekshiring",
+        });
+      }
+    } catch (err: any) {
       messageApi.open({
         type: "error",
-        content: err.response.data.message,
+        content:
+          err?.response?.data?.message ||
+          err?.message ||
+          "Registration failed",
       });
-    });
-    if ((res as any)?.status === 201) {
-      localStorage.setItem("token", (res as any).data.token);
-
-      navigate("/");
-
-        window.location.reload();
     }
   }
 
-  const content = {
+  const content: Record<string, string> = {
     title: "Xush kelibsiz!",
     title_ru: "Добро пожаловать!",
     subtitle:
@@ -57,10 +88,6 @@ const RegisterPage = () => {
     email_ru: "Введите электронной почты",
     password: "Parolni kiriting",
     password_ru: "Введите пароль",
-    date: "Tug‘ilgan sana",
-    date_ru: "Дата рождения",
-    number: "Telefon nomer",
-    number_ru: "Телефон номер",
     lastname: "Familiyangizni kiriting",
     lastname_ru: "Введите свою фамилию",
     lastname_label: "Familiya",
@@ -78,110 +105,85 @@ const RegisterPage = () => {
     register: "Ro‘yhatdan o‘tish",
     register_ru: "Регистрация",
   };
+
   return (
     <>
-            <Helmet>
-            <title> CoachingZona registor</title>
-            <meta name="description" content="CoachingZona registor, Coaching Zona  registor ,CoachingZone  registor , Coaching Zone registor" />
-            <link rel='canonical' href='https://coachingzona.uz/login' />
-          </Helmet>
+      <Helmet>
+        <title>CoachingZona registor</title>
+        <meta
+          name="description"
+          content="CoachingZona registor, Coaching Zona registor, CoachingZone registor, Coaching Zone registor"
+        />
+        <link rel="canonical" href="https://coachingzona.uz/register" />
+      </Helmet>
 
-    <FormWrapper
-      title={content[changaLang("title")]}
-      subTitle={content[changaLang("subtitle")]}
-      img={img}
+      <FormWrapper
+        title={content[changaLang("title")]}
+        subTitle={content[changaLang("subtitle")]}
+        img={img}
       >
-      {contextHolder}
-      <form onSubmit={RegisterFunc} className={s.form}>
-        <div className={s.label}>{content[changaLang("name_label")]}</div>
-        <Input
-          required
-          value={userData.name}
-          onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-          className={s.input}
-          placeholder={content[changaLang("name")]}
-          />
-        <div className={s.label}>{content[changaLang("lastname_label")]}</div>
-        <Input
-          required
-          value={userData.surname}
-          onChange={(e) =>
-            setUserData({ ...userData, surname: e.target.value })
-          }
-          className={s.input}
-          placeholder={content[changaLang("lastname")]}
-          />
-        <div className={s.row}>
-          <div>
-            <div className={s.label}>{content[changaLang("date")]}</div>
-            <Input
-              required
-              value={moment(userData.was_born, "DD.MM.YYYY").format(
-                "YYYY-MM-DD"
-                )}
-                onChange={(e) =>
-                  setUserData({
-                    ...userData,
-                    was_born: moment(e.target.value, "YYYY-MM-DD").format(
-                      "DD.MM.YYYY"
-                      ),
-                    })
-                  }
-                  className={s.input}
-                  type="date"
-                  placeholder="00.00.0000"
-                  />
-          </div>
-          <div>
-            <div className={s.label}>{content[changaLang("number")]}</div>
-            <Input
-              required
-              value={userData.number}
-              onChange={(e) => {
-                if (e.target.value.slice(0, 4) !== "+998") {
-                  e.target.value = "+998";
-                } else if (e.target.value.length > 11) {
-                  e.target.value = e.target.value.slice(0, 13);
-                }
-                setUserData({ ...userData, number: e.target.value });
-              }}
-              className={s.input}
-              placeholder="+998"
-              />
-          </div>
-        </div>
-        <div className={s.label}>Email</div>
-        <Input
-          type="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-          title="Введите корректный email"
-          required
-          value={userData.gmail}
-          onChange={(e) => setUserData({ ...userData, gmail: e.target.value })}
-          className={s.input}
-          placeholder={content[changaLang("email")]}
+        {contextHolder}
+        <form onSubmit={RegisterFunc} className={s.form}>
+          <div className={s.label}>{content[changaLang("name_label")]}</div>
+          <Input
+            required
+            value={userData.firstName}
+            onChange={(e) =>
+              setUserData({ ...userData, firstName: e.target.value })
+            }
+            className={s.input}
+            placeholder={content[changaLang("name")]}
           />
 
-        <div className={s.label}>{content[changaLang("password_label")]}</div>
-        <Input.Password
-          required
-          value={userData.password}
-          onChange={(e) =>
-            setUserData({ ...userData, password: e.target.value })
-          }
-          className={s.input}
-          placeholder={content[changaLang("password")]}
+          <div className={s.label}>{content[changaLang("lastname_label")]}</div>
+          <Input
+            required
+            value={userData.lastName}
+            onChange={(e) =>
+              setUserData({ ...userData, lastName: e.target.value })
+            }
+            className={s.input}
+            placeholder={content[changaLang("lastname")]}
           />
-        <div className={s.btn}>
-          <MyButton>{content[changaLang("register")]}</MyButton>
-        </div>
-        <div className={s.register}>
-          {content[changaLang("isodd")]}
-          <Link to="/login"> {content[changaLang("login")]}</Link>
-        </div>
-      </form>
-    </FormWrapper>
-          </>
+
+          <div className={s.label}>Email</div>
+          <Input
+            type="email"
+            required
+            value={userData.email}
+            onChange={(e) =>
+              setUserData({ ...userData, email: e.target.value })
+            }
+            className={s.input}
+            placeholder={content[changaLang("email")]}
+          />
+
+          <div className={s.label}>{content[changaLang("password_label")]}</div>
+          <Input.Password
+            required
+            minLength={8}
+            value={userData.password}
+            onChange={(e) =>
+              setUserData({ ...userData, password: e.target.value })
+            }
+            className={s.input}
+            placeholder={content[changaLang("password")]}
+          />
+
+          <div className={s.btn}>
+            <MyButton>{content[changaLang("register")]}</MyButton>
+          </div>
+          <div className={g.divider}>yoki</div>
+          <div className={g.wrap}>
+            <GoogleAuthButton text="signup_with" />
+          </div>
+          <div className={s.register}>
+            {content[changaLang("isodd")]}
+            <Link to="/login"> {content[changaLang("login")]}</Link>
+          </div>
+        </form>
+      </FormWrapper>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4021/api/v1/";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4021/v1/";
 
 const FT_API = axios.create({
   baseURL: BASE_URL,

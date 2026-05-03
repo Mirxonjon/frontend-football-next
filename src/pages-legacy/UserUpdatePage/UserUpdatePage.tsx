@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "../../components/ui/Container/Container";
 import s from "./UserUpdatePage.module.scss";
 import img from "./../../assets/img/acc.svg";
@@ -9,14 +9,26 @@ import moment from "moment";
 import MyButton from "../../components/ui/MyButton/MyButton";
 import FT_API from "../../api/api";
 import { useNavigate } from "@/lib/router-compat";
-import { Button, Input, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Input } from "antd";
 import { Helmet } from "@/lib/helmet-compat";
+
+type ApiUser = {
+  id: number;
+  phone: string | null;
+  email: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  birthDate: string | null;
+  avatarUrl: string | null;
+};
+
+const isPlaceholderPhone = (phone?: string | null) =>
+  !!phone && (phone.startsWith("google_") || phone.startsWith("unset_"));
 
 const UserUpdatePage = () => {
   const navigate = useNavigate();
   const langChange = useLocalizedText();
-  const fileInputRef = useRef();
+
   const content = {
     surname: "Familiya",
     surname_ru: "Фамилия",
@@ -26,185 +38,188 @@ const UserUpdatePage = () => {
     phone_ru: "Телефон",
     email: "Email",
     email_ru: "Email",
-    password: "Parol",
-    password_ru: "Пароль",
     was_born_date: "Tug'ilgan sana",
     was_born_date_ru: "Дата рождения",
-    avatar: "Rasm",
-    avatar_ru: "Фото",
+    avatar: "Rasm URL",
+    avatar_ru: "URL фото",
     save: "Saqlash",
     save_ru: "Сохранить",
-  };
-  const [user, setUser] = useState({
-    // create_data: "",
-    id: "",
-    email: "",
-    image: "",
-    name: "",
-    password: "",
-    phone: "",
-    role: "",
-    surname: "",
-    was_born_date: "",
-  });
-  async function submit(e) {
-    e.preventDefault();
+    cancel: "Bekor qilish",
+    cancel_ru: "Отмена",
+    saved: "Saqlandi",
+    saved_ru: "Сохранено",
+    error: "Xatolik yuz berdi",
+    error_ru: "Произошла ошибка",
+  } as const;
 
-    const formData = new FormData();
-    formData.append("email", user.email);
-    formData.append("name", user.name);
-    formData.append("password", user.password);
-    formData.append("phone", user.phone);
-    formData.append("role", user.role);
-    formData.append("surname", user.surname);
-    formData.append("was_born_date", user.was_born_date);
-    // formData.append("image", fileInputRef.current.files[0]);
-    const res = await FT_API.patch("/Users/update/" + user.id, formData);
+  const [user, setUser] = useState<ApiUser | null>(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthDate, setBirthDate] = useState(""); // YYYY-MM-DD for <input type="date">
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: "ok" | "err"; text: string } | null>(null);
 
-    console.log(res.data);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    async function fetch() {
+    let cancelled = false;
+    (async () => {
       try {
-        const res = await FT_API.get("/Users/one");
-        setUser(await res.data);
-      } catch (error) {
-        if (error.response.status == 400) {
+        const res = await FT_API.get("/users/me");
+        const u: ApiUser = res.data?.data ?? res.data;
+        if (cancelled) return;
+        setUser(u);
+        setFirstName(u.firstName ?? "");
+        setLastName(u.lastName ?? "");
+        setBirthDate(u.birthDate ? moment(u.birthDate).format("YYYY-MM-DD") : "");
+        setAvatarUrl(u.avatarUrl ?? "");
+      } catch (error: any) {
+        const status = error?.response?.status;
+        if (status === 401 || status === 400) {
           localStorage.removeItem("token");
+          localStorage.removeItem("refreshToken");
           navigate("/login");
         }
       }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [navigate]);
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setFeedback(null);
+
+    // Build payload — only send fields the backend accepts.
+    const payload: Record<string, unknown> = {};
+    if (firstName !== (user?.firstName ?? "")) payload.firstName = firstName;
+    if (lastName !== (user?.lastName ?? "")) payload.lastName = lastName;
+    if (avatarUrl !== (user?.avatarUrl ?? "")) payload.avatarUrl = avatarUrl;
+
+    const newDateIso = birthDate ? new Date(birthDate).toISOString() : null;
+    const oldDateIso = user?.birthDate ?? null;
+    if (newDateIso !== oldDateIso) payload.birthDate = newDateIso;
+
+    try {
+      const res = await FT_API.patch("/users/me", payload);
+      const updated: ApiUser = res.data?.data ?? res.data;
+      setUser(updated);
+      setFeedback({ type: "ok", text: content[langChange("saved")] });
+      // Brief feedback then return to profile page.
+      setTimeout(() => navigate("/user"), 700);
+    } catch (error: any) {
+      const msg = error?.response?.data?.error?.message || content[langChange("error")];
+      setFeedback({ type: "err", text: msg });
+    } finally {
+      setSubmitting(false);
     }
-    fetch();
-  }, []);
+  }
 
   return (
     <Container>
-          <Helmet>
-            <title> CoachingZona Accaunt</title>
-            <meta name="description" content="CoachingZona accaunt , CoachingZona accaunt update" />
-            <link rel='canonical' href='https://coachingzona.uz/user' />
-          </Helmet>
+      <Helmet>
+        <title>CoachingZona Accaunt</title>
+        <meta
+          name="description"
+          content="CoachingZona accaunt , CoachingZona accaunt update"
+        />
+        <link rel="canonical" href="https://coachingzona.uz/user" />
+      </Helmet>
       <div className={s.row}>
         <div className={s.img}>
-          <img width={200} src={user.image ? user.image : (img as any).src} alt="avatar" />
+          <img
+            width={200}
+            src={avatarUrl || (img as any).src}
+            alt="avatar"
+          />
         </div>
         <form onSubmit={submit} className={s.info}>
           <div className={s.item}>
-            <div className={s.label}> {content[langChange("surname")]}</div>
+            <div className={s.label}>{content[langChange("surname")]}</div>
             <div className={s.value}>
               <Input
-                value={user.surname}
-                onChange={(e) => {
-                  setUser({ ...user, surname: e.target.value });
-                }}
-                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 placeholder={content[langChange("surname")]}
               />
             </div>
           </div>
+
           <div className={s.item}>
-            <div className={s.label}> {content[langChange("name")]}</div>
+            <div className={s.label}>{content[langChange("name")]}</div>
             <div className={s.value}>
               <Input
-                required
-                value={user.name}
-                onChange={(e) => {
-                  setUser({ ...user, name: e.target.value });
-                }}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 placeholder={content[langChange("name")]}
               />
             </div>
           </div>
+
+          {/* Phone: read-only. Hide Google placeholder. */}
+          {!isPlaceholderPhone(user?.phone) && user?.phone && (
+            <div className={s.item}>
+              <div className={s.label}>{content[langChange("phone")]}</div>
+              <div className={s.value}>
+                <Input value={user.phone} disabled />
+              </div>
+            </div>
+          )}
+
+          {/* Email: read-only (backend does not accept email change here). */}
+          {user?.email && (
+            <div className={s.item}>
+              <div className={s.label}>{content[langChange("email")]}</div>
+              <div className={s.value}>
+                <Input value={user.email} disabled />
+              </div>
+            </div>
+          )}
+
           <div className={s.item}>
-            <div className={s.label}> {content[langChange("phone")]}</div>
+            <div className={s.label}>{content[langChange("was_born_date")]}</div>
             <div className={s.value}>
               <Input
-                value={user.phone}
-                required
-                onChange={(e) => {
-                  if (e.target.value.slice(0, 4) !== "+998") {
-                    e.target.value = "+998";
-                  } else if (e.target.value.length > 11) {
-                    e.target.value = e.target.value.slice(0, 13);
-                  }
-                  setUser({ ...user, phone: e.target.value });
-                }}
-                className={s.input}
-                placeholder="+998"
-              />
-            </div>
-          </div>
-          <div className={s.item}>
-            <div className={s.label}> {content[langChange("email")]}</div>
-            <div className={s.value}>
-              <Input
-                required
-                type="email"
-                // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                title="Введите корректный email"
-                value={user.email}
-                onChange={(e) => {
-                  setUser({ ...user, email: e.target.value });
-                }}
-                placeholder={content[langChange("email")]}
-              />
-            </div>
-          </div>
-          <div className={s.item}>
-            <div className={s.label}> {content[langChange("password")]}</div>
-            <div className={s.value}>
-              <Input.Password
-                required
-                value={user.password}
-                onChange={(e) => {
-                  setUser({ ...user, password: e.target.value });
-                }}
-                className={s.input}
-                placeholder={content[langChange("password")]}
-              />
-            </div>
-          </div>
-          <div className={s.item}>
-            <div className={s.label}>
-              {" "}
-              {content[langChange("was_born_date")]}
-            </div>
-            <div className={s.value}>
-              <Input
-                required
-                value={moment(user.was_born_date, "DD.MM.YYYY").format(
-                  "YYYY-MM-DD"
-                )}
-                onChange={(e) =>
-                  setUser({
-                    ...user,
-                    was_born_date: moment(e.target.value, "YYYY-MM-DD").format(
-                      "DD.MM.YYYY"
-                    ),
-                  })
-                }
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
                 className={s.input}
                 type="date"
-                placeholder="00.00.0000"
+                placeholder="YYYY-MM-DD"
               />
             </div>
           </div>
+
           <div className={s.item}>
-            <div className={s.label}> {content[langChange("avatar")]}</div>
+            <div className={s.label}>{content[langChange("avatar")]}</div>
             <div className={s.value}>
-              <Upload
-                className=""
-                accept="image/*"
-                {...({ ref: fileInputRef, type: "file" } as any)}
-              >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
-              </Upload>
+              <Input
+                value={avatarUrl}
+                onChange={(e) => setAvatarUrl(e.target.value)}
+                placeholder="https://..."
+              />
             </div>
           </div>
-          <div className={s.btn}>
-            <MyButton>{content[langChange("save")]}</MyButton>
+
+          {feedback && (
+            <div
+              className={s.item}
+              style={{
+                color: feedback.type === "ok" ? "#16a34a" : "#dc2626",
+                fontWeight: 500,
+              }}
+            >
+              {feedback.text}
+            </div>
+          )}
+
+          <div className={s.btn} style={{ display: "flex", gap: 12 }}>
+            <MyButton onClick={() => navigate("/user")} disabled={submitting}>
+              {content[langChange("cancel")]}
+            </MyButton>
+            <MyButton disabled={submitting}>
+              {submitting ? "..." : content[langChange("save")]}
+            </MyButton>
           </div>
         </form>
       </div>

@@ -2,13 +2,16 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "@/lib/router-compat";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import LangChange from "../LangChange/LangChange";
 import Logo from "./../Logo/Logo";
 import Container from "../Container/Container";
 import { menu } from "../../../content/pages";
 import { useLocalizedText } from "../../../hook/useLocalizedText";
-import accImg from "./../../../assets/img/acc.svg";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(true);
@@ -62,8 +65,12 @@ function Header() {
               Sign In
             </Link>
           ) : (
-            <Link className="header_account" to="/user">
-              <img src={(accImg as any).src ?? accImg} alt="account logo" />
+            <Link
+              className="header_account"
+              to="/user"
+              aria-label="Profile"
+            >
+              <UserOutlined />
             </Link>
           )}
           <div
