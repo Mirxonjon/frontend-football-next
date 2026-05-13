@@ -3,27 +3,32 @@
 import c from "./Slider.module.scss";
 import img1 from "./../../../assets/img/slider.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getMasterclassCategory } from "../../../store/masterclass/masterclassSlice";
+import {
+  fetchMasterclassCategories,
+  type MasterclassCategory,
+} from "../../../store/masterclass/masterclassSlice";
 import { useEffect } from "react";
 import { Link } from "@/lib/router-compat";
-import { useLocalizedText } from "../../../hook/useLocalizedText";
 
-const content = {
-  masterclass: "Masterclass",
-  masterclass_ru: "Мастерклассы",
-};
 const MySilder = () => {
   const dispatch = useDispatch<any>();
-  const treners = useSelector((state: any) => state.masterclass.masterclassCategory);
+  const categories = useSelector(
+    (state: any) =>
+      (state.masterclass?.categories ?? []) as MasterclassCategory[]
+  );
+  const lang = useSelector((state: any) => state.lang.lang);
+  const pick = <T,>(uz: T, ru: T): T => (lang === "ru" ? ru : uz);
 
-  const langChange = useLocalizedText();
   useEffect(() => {
-    dispatch(getMasterclassCategory());
-  }, []);
+    if (categories.length === 0) {
+      dispatch(fetchMasterclassCategories());
+    }
+  }, [dispatch, categories.length]);
+
   return (
     <div className={c.row}>
-      {treners.length > 0
-        ? treners.slice(0, 3).map((el) => (
+      {categories.length > 0
+        ? categories.slice(0, 3).map((el) => (
             <Link
               to={"/masterclass/" + el.id}
               data-aos-duration="1500"
@@ -35,10 +40,16 @@ const MySilder = () => {
               <div className={c.img}>
                 <img src={(img1.src ?? img1) as string} alt="trener photo" />
               </div>
-              <div className={c.role}>{content[langChange("masterclass")]}</div>
-              <div className={c.name}>{el[langChange("title")]}</div>
+              <div className={c.role}>
+                {lang === "ru"
+                  ? "Мастер-класс"
+                  : lang === "en"
+                    ? "Masterclass"
+                    : "Masterclass"}
+              </div>
+              <div className={c.name}>{pick(el.titleUz, el.titleRu)}</div>
               <div className={c.description}>
-                {el[langChange("title_descrioption")]}
+                {pick(el.descriptionUz, el.descriptionRu)}
               </div>
             </Link>
           ))

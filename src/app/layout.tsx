@@ -5,11 +5,6 @@ import "@/components/ui/Container/Container.scss";
 import "@/components/ui/Header/Header.scss";
 import "@/components/ui/Footer/Footer.scss";
 import "@/components/ui/LangChange/LangChange.scss";
-import "aos/dist/aos.css";
-import "swiper/scss";
-import "swiper/scss/navigation";
-import "swiper/scss/pagination";
-import "react-notifications/lib/notifications.css";
 import Providers from "./providers";
 
 export const metadata: Metadata = {

@@ -3,6 +3,10 @@
 import { useEffect, useRef } from "react";
 import { message } from "antd";
 import FT_API from "@/api/api";
+import { tokens } from "@/api/tokens";
+import { langFromUserModel } from "@/api/userLanguage";
+import { langActions } from "@/store/slice/lang";
+import { useDispatch } from "react-redux";
 
 type GoogleAuthResponse = {
   status_code: number;
@@ -86,6 +90,7 @@ type Props = {
 
 const GoogleAuthButton = ({ text = "continue_with", width = 320 }: Props) => {
   const buttonRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch<any>();
   const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
@@ -114,9 +119,16 @@ const GoogleAuthButton = ({ text = "continue_with", width = 320 }: Props) => {
               const accessToken = res.data?.data?.accessToken;
               const refreshToken = res.data?.data?.refreshToken;
               if (accessToken) {
-                localStorage.setItem("token", accessToken);
-                if (refreshToken) {
-                  localStorage.setItem("refreshToken", refreshToken);
+                tokens.save({ accessToken, refreshToken });
+                if (res.data?.data?.user) {
+                  localStorage.setItem(
+                    "user",
+                    JSON.stringify(res.data.data.user)
+                  );
+                  const serverLang = langFromUserModel(
+                    (res.data.data.user as any)?.language
+                  );
+                  if (serverLang) dispatch(langActions.setLang(serverLang));
                 }
                 window.location.href = "/";
               } else {

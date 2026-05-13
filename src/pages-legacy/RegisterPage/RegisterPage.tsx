@@ -8,6 +8,10 @@ import { Link, useNavigate } from "@/lib/router-compat";
 import { useState } from "react";
 import { Input, message } from "antd";
 import FT_API from "../../api/api";
+import { tokens } from "../../api/tokens";
+import { langFromUserModel } from "../../api/userLanguage";
+import { langActions } from "../../store/slice/lang";
+import { useDispatch } from "react-redux";
 import { useLocalizedText } from "../../hook/useLocalizedText";
 import { Helmet } from "@/lib/helmet-compat";
 import GoogleAuthButton from "@/components/ui/GoogleAuthButton/GoogleAuthButton";
@@ -33,6 +37,7 @@ type RegisterResponse = {
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<any>();
   const [messageApi, contextHolder] = message.useMessage();
 
   const changaLang = useLocalizedText();
@@ -55,9 +60,13 @@ const RegisterPage = () => {
       const refreshToken = res.data?.data?.refreshToken;
 
       if (accessToken) {
-        localStorage.setItem("token", accessToken);
-        if (refreshToken) {
-          localStorage.setItem("refreshToken", refreshToken);
+        tokens.save({ accessToken, refreshToken });
+        if (res.data?.data?.user) {
+          localStorage.setItem("user", JSON.stringify(res.data.data.user));
+          const serverLang = langFromUserModel(
+            (res.data.data.user as any)?.language
+          );
+          if (serverLang) dispatch(langActions.setLang(serverLang));
         }
         window.location.href = "/";
       } else {
@@ -80,30 +89,43 @@ const RegisterPage = () => {
   const content: Record<string, string> = {
     title: "Xush kelibsiz!",
     title_ru: "Добро пожаловать!",
+    title_en: "Welcome!",
     subtitle:
       "Kuchli futbol mashg’ulotlari va taktikalardan foydalangan holda yuqori marralarni zabt eting!",
     subtitle_ru:
       "Доберитесь до вершины, используя мощную футбольную подготовку и тактику!",
+    subtitle_en:
+      "Reach the top with strong football training and tactics!",
     email: "Emailingizni kiriting",
     email_ru: "Введите электронной почты",
+    email_en: "Enter your email",
     password: "Parolni kiriting",
     password_ru: "Введите пароль",
+    password_en: "Enter your password",
     lastname: "Familiyangizni kiriting",
     lastname_ru: "Введите свою фамилию",
+    lastname_en: "Enter your last name",
     lastname_label: "Familiya",
     lastname_label_ru: "Фамилия",
+    lastname_label_en: "Last name",
     name: "Ismingizni kiriting",
     name_ru: "Введите свою имию",
+    name_en: "Enter your first name",
     name_label: "Ism",
     name_label_ru: "Имя",
+    name_label_en: "First name",
     password_label: "Parol",
     password_label_ru: "Пароль",
+    password_label_en: "Password",
     login: "Kirish",
     login_ru: "Ввойти",
+    login_en: "Sign in",
     isodd: "Platformamizda ro‘yhatdan o‘tganmisiz?",
     isodd_ru: "Вы зарегистрированы на нашей платформе?",
+    isodd_en: "Already have an account?",
     register: "Ro‘yhatdan o‘tish",
     register_ru: "Регистрация",
+    register_en: "Sign up",
   };
 
   return (

@@ -1,15 +1,45 @@
 "use client";
 
+import { useEffect } from "react";
 import { Link } from "@/lib/router-compat";
 import Logo from "../Logo/Logo";
 import Container from "../Container/Container";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import content from "./content";
+import {
+  fetchLegalDocuments,
+  legalTitle,
+  TYPE_ORDER,
+  typeToSlug,
+  LEGAL_TYPE_LABEL,
+  type LegalDocument,
+} from "../../../store/legal/legalSlice";
 
 const ufcLogo = "https://staging.e.ufa.uz/_astro/logo.Ckxx7Njd.svg";
 
 function Footer() {
-  const lang = useSelector((state: any) => state.lang.lang);
+  const dispatch = useDispatch<any>();
+  const lang = useSelector((state: any) => state.lang.lang) as
+    | "uz"
+    | "ru"
+    | "en";
+  const legalDocs = useSelector(
+    (state: any) => (state.legal?.list ?? []) as LegalDocument[]
+  );
+
+  useEffect(() => {
+    if (legalDocs.length === 0) {
+      dispatch(fetchLegalDocuments());
+    }
+  }, [dispatch, legalDocs.length]);
+
+  // Order docs by canonical type sequence; show only known types.
+  const sortedDocs = TYPE_ORDER.map((t) =>
+    legalDocs.find((d) => d.type === t)
+  ).filter((d): d is LegalDocument => Boolean(d));
+
+  const legalTitleText =
+    lang === "ru" ? "Документы" : lang === "en" ? "Documents" : "Hujjatlar";
 
   const getLocalizedText = (content) => {
     return content && content[lang] ? content[lang] : content;
@@ -74,6 +104,31 @@ function Footer() {
                     {getLocalizedText(link.label)}
                   </Link>
                 ))}
+              </div>
+            </div>
+
+            <div className="footer_info">
+              <h2 className="footer_info_title">{legalTitleText}</h2>
+              <div className="info__container">
+                {sortedDocs.length > 0
+                  ? sortedDocs.map((d) => (
+                      <Link
+                        key={d.id}
+                        href={`/legal/${typeToSlug(d.type)}`}
+                        className="info__container_link"
+                      >
+                        {legalTitle(d, lang)}
+                      </Link>
+                    ))
+                  : TYPE_ORDER.map((type) => (
+                      <Link
+                        key={type}
+                        href={`/legal/${typeToSlug(type)}`}
+                        className="info__container_link"
+                      >
+                        {LEGAL_TYPE_LABEL[type][lang]}
+                      </Link>
+                    ))}
               </div>
             </div>
 

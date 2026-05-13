@@ -2,34 +2,123 @@
 
 .header_lang {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+}
+
+.header_lang_trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: #f3f5f7;
+  border: 1px solid transparent;
+  border-radius: 999px;
   color: #181818;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
-  text-transform: capitalize;
-  &_select {
-    position: absolute;
-    top: 20px;
-    right: -12px;
-    overflow: hidden;
-    width: 60px;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: white;
-    padding: 7px;
-    display: none;
-    .select_btn {
-      width: 100%;
-      border-radius: 7px;
-      border: 0;
-      cursor: pointer;
-      padding: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+  .anticon {
+    font-size: 14px;
+    color: #4b5563;
+    transition: color 0.15s ease;
+  }
+
+  &:hover {
+    background: #e8efe9;
+
+    .anticon {
+      color: #15803d;
     }
-    .select_btn:hover {
-      background: $lightGray;
+  }
+
+  &.is-open {
+    background: rgba(22, 163, 74, 0.12);
+    border-color: rgba(22, 163, 74, 0.3);
+    color: #15803d;
+
+    .anticon {
+      color: #15803d;
     }
+  }
+}
+
+.header_lang_code {
+  line-height: 1;
+}
+
+.header_lang_select {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 50;
+  animation: langPop 0.16s ease-out;
+
+  .select_btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #181818;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    .select_btn_flag {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .select_btn_label {
+      flex: 1;
+    }
+
+    .select_btn_check {
+      color: #15803d;
+      font-size: 13px;
+    }
+
+    &:hover {
+      background: rgba(22, 163, 74, 0.08);
+      color: #15803d;
+    }
+
+    &.is-active {
+      background: rgba(22, 163, 74, 0.1);
+      color: #15803d;
+      font-weight: 600;
+    }
+  }
+}
+
+@keyframes langPop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

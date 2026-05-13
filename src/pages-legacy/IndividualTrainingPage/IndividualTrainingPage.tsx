@@ -1,11 +1,9 @@
 "use client";
 
-import AgesCategory from "../../components/ui/AgesCategory/AgesCategory";
 import Container from "../../components/ui/Container/Container";
 import s from "./IndividualTrainingPage.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getTreningCategory } from "../../store/trening/treningCategoriesSlice";
 import { useEffect } from "react";
 import { message } from "antd";
 import NotFound from "../../components/ui/404/404";

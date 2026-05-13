@@ -1,0 +1,261 @@
+$brand: #16a34a;
+$brand-deep: #15803d;
+
+.wrapper {
+  padding: 24px 0 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(22, 163, 74, 0.08);
+  color: $brand-deep;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  transition: background 0.18s ease, transform 0.18s ease;
+
+  &:hover {
+    background: rgba(22, 163, 74, 0.16);
+    transform: translateX(-2px);
+  }
+}
+
+/* ───────── Layout ───────── */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  align-items: start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ───────── Main ───────── */
+
+.main {
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+
+  @media (max-width: 720px) {
+    padding: 20px;
+  }
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #181818;
+  text-transform: capitalize;
+  line-height: 1.2;
+
+  @media (max-width: 720px) {
+    font-size: 24px;
+  }
+}
+
+.discountBadge {
+  padding: 5px 12px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+
+  .anticon {
+    color: $brand;
+    font-size: 14px;
+  }
+}
+
+.section {
+  margin-top: 8px;
+}
+
+.sectionTitle {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #181818;
+  letter-spacing: 0.2px;
+}
+
+.features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.5;
+
+  .anticon {
+    color: $brand;
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.featureHighlight {
+  font-weight: 700;
+  color: $brand-deep;
+
+  .anticon {
+    color: #d97706;
+  }
+}
+
+.empty {
+  font-size: 14px;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* ───────── Sidebar (price card) ───────── */
+
+.sidebar {
+  position: sticky;
+  top: 24px;
+
+  @media (max-width: 900px) {
+    position: static;
+  }
+}
+
+.priceCard {
+  background: linear-gradient(180deg, #fff 0%, #fafdfb 100%);
+  border: 2px solid rgba(22, 163, 74, 0.15);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.priceOld {
+  font-size: 14px;
+  color: #9ca3af;
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.priceNow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.priceValue {
+  font-size: 38px;
+  font-weight: 800;
+  color: #181818;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.priceCurrency {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.priceMeta {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 14px;
+}
+
+.subscribeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, $brand 0%, $brand-deep 100%);
+  color: #fff;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  .anticon {
+    font-size: 14px;
+  }
+
+  &:hover {
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(22, 163, 74, 0.42);
+  }
+}
+
+.priceNote {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.5;
+  text-align: center;
+}

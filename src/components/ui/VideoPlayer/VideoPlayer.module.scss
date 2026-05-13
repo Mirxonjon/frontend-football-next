@@ -1,0 +1,469 @@
+$brand: #16a34a;
+$brand-deep: #15803d;
+
+.root {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  outline: none;
+  user-select: none;
+  font-family: inherit;
+
+  &.fullscreen {
+    border-radius: 0;
+    aspect-ratio: auto;
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #000;
+}
+
+/* ───────── Big play button (when paused) ───────── */
+
+.bigPlay {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  font-size: 36px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  transition: transform 0.18s ease, background 0.18s ease;
+  z-index: 4;
+
+  &:hover {
+    transform: scale(1.06);
+    background: $brand;
+    border-color: $brand;
+  }
+
+  .anticon {
+    margin-left: 4px;
+  }
+}
+
+/* ───────── Loading / buffering / error ───────── */
+
+.loadingOverlay,
+.errorOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.spinnerLg {
+  font-size: 44px;
+  color: $brand;
+}
+
+.loadingText {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.bufferIndicator {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  z-index: 4;
+}
+
+.errorTitle {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.retryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: $brand;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: $brand-deep;
+  }
+}
+
+/* ───────── Skip hints (double-tap feedback) ───────── */
+
+.skipHint {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  pointer-events: none;
+  animation: skipFade 0.6s ease;
+  z-index: 4;
+
+  .anticon {
+    color: $brand;
+  }
+}
+
+.skipLeft {
+  left: 12%;
+}
+
+.skipRight {
+  right: 12%;
+}
+
+@keyframes skipFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.85);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* ───────── Controls overlay ───────── */
+
+.controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 32px 16px 14px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.5) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  z-index: 3;
+
+  .root.showControls & {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* Progress bar */
+
+.progressTrack {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: height 0.15s ease;
+
+  &:hover {
+    height: 8px;
+
+    .progressDot {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+.progressBuffer {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.progressFilled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, $brand 0%, $brand-deep 100%);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.progressDot {
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: $brand;
+  border: 2px solid #fff;
+  transform: translateY(-50%) scale(0);
+  opacity: 0;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Bottom row */
+
+.bottomRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #fff;
+}
+
+.left,
+.right {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  &.iconBtnActive {
+    color: $brand;
+  }
+}
+
+.rateLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* Volume slider */
+
+.volumeGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  .volumeSlider {
+    width: 0;
+    opacity: 0;
+    transition: width 0.2s ease, opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  &:hover .volumeSlider,
+  &:focus-within .volumeSlider {
+    width: 80px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.volumeSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  outline: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $brand;
+    cursor: pointer;
+    border: 2px solid #fff;
+  }
+
+  &::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $brand;
+    cursor: pointer;
+    border: 2px solid #fff;
+  }
+}
+
+/* Time display */
+
+.time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.timeSep {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.timeTotal {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Speed menu */
+
+.speedWrap {
+  position: relative;
+}
+
+.speedMenu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  background: rgba(20, 20, 20, 0.95);
+  border-radius: 12px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  min-width: 88px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  animation: menuIn 0.15s ease;
+  z-index: 10;
+}
+
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.speedItem {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.12s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &.speedItemActive {
+    background: $brand;
+    color: #fff;
+    font-weight: 700;
+  }
+}
+
+/* Always show controls when error / paused / loading */
+.root:not(.showControls):hover .controls,
+.root.errorState .controls {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ───────── Mobile tweaks ───────── */
+
+@media (max-width: 600px) {
+  .controls {
+    padding: 24px 10px 10px;
+  }
+  .iconBtn {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0 8px;
+    font-size: 16px;
+  }
+  .bigPlay {
+    width: 68px;
+    height: 68px;
+    font-size: 28px;
+  }
+  .time {
+    font-size: 12px;
+  }
+  .volumeGroup .volumeSlider {
+    /* Always-collapsed on mobile to save space; tap mute/unmute instead */
+    display: none;
+  }
+}

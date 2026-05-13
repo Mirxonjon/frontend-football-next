@@ -1,65 +1,87 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { GlobalOutlined } from "@ant-design/icons";
+import { useState, useEffect, useRef } from "react";
+import { GlobalOutlined, CheckOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { langActions } from "../../../store/slice/lang";
+import { syncUserLanguage } from "../../../api/userLanguage";
+
+const LANGS: { code: "uz" | "ru" | "en"; label: string; flag: string }[] = [
+  { code: "uz", label: "O‘zbek", flag: "🇺🇿" },
+  { code: "ru", label: "Русский", flag: "🇷🇺" },
+  { code: "en", label: "English", flag: "🇬🇧" },
+];
 
 function LangChange() {
-  const [isOpenLang, setIsOpenLang] = useState(false);
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch<any>();
-  // eslint-disable-next-line no-unused-vars
-  const { lang, loading } = useSelector((state: any) => state.lang);
+  const { lang } = useSelector((state: any) => state.lang);
 
-  const handleLang = () => {
-    const el = document.querySelector<HTMLElement>(".header_lang_select");
-    if (!el) return;
-    if (isOpenLang) {
-      el.style.display = "none";
-    } else {
-      el.style.display = "block";
-    }
-    setIsOpenLang(!isOpenLang);
-  };
-
-  const handleLanguageSelect = (selectedLang: any) => {
-    dispatch(langActions.setLang(selectedLang));
+  const handlePick = (code: "uz" | "ru" | "en") => {
+    dispatch(langActions.setLang(code));
+    setOpen(false);
+    // Persist server-side too, when authenticated and backend supports the
+    // chosen language. Fire-and-forget — UI doesn't wait for the response.
+    void syncUserLanguage(code);
   };
 
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      const target = e.target as HTMLElement | null;
-      const select = document.querySelector<HTMLElement>(".header_lang_select");
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
       if (
-        target &&
-        !target.closest(".header_lang") &&
-        select?.style?.display === "block"
+        wrapRef.current &&
+        !wrapRef.current.contains(e.target as Node)
       ) {
-        select.style.display = "none";
-        setIsOpenLang(false);
+        setOpen(false);
       }
     };
-    document.body.addEventListener("click", handler);
-    return () => document.body.removeEventListener("click", handler);
-  }, []);
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onEsc);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onEsc);
+    };
+  }, [open]);
 
   return (
-    <div className="header_lang" onClick={handleLang}>
-      <GlobalOutlined /> {lang}
-      <div className="header_lang_select">
-        <button
-          className="select_btn"
-          onClick={() => handleLanguageSelect("uz")}
-        >
-          Uz
-        </button>
-        <button
-          className="select_btn"
-          onClick={() => handleLanguageSelect("ru")}
-        >
-          Ru
-        </button>
-      </div>
+    <div className="header_lang" ref={wrapRef}>
+      <button
+        type="button"
+        className={`header_lang_trigger ${open ? "is-open" : ""}`}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <GlobalOutlined />
+        <span className="header_lang_code">{lang}</span>
+      </button>
+
+      {open && (
+        <div className="header_lang_select" role="listbox">
+          {LANGS.map((l) => (
+            <button
+              key={l.code}
+              type="button"
+              role="option"
+              aria-selected={lang === l.code}
+              className={`select_btn ${lang === l.code ? "is-active" : ""}`}
+              onClick={() => handlePick(l.code)}
+            >
+              <span className="select_btn_flag" aria-hidden="true">
+                {l.flag}
+              </span>
+              <span className="select_btn_label">{l.label}</span>
+              {lang === l.code && (
+                <CheckOutlined className="select_btn_check" />
+              )}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

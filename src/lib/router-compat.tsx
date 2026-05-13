@@ -13,6 +13,7 @@ import {
 } from "next/navigation";
 import React, {
   forwardRef,
+  useCallback,
   type AnchorHTMLAttributes,
   type ReactNode,
 } from "react";
@@ -96,15 +97,21 @@ export type NavigateFn = (
 
 export const useNavigate = (): NavigateFn => {
   const router = useRouter();
-  return (to, options) => {
-    if (typeof to === "number") {
-      if (to < 0) router.back();
-      else router.forward();
-      return;
-    }
-    if (options?.replace) router.replace(to);
-    else router.push(to);
-  };
+  // Memoize so callers can safely include `navigate` in useEffect deps
+  // without triggering an infinite loop (the function used to be re-created
+  // on every render).
+  return useCallback<NavigateFn>(
+    (to, options) => {
+      if (typeof to === "number") {
+        if (to < 0) router.back();
+        else router.forward();
+        return;
+      }
+      if (options?.replace) router.replace(to);
+      else router.push(to);
+    },
+    [router]
+  );
 };
 
 export const useParams = <T extends Record<string, string | string[] | undefined> = Record<string, string>>(): T => {

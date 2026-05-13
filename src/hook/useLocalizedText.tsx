@@ -6,11 +6,8 @@ export const useLocalizedText = () => {
   const lang = useAppSelector((state: any) => state.lang.lang);
 
   const localizeText = (text: string): string => {
-    if (lang === "uz") {
-      return text;
-    } else if (lang === "ru") {
-      return text + "_ru";
-    }
+    if (lang === "ru") return text + "_ru";
+    if (lang === "en") return text + "_en";
     return text;
   };
 

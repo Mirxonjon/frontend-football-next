@@ -8,6 +8,10 @@ import { Link } from "@/lib/router-compat";
 import { Input, message } from "antd";
 import { useState } from "react";
 import FT_API from "../../api/api";
+import { tokens } from "../../api/tokens";
+import { langFromUserModel } from "../../api/userLanguage";
+import { langActions } from "../../store/slice/lang";
+import { useDispatch } from "react-redux";
 import { useLocalizedText } from "../../hook/useLocalizedText";
 import { Helmet } from "@/lib/helmet-compat";
 import GoogleAuthButton from "@/components/ui/GoogleAuthButton/GoogleAuthButton";
@@ -32,6 +36,7 @@ type LoginResponse = {
 };
 
 const LoginPage = () => {
+  const dispatch = useDispatch<any>();
   const [messageApi, contextHolder] = message.useMessage();
   const [userData, setUserData] = useState({
     email: "",
@@ -50,9 +55,14 @@ const LoginPage = () => {
       const refreshToken = res.data?.data?.refreshToken;
 
       if (accessToken) {
-        localStorage.setItem("token", accessToken);
-        if (refreshToken) {
-          localStorage.setItem("refreshToken", refreshToken);
+        tokens.save({ accessToken, refreshToken });
+        if (res.data?.data?.user) {
+          localStorage.setItem("user", JSON.stringify(res.data.data.user));
+          // Sync app language with the server-side preference for this user.
+          const serverLang = langFromUserModel(
+            (res.data.data.user as any)?.language
+          );
+          if (serverLang) dispatch(langActions.setLang(serverLang));
         }
         window.location.href = "/";
       } else {
@@ -73,20 +83,28 @@ const LoginPage = () => {
   const content: Record<string, string> = {
     title: "Xush kelibsiz!",
     title_ru: "Добро пожаловать!",
+    title_en: "Welcome back!",
     subtitle: "Iltimos, davom etish uchun maʼlumotlarni kiriting!",
     subtitle_ru: "Пожалуйста, введите данные, чтобы продолжить!",
+    subtitle_en: "Please enter your details to continue.",
     email: "Emailingizni kiriting",
     email_ru: "Введите электронной почты",
+    email_en: "Enter your email",
     password: "Parolni kiriting",
     password_ru: "Введите пароль",
+    password_en: "Enter your password",
     login: "Kirish",
     login_ru: "Ввойти",
+    login_en: "Sign in",
     isnew: "Platformamizda yangimisiz?",
     isnew_ru: "Впервые на нашей платформе?",
+    isnew_en: "New to our platform?",
     register: "Ro‘yhatdan o‘tish",
     register_ru: "Регистрация",
+    register_en: "Sign up",
     password_label: "Parol",
     password_label_ru: "Пароль",
+    password_label_en: "Password",
   };
 
   return (

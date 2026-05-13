@@ -1,143 +1,303 @@
 "use client";
 
-import Container from "../../components/ui/Container/Container";
-import TrenersList from "../../components/ui/TrenersList/TrenersList";
-import s from "./MasterclassSinglePage.module.scss";
-import bg from "./../../assets/img/bg.png";
+import { useEffect, useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams, Link } from "@/lib/router-compat";
+import { Spin, message } from "antd";
 import {
-  getMasterclassAllCategory,
-  getMasterclassVideos,
-} from "../../store/masterclass/masterclassSlice";
-import { useEffect } from "react";
-import { useNavigate, useParams } from "@/lib/router-compat";
+  ArrowLeftOutlined,
+  PictureOutlined,
+  PaperClipOutlined,
+  BulbOutlined,
+  PlayCircleOutlined,
+} from "@ant-design/icons";
+
+import Container from "../../components/ui/Container/Container";
 import NotFound from "../../components/ui/404/404";
-import { Select } from "antd";
-import { useLocalizedText } from "../../hook/useLocalizedText";
+import VideoPlayer from "../../components/ui/VideoPlayer/VideoPlayer";
 import { Helmet } from "@/lib/helmet-compat";
-const MasterclassSinglePage = () => {
-  const { id } = useParams();
-  const navigatio = useNavigate();
-  const dispatch = useDispatch<any>();
 
-  const changaLang = useLocalizedText();
+import {
+  fetchMasterclassById,
+  fetchMasterclasses,
+  type Masterclass,
+  type MasterclassBlock,
+  type MasterclassDetail,
+} from "../../store/masterclass/masterclassSlice";
+import s from "./MasterclassSinglePage.module.scss";
 
-  const singleMasterclassCategory = useSelector(
-    (state: any) => state.masterclass.masterclassVideos?.[0]
-  );
-  const loading_videos = useSelector(
-    (state: any) => state.masterclass.loading_videos
-  );
+const isAbsoluteUrl = (u: string | null | undefined): u is string =>
+  typeof u === "string" &&
+  (u.startsWith("http://") ||
+    u.startsWith("https://") ||
+    u.startsWith("blob:"));
 
-  const singleMasterclass = useSelector(
-    (state: any) => state.masterclass.masterclassVideos?.[0]?.MasterclassVideos?.[0]
-  );
-  const allCategory = useSelector(
-    (state: any) => state.masterclass.masterclassAllCategory
-  );
-  useEffect(() => {
-    dispatch(getMasterclassAllCategory());
-    dispatch(getMasterclassVideos(id));
-  }, [id]);
-  if (loading_videos) {
-    return (
-      <h1 style={{ padding: "20px 0", textAlign: "center" }}>Loading ...</h1>
-    );
-  }
-  const content = {
-    popular: "Taniqli murabbiylar",
-    popular_ru: "Популярные тренеры",
-    massterclass: "Masterclass",
-    massterclass_ru: "Мастеркласс",
-    notFound: "Bu categoriya bo'yicha masterclass topilmadi",
-    notFound_ru: "Для этой категории мастер-классов не найдено",
-  };
+const SafeImg = ({
+  src,
+  alt,
+  className,
+  fallback,
+}: {
+  src: string | null | undefined;
+  alt: string;
+  className?: string;
+  fallback: ReactNode;
+}) => {
+  const [errored, setErrored] = useState(false);
+  if (!isAbsoluteUrl(src) || errored) return <>{fallback}</>;
   return (
-    <div className={s.wrapper}>
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      onError={() => setErrored(true)}
+    />
+  );
+};
 
-      <Helmet>
-        <title > CoachingZona Masterclasslar Videolar</title>
-        <meta name="description" content="CoachingZona  Masterclasslar Videolar,Coaching Zona Masterclasslar Videolar , Murabbiylardan masterclaslar Videolari, Masterclasslar videolari" />
-        <link rel='canonical' href='https://coachingzona.uz/masterclass' />
-      </Helmet>
-      {singleMasterclassCategory ? (
-        <div className={s.top}>
-          <div className={s.img}>
-            <img
-              src={
-                singleMasterclassCategory
-                  ? "https://storage.googleapis.com/telecom2003/" +
-                    singleMasterclassCategory.img_link
-                  : (bg as any).src ?? bg
-              }
-              alt="trener"
-            />
-          </div>
-
-          <Container>
-            <h3 className={s.top_role}>
-              {content[changaLang("massterclass")]}
-            </h3>
-            <h5 className={s.top_name}>
-              {singleMasterclassCategory[changaLang("title")]}
-            </h5>
-          </Container>
+const Block = ({
+  block,
+  lang,
+}: {
+  block: MasterclassBlock;
+  lang: string;
+}) => {
+  const content = lang === "ru" ? block.contentRu : block.contentUz;
+  switch (block.blockType) {
+    case "TITLE":
+      return <h2 className={s.bTitle}>{content}</h2>;
+    case "TEXT":
+      return (
+        <div className={s.bText}>
+          {content.split(/\n{2,}/).map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+        </div>
+      );
+    case "VIDEO":
+      return isAbsoluteUrl(content) ? (
+        <div className={s.bVideo}>
+          <VideoPlayer src={content} duration={block.duration} />
         </div>
       ) : (
-        ""
-      )}
-      <Container>
-        <div className={s.row}>
-          {allCategory.length > 0 && (
-            <Select
-              className={s.select}
-              defaultValue={id}
-              onChange={(selectedValue) => {
-                navigatio("/masterclass/" + selectedValue);
-              }}
-              options={allCategory.map((el) => ({
-                value: el.id,
-                label: el[changaLang("title")],
-              }))}
-            />
-          )}
-          {singleMasterclass ? (
-            <div className={s.left}>
-              <div className={s.info}>
-                <h2 className={s.title}>{singleMasterclass[changaLang("title")]}</h2>
-                <h4 className={s.sub_title}>
-                  {singleMasterclass[changaLang("description_title")]}
-                </h4>
-                <p className={s.descr}>
-                  {singleMasterclass.description_tactic}
-                </p>
-              </div>
-              <div className={s.img_plan}>
-                <img
-                  src={
-                    "https://storage.googleapis.com/telecom2003/" +
-                    singleMasterclass.tactic_img
-                  }
-                  alt="plan"
-                />
-              </div>
+        <div className={s.bMissing}>
+          <PlayCircleOutlined /> {lang === "ru" ? "Видео" : lang === "en" ? "Video" : "Video"}
+        </div>
+      );
+    case "IMAGE":
+      return isAbsoluteUrl(content) ? (
+        <SafeImg
+          src={content}
+          alt="masterclass"
+          className={s.bImage}
+          fallback={
+            <div className={s.bMissing}>
+              <PictureOutlined />
             </div>
+          }
+        />
+      ) : (
+        <div className={s.bMissing}>
+          <PictureOutlined />
+        </div>
+      );
+    case "FILE":
+      return (
+        <div className={s.bFile}>
+          <PaperClipOutlined />
+          {isAbsoluteUrl(content) ? (
+            <a href={content} target="_blank" rel="noopener noreferrer" download>
+              {lang === "ru"
+                ? "Скачать материал"
+                : lang === "en"
+                  ? "Download material"
+                  : "Materialni yuklab olish"}
+            </a>
           ) : (
-            <NotFound
-              style={{
-                maxWidth: "50%",
-                margin: "0 auto",
-                padding: "100px 0px",
-              }}
-              subTitle={content[changaLang("notFound")]}
-            />
+            <span>{lang === "ru" ? "Файл" : lang === "en" ? "File" : "Fayl"}</span>
           )}
-          <div className={s.right}>
-            <TrenersList data={allCategory} />
-          </div>
+        </div>
+      );
+    case "HINT":
+      return (
+        <div className={s.bHint}>
+          <BulbOutlined className={s.bHintIcon} />
+          <div>{content}</div>
+        </div>
+      );
+    default:
+      return null;
+  }
+};
+
+const MasterclassSinglePage = () => {
+  const dispatch = useDispatch<any>();
+  const params = useParams<{ id?: string }>();
+  const id = params?.id;
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const current = useSelector(
+    (state: any) =>
+      (state.masterclass?.current ?? null) as MasterclassDetail | null
+  );
+  const loading = useSelector(
+    (state: any) => (state.masterclass?.currentLoading ?? false) as boolean
+  );
+  const error = useSelector(
+    (state: any) => (state.masterclass?.currentError ?? "") as string
+  );
+  const list = useSelector(
+    (state: any) => (state.masterclass?.list ?? []) as Masterclass[]
+  );
+  const lang = useSelector((state: any) => state.lang.lang);
+
+  const pick = <T,>(uz: T, ru: T): T => (lang === "ru" ? ru : uz);
+  const t = (uz: string, ru: string, en: string): string =>
+    lang === "ru" ? ru : lang === "en" ? en : uz;
+
+  useEffect(() => {
+    if (id) dispatch(fetchMasterclassById(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    // Fetch sibling list once for the right sidebar
+    if (list.length === 0) dispatch(fetchMasterclasses());
+  }, [dispatch, list.length]);
+
+  useEffect(() => {
+    if (error) messageApi.error(error);
+  }, [error, messageApi]);
+
+  const blocks = useMemo<MasterclassBlock[]>(() => {
+    if (!current?.blocks) return [];
+    return current.blocks
+      .slice()
+      .sort((a, b) => a.sequenceOrder - b.sequenceOrder);
+  }, [current]);
+
+  if (loading && !current) {
+    return (
+      <Container>
+        <div className={s.loader}>
+          <Spin size="large" />
         </div>
       </Container>
-    </div>
+    );
+  }
+
+  if (!current) {
+    return (
+      <Container>
+        {contextHolder}
+        <NotFound
+          style={{ margin: "60px 0" }}
+          subTitle={
+            t(
+              "Master-klass topilmadi",
+              "Мастер-класс не найден",
+              "Masterclass not found"
+            )
+          }
+        />
+      </Container>
+    );
+  }
+
+  const title = pick(current.titleUz, current.titleRu);
+  const heroImg = current.masterclassCategory?.imageUrl;
+  const heroIsUrl = isAbsoluteUrl(heroImg);
+  const categoryDesc = pick(
+    current.masterclassCategory?.descriptionUz,
+    current.masterclassCategory?.descriptionRu
+  );
+
+  return (
+    <Container>
+      <Helmet>
+        <title>{`${title} — Masterclass`}</title>
+      </Helmet>
+
+      {contextHolder}
+
+      <div className={s.wrapper}>
+        <Link to="/masterclass" className={s.back}>
+          <ArrowLeftOutlined />
+          <span>
+            {t(
+              "Masterclasslarga",
+              "К мастер-классам",
+              "Back to masterclasses"
+            )}
+          </span>
+        </Link>
+
+        {/* ─── Hero ─── */}
+        <section
+          className={s.hero}
+          style={
+            heroIsUrl
+              ? { backgroundImage: `url("${heroImg}")` }
+              : undefined
+          }
+        >
+          <div className={s.heroOverlay} />
+          <div className={s.heroBody}>
+            <span className={s.heroKind}>
+              {t("Masterclass", "Мастер-класс", "Masterclass")}
+            </span>
+            <h1 className={s.heroTitle}>{title}</h1>
+          </div>
+        </section>
+
+        {/* ─── Content + sidebar ─── */}
+        <div className={s.layout}>
+          <main className={s.content}>
+            <h2 className={s.coachName}>{title.toUpperCase()}</h2>
+            {categoryDesc && (
+              <div className={s.coachSub}>{categoryDesc}</div>
+            )}
+
+            <div className={s.blocks}>
+              {blocks.length === 0 ? (
+                <div className={s.empty}>
+                  {t("Kontent yo‘q", "Нет содержимого", "No content")}
+                </div>
+              ) : (
+                blocks.map((b) => <Block key={b.id} block={b} lang={lang} />)
+              )}
+            </div>
+          </main>
+
+          <aside className={s.sidebar}>
+            <div className={s.sideTitle}>
+              {t("Taniqli murabbiylar", "Известные тренеры", "Notable coaches")}
+            </div>
+            <ul className={s.sideList}>
+              {list.slice(0, 12).map((m) => {
+                const active = m.id === current.id;
+                return (
+                  <li key={m.id}>
+                    <Link
+                      to={`/masterclass/${m.id}`}
+                      className={`${s.sideItem} ${active ? s.sideItemActive : ""}`}
+                    >
+                      <span className={s.sideName}>
+                        {pick(m.titleUz, m.titleRu)}
+                      </span>
+                      <span className={s.sideKind}>
+                        {t("Masterclass", "Мастер-класс", "Masterclass")}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </Container>
   );
 };
 

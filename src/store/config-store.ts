@@ -11,6 +11,14 @@ import { randomCopiesReducers } from "./copy/randomCopy";
 import { masterclassCategoryReducers } from "./masterclass/masterclassSlice";
 import { individualtreningCategoryReducers } from "./individualTraining/IndividualTreningCategoriesSlice";
 import { IndividualTreningVideoReducers } from "./individualTraining/IndividualTreningVideo";
+import { lessonsReducer } from "./lessons/lessonsSlice";
+import { bookCategoriesReducer } from "./bookCategories/bookCategoriesSlice";
+import { cardsReducer } from "./cards/cardsSlice";
+import { subscriptionsReducer } from "./subscriptions/subscriptionsSlice";
+import { walletReducer } from "./wallet/walletSlice";
+import { plansReducer } from "./plans/plansSlice";
+import { legalReducer } from "./legal/legalSlice";
+import { lessonProgressReducer } from "./lessonProgress/lessonProgressSlice";
 
 export const makeStore = () =>
   configureStore({
@@ -26,6 +34,14 @@ export const makeStore = () =>
       randomBooks: randomBooksReducers,
       randomCopies: randomCopiesReducers,
       masterclass: masterclassCategoryReducers,
+      lessons: lessonsReducer,
+      bookCategories: bookCategoriesReducer,
+      cards: cardsReducer,
+      subscriptions: subscriptionsReducer,
+      wallet: walletReducer,
+      plans: plansReducer,
+      legal: legalReducer,
+      lessonProgress: lessonProgressReducer,
     },
   });
 

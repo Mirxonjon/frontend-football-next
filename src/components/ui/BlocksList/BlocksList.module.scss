@@ -1,0 +1,150 @@
+$brand: #16a34a;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    border-color: rgba(22, 163, 74, 0.18);
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.06);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-bottom: 1px solid #f1f3f5;
+  background: #fafbfc;
+}
+
+.seq {
+  font-size: 12px;
+  font-weight: 700;
+  color: $brand;
+  background: rgba(22, 163, 74, 0.1);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+
+.kind {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.freeBadge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  background: rgba(245, 158, 11, 0.15);
+  color: #b45309;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.cardBody {
+  padding: 18px;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 18px;
+  border-top: 1px solid #f1f3f5;
+  background: #fafbfc;
+  min-height: 38px;
+}
+
+.footLeft,
+.footRight {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.duration {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  font-variant-numeric: tabular-nums;
+  background: #f3f4f6;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.doneBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: $brand;
+  background: rgba(22, 163, 74, 0.1);
+  padding: 4px 12px;
+  border-radius: 999px;
+
+  .anticon {
+    font-size: 13px;
+  }
+}
+
+.empty {
+  padding: 40px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 15px;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 2px dashed #e5e7eb;
+}
+
+/* ───────── Skeleton ───────── */
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skelLine {
+  height: 16px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f1f5f9 0%, #e5e7eb 50%, #f1f5f9 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+.skelBox {
+  height: 280px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #f1f5f9 0%, #e5e7eb 50%, #f1f5f9 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

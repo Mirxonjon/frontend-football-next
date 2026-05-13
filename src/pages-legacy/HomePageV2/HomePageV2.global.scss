@@ -1,0 +1,34 @@
+/* Global container override active only while /home-v2 is mounted.
+   HomePageV2.tsx toggles `home-v2-active` on <html> via useEffect. */
+
+html.home-v2-active,
+html.home-v2-active body {
+  overflow-x: hidden;
+}
+
+html.home-v2-active .container {
+  max-width: 1640px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1024px) {
+  html.home-v2-active .container {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  html.home-v2-active .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+html.home-v2-active .header_container {
+  max-width: 1640px !important;
+}

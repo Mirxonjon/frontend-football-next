@@ -46,7 +46,12 @@
   font-size: 16px;
   align-items: center;
 }
+.header_account_wrap {
+  position: relative;
+  display: inline-block;
+}
 .header_account {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -56,12 +61,26 @@
   background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
   color: #fff;
   text-decoration: none;
+  overflow: hidden;
   box-shadow: 0 2px 6px rgba(46, 125, 50, 0.25);
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  border: 2px solid #fff;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+
   .anticon {
     font-size: 18px;
     line-height: 1;
   }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 10px rgba(46, 125, 50, 0.35);
@@ -71,6 +90,122 @@
     transform: translateY(0);
   }
 }
+
+.account_menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 260px;
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  padding: 10px;
+  z-index: 50;
+  animation: accountMenuIn 0.16s ease-out;
+}
+@keyframes accountMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.account_menu_head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 10px;
+}
+.account_menu_avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .anticon {
+    font-size: 18px;
+  }
+}
+.account_menu_meta {
+  min-width: 0;
+  flex: 1;
+}
+.account_menu_name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #181818;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.account_menu_email {
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.account_menu_divider {
+  height: 1px;
+  background: #eef0f2;
+  margin: 4px 0;
+}
+.account_menu_item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #181818;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  .anticon {
+    font-size: 16px;
+    color: #15803d;
+  }
+
+  &:hover {
+    background: rgba(22, 163, 74, 0.08);
+    color: #15803d;
+  }
+}
+.account_menu_logout {
+  color: #b91c1c;
+  .anticon {
+    color: #b91c1c;
+  }
+  &:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #991b1b;
+    .anticon {
+      color: #991b1b;
+    }
+  }
+}
+
 .header_singin {
   color: $lightGreen;
   font-size: 16px;
@@ -105,6 +240,51 @@
   }
   .hamburger_menu {
     display: block;
+  }
+
+  // Hide the avatar dropdown and standalone Sign In on mobile.
+  // Account links live inside the hamburger menu instead.
+  .header_account_wrap,
+  .header_singin {
+    display: none !important;
+  }
+
+  .hamburger_list .header_layout_link_account,
+  .hamburger_list .header_layout_link_logout {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    width: 100%;
+    margin: 6px 0 0 !important;
+
+    .anticon {
+      font-size: 16px;
+    }
+  }
+
+  .hamburger_list .header_layout_link_account {
+    background: rgba(22, 163, 74, 0.1) !important;
+    color: $lightGreen !important;
+
+    &:hover {
+      text-decoration: none !important;
+      background: rgba(22, 163, 74, 0.18) !important;
+    }
+  }
+
+  .hamburger_list .header_layout_link_logout {
+    background: rgba(239, 68, 68, 0.08) !important;
+    color: #b91c1c !important;
+
+    &:hover {
+      text-decoration: none !important;
+      background: rgba(239, 68, 68, 0.16) !important;
+      color: #991b1b !important;
+    }
   }
 
   .hemburger_layout {
@@ -151,6 +331,9 @@
   }
 
   .container_signIn {
-    max-width: 230px;
+    max-width: max-content;
+    margin-left: auto;
+    justify-content: flex-end;
+    gap: 22px;
   }
 }

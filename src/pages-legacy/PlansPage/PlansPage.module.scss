@@ -1,0 +1,366 @@
+$brand: #16a34a;
+$brand-deep: #15803d;
+
+.wrapper {
+  padding: 32px 0 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ───────── Hero ───────── */
+
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(22, 163, 74, 0.12);
+  color: $brand-deep;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-bottom: 14px;
+
+  .anticon {
+    font-size: 14px;
+  }
+}
+
+.heroTitle {
+  margin: 0 0 12px;
+  font-size: 36px;
+  font-weight: 700;
+  color: #181818;
+  letter-spacing: -0.5px;
+
+  @media (max-width: 720px) {
+    font-size: 26px;
+  }
+}
+
+.heroSubtitle {
+  margin: 0 auto;
+  max-width: 620px;
+  font-size: 16px;
+  color: #6b7280;
+  line-height: 1.55;
+
+  @media (max-width: 720px) {
+    font-size: 14px;
+  }
+}
+
+/* ───────── Loader ───────── */
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+/* ───────── Grid ───────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  max-width: 1180px;
+  margin: 0 auto;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 760px;
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    max-width: none;
+  }
+}
+
+/* ───────── Card ───────── */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 24px 24px;
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(22, 163, 74, 0.3);
+    box-shadow: 0 14px 32px rgba(22, 163, 74, 0.12);
+  }
+}
+
+.cardRecommended {
+  border: 2px solid $brand;
+  box-shadow: 0 8px 28px rgba(22, 163, 74, 0.18);
+  background: linear-gradient(
+    180deg,
+    rgba(22, 163, 74, 0.04) 0%,
+    #fff 60%
+  );
+}
+
+.ribbon {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  box-shadow: 0 6px 14px rgba(217, 119, 6, 0.3);
+  white-space: nowrap;
+
+  .anticon {
+    font-size: 12px;
+  }
+}
+
+.discountBadge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 5px 12px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+}
+
+.cardHead {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 70px; // leave space for discount badge
+  min-height: 56px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #181818;
+  text-transform: capitalize;
+  line-height: 1.25;
+}
+
+.duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+
+  .anticon {
+    color: $brand;
+  }
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 0;
+  border-top: 1px dashed #e5e7eb;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.priceOld {
+  font-size: 13px;
+  color: #9ca3af;
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.priceNow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.priceValue {
+  font-size: 34px;
+  font-weight: 800;
+  color: #181818;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+
+  @media (max-width: 720px) {
+    font-size: 28px;
+  }
+}
+
+.priceCurrency {
+  font-size: 16px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.priceMeta {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ───────── Features ───────── */
+
+.featureList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  align-self: stretch;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.45;
+  text-align: left;
+
+  > .anticon {
+    color: $brand;
+    font-size: 16px;
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    margin-top: 3px;
+  }
+
+  > span {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+.featureHighlight {
+  font-weight: 700;
+  color: $brand-deep;
+
+  .anticon {
+    color: #d97706;
+  }
+}
+
+/* ───────── Actions ───────── */
+
+.detailsLink {
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 500;
+  color: $brand-deep;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-bottom-color: $brand-deep;
+  }
+}
+
+.subscribeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 18px;
+  background: #f3f5f7;
+  color: #181818;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  margin-top: auto;
+
+  .anticon {
+    font-size: 14px;
+  }
+
+  &:hover {
+    background: #e8efe9;
+    color: $brand-deep;
+  }
+}
+
+.subscribeBtnPrimary {
+  background: linear-gradient(135deg, $brand 0%, $brand-deep 100%);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
+
+  &:hover {
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(22, 163, 74, 0.4);
+  }
+}
+
+/* ───────── Note ───────── */
+
+.note {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.5;
+}
+
+/* ───────── Mobile ───────── */
+
+@media (max-width: 720px) {
+  .wrapper {
+    padding: 20px 0 48px;
+  }
+
+  .hero {
+    margin-bottom: 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    padding: 22px 18px 20px;
+  }
+
+  .ribbon {
+    top: -12px;
+    padding: 5px 14px;
+    font-size: 10px;
+  }
+}

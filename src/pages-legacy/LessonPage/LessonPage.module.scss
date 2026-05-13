@@ -1,0 +1,49 @@
+.wrapper {
+  padding: 24px 0 64px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #15803d;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-bottom: 18px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(22, 163, 74, 0.08);
+  transition: background 0.18s ease, transform 0.18s ease;
+  text-transform: capitalize;
+
+  &:hover {
+    background: rgba(22, 163, 74, 0.16);
+    transform: translateX(-2px);
+  }
+}
+
+.header {
+  margin-bottom: 22px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #181818;
+  text-transform: capitalize;
+
+  @media (max-width: 600px) {
+    font-size: 22px;
+  }
+}
