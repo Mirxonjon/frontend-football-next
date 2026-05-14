@@ -199,21 +199,27 @@ export function formatPrice(amount: number): string {
 
 export function durationLabel(
   days: number,
-  locale: "uz" | "ru"
+  locale: "uz" | "ru" | "en"
 ): string {
   if (days % 365 === 0) {
     const y = days / 365;
-    return locale === "ru"
-      ? `${y} ${y === 1 ? "год" : "год(а)"}`
-      : `${y} yil`;
+    if (locale === "ru") return `${y} ${y === 1 ? "год" : "год(а)"}`;
+    if (locale === "en") return `${y} ${y === 1 ? "year" : "years"}`;
+    return `${y} yil`;
   }
   if (days % 30 === 0) {
     const m = days / 30;
-    return locale === "ru" ? `${m} мес.` : `${m} oy`;
+    if (locale === "ru") return `${m} мес.`;
+    if (locale === "en") return `${m} ${m === 1 ? "month" : "months"}`;
+    return `${m} oy`;
   }
   if (days % 7 === 0) {
     const w = days / 7;
-    return locale === "ru" ? `${w} нед.` : `${w} hafta`;
+    if (locale === "ru") return `${w} нед.`;
+    if (locale === "en") return `${w} ${w === 1 ? "week" : "weeks"}`;
+    return `${w} hafta`;
   }
-  return locale === "ru" ? `${days} дн.` : `${days} kun`;
+  if (locale === "ru") return `${days} дн.`;
+  if (locale === "en") return `${days} ${days === 1 ? "day" : "days"}`;
+  return `${days} kun`;
 }

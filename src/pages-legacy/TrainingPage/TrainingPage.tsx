@@ -130,7 +130,7 @@ const TrainingPage = () => {
   // Fetch categories (paginated, server-side filters) when in categories mode.
   useEffect(() => {
     if (viewMode !== "categories") return;
-    dispatch(fetchTrainingCategories());
+    dispatch(fetchTrainingCategories(undefined));
   }, [
     dispatch,
     viewMode,
