@@ -3,6 +3,8 @@ node_modules/
 out/
 dist/
 .env*.local
+.env
+!.env.docker.example
 *.tsbuildinfo
 next-env.d.ts.bak
 .DS_Store

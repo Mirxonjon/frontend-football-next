@@ -21,7 +21,7 @@ const MySilder = () => {
 
   useEffect(() => {
     if (categories.length === 0) {
-      dispatch(fetchMasterclassCategories());
+      dispatch(fetchMasterclassCategories(undefined));
     }
   }, [dispatch, categories.length]);
 

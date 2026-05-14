@@ -163,7 +163,7 @@ const MasterclassSinglePage = () => {
 
   useEffect(() => {
     // Fetch sibling list once for the right sidebar
-    if (list.length === 0) dispatch(fetchMasterclasses());
+    if (list.length === 0) dispatch(fetchMasterclasses(undefined));
   }, [dispatch, list.length]);
 
   useEffect(() => {
