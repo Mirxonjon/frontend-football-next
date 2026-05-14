@@ -23,10 +23,10 @@ const Logo = (props) => (
         fontWeight: 700,
         lineHeight: 1.1,
         color: "#000",
-        maxWidth: 90,
+        maxWidth: 110,
       }}
     >
-      Murabbiylar markazi
+      Coaching Center
     </span>
   </Link>
 );
