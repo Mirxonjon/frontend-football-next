@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Slim, self-contained production server for Docker — copies only the
+  // files actually needed at runtime, so the final image stays small and
+  // SSR/ISR keep working (no static export).
+  output: "standalone",
   // Speed: silently rewrite `import { Modal } from "antd"` to direct
   // sub-module imports so the bundler ships only the AntD modules we use.
   // Same idea for ant-design icons.
@@ -29,6 +33,8 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { protocol: "https", hostname: "api.coachingzona.uz" },
+      { protocol: "https", hostname: "api.coaching-center.uz" },
+      { protocol: "https", hostname: "coaching-center.uz" },
       { protocol: "http", hostname: "localhost", port: "4021" },
       { protocol: "https", hostname: "img.youtube.com" },
       { protocol: "https", hostname: "i.ytimg.com" },
