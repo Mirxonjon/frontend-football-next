@@ -33,7 +33,8 @@ ENV NEXT_PUBLIC_APP_ORIGIN=$NEXT_PUBLIC_APP_ORIGIN \
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+# Make sure public/ exists so the runner stage can COPY it unconditionally.
+RUN mkdir -p public && npm run build
 
 # ─── 3. runner ──────────────────────────────────────────────────────────
 # Minimal production image — just node + the standalone output.
