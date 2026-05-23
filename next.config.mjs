@@ -31,6 +31,10 @@ const nextConfig = {
   // Allow Next/Image to optimise covers from the API host(s).
   images: {
     formats: ["image/avif", "image/webp"],
+    // Cache optimised images aggressively — addresses Lighthouse's
+    // "inefficient cache lifetime" finding (saves up to ~8 MB on repeat
+    // visits). The hash in the URL makes invalidation safe.
+    minimumCacheTTL: 60 * 60 * 24 * 365,
     remotePatterns: [
       { protocol: "https", hostname: "api.coachingzona.uz" },
       { protocol: "https", hostname: "api.coaching-center.uz" },
@@ -74,6 +78,38 @@ const nextConfig = {
           {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        // Optimised images served by Next's image pipeline — same long
+        // cache, addresses Lighthouse's 8 MiB cache-lifetime finding.
+        source: "/_next/image",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        // Favicons, app icons and the manifest — these rarely change and
+        // can sit in the browser cache for a year. The manifest itself is
+        // tiny; the icon files are the meaningful win.
+        source: "/(icon|apple-icon|icon-192|icon-512).png",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/manifest.webmanifest",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400",
           },
         ],
       },

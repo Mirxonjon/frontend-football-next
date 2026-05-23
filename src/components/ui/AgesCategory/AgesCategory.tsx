@@ -47,7 +47,14 @@ const AgesCategory = ({ ageCategories }: Props) => {
           }`}
         >
           {ac.iconUrl ? (
-            <img src={ac.iconUrl} alt={pickTitle(ac)} />
+            <img
+              src={ac.iconUrl}
+              alt={pickTitle(ac)}
+              width={24}
+              height={24}
+              loading="lazy"
+              decoding="async"
+            />
           ) : (
             <span className={s.range}>
               {ac.minAge}–{ac.maxAge}

@@ -83,6 +83,15 @@ const jsonLd = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="uz">
+      <head>
+        {/* Pre-warm the TCP/TLS handshake for the two hosts that block the
+            hero render: the API (covers, lesson data) and the GCS bucket
+            that serves the hero video. Saves ~100-300 ms on LCP. */}
+        <link rel="preconnect" href="https://api.coaching-center.uz" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://api.coaching-center.uz" />
+        <link rel="preconnect" href="https://storage.googleapis.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="https://storage.googleapis.com" />
+      </head>
       <body>
         <script
           type="application/ld+json"

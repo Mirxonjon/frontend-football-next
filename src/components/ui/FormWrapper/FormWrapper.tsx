@@ -25,7 +25,14 @@ const FormWrapper = ({ img, title, subTitle, children }: FormWrapperProps) => {
           </div>
         </div>
         <div className={s.img}>
-          <img src={imgSrc} alt="bg img" />
+          <img
+            src={imgSrc}
+            alt=""
+            width={800}
+            height={600}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
       <div className={s.footer}>© 2024 FutbolLab.</div>

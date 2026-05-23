@@ -436,6 +436,13 @@ const HomePageV2 = () => {
             <LazyHeroVideo
               className={s.heroVideo}
               src="https://storage.googleapis.com/telecom2003/video_for_site.mp4"
+              width={1280}
+              height={720}
+              ariaLabel={t(
+                "Futbol mashg'uloti namoyishi",
+                "Демонстрация футбольной тренировки",
+                "Football training demo"
+              )}
             />
             <div className={s.heroFloatCard}>
               <ThunderboltFilled />

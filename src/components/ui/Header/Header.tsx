@@ -32,7 +32,7 @@ function Header() {
   const accountWrapRef = useRef<HTMLDivElement | null>(null);
   const loyaut = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
-  const openIcon = useRef<HTMLDivElement | null>(null);
+  const openIcon = useRef<HTMLButtonElement | null>(null);
   const langChange = useLocalizedText();
   const navigate = useNavigate();
   const t = useT();
@@ -177,7 +177,14 @@ function Header() {
                   <div className="account_menu_head">
                     <div className="account_menu_avatar">
                       {avatarUrl && !avatarErrored ? (
-                        <img src={avatarUrl} alt="avatar" />
+                        <img
+                          src={avatarUrl}
+                          alt="avatar"
+                          width={40}
+                          height={40}
+                          loading="lazy"
+                          decoding="async"
+                        />
                       ) : (
                         <UserOutlined />
                       )}
@@ -246,17 +253,24 @@ function Header() {
               )}
             </div>
           )}
-          <div
+          <button
             ref={openIcon}
+            type="button"
             className="hamburger_menu"
             onClick={handleToggleMenu}
+            aria-label={t("Menyuni ochish", "Открыть меню", "Open menu")}
           >
             <MenuFoldOutlined />
-          </div>
+          </button>
           <div className="hemburger_layout">
-            <div className="hamburger_menu_close" onClick={handleToggleMenu}>
+            <button
+              type="button"
+              className="hamburger_menu_close"
+              onClick={handleToggleMenu}
+              aria-label={t("Menyuni yopish", "Закрыть меню", "Close menu")}
+            >
               <MenuUnfoldOutlined />
-            </div>
+            </button>
             <div className="hamburger_list">
               {menu.length > 0 &&
                 menu.map((el: any) =>

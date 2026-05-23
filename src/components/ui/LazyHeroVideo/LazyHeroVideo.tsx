@@ -5,6 +5,12 @@ import { useEffect, useRef, useState } from "react";
 type Props = {
   src: string;
   className?: string;
+  // Explicit dimensions stop the layout from shifting when the video pops
+  // in and let the browser reserve the right aspect-ratio box up-front.
+  // Defaults match the homepage hero crop.
+  width?: number;
+  height?: number;
+  ariaLabel?: string;
 };
 
 /**
@@ -18,7 +24,13 @@ type Props = {
  * - We honour `prefers-reduced-motion` — never autoplay if the user opted
  *   out of motion.
  */
-const LazyHeroVideo = ({ src, className }: Props) => {
+const LazyHeroVideo = ({
+  src,
+  className,
+  width = 1280,
+  height = 720,
+  ariaLabel,
+}: Props) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
 
@@ -80,9 +92,12 @@ const LazyHeroVideo = ({ src, className }: Props) => {
     <video
       ref={videoRef}
       className={className}
+      width={width}
+      height={height}
       muted
       loop
       playsInline
+      aria-label={ariaLabel}
       // Start with `none` — the IntersectionObserver flips it to "metadata"
       // when the video becomes visible.
       preload={shouldLoad ? "metadata" : "none"}

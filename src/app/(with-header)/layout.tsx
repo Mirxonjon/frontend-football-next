@@ -9,7 +9,9 @@ export default function WithHeaderLayout({ children }: { children: ReactNode }) 
       <Suspense fallback={null}>
         <Header />
       </Suspense>
-      {children}
+      {/* <main> landmark — required for accessibility (Lighthouse "no main landmark")
+          and lets screen readers skip past the header to the page content. */}
+      <main>{children}</main>
     </>
   );
 }
