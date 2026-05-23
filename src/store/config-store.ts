@@ -3,14 +3,9 @@ import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux
 import { langReducers } from "./slice/lang";
 import { treningCategoryReducers } from "./trening/treningCategoriesSlice";
 import { treningSubCategoryReducers } from "./trening/treningSubCatSlice";
-import { competitionCategoryReducers } from "./competion/competitionCatSlice";
 import { booksReducers } from "./books/booksSlice";
 import { randomBooksReducers } from "./books/randomBook";
-import { copiesReducers } from "./copy/copiesSlice";
-import { randomCopiesReducers } from "./copy/randomCopy";
 import { masterclassCategoryReducers } from "./masterclass/masterclassSlice";
-import { individualtreningCategoryReducers } from "./individualTraining/IndividualTreningCategoriesSlice";
-import { IndividualTreningVideoReducers } from "./individualTraining/IndividualTreningVideo";
 import { lessonsReducer } from "./lessons/lessonsSlice";
 import { bookCategoriesReducer } from "./bookCategories/bookCategoriesSlice";
 import { cardsReducer } from "./cards/cardsSlice";
@@ -25,14 +20,9 @@ export const makeStore = () =>
     reducer: {
       lang: langReducers,
       treningCategory: treningCategoryReducers,
-      individualTreningCategory: individualtreningCategoryReducers,
-      IndividualTreningVideo: IndividualTreningVideoReducers,
-      competition: competitionCategoryReducers,
       treningSubCategory: treningSubCategoryReducers,
       books: booksReducers,
-      copies: copiesReducers,
       randomBooks: randomBooksReducers,
-      randomCopies: randomCopiesReducers,
       masterclass: masterclassCategoryReducers,
       lessons: lessonsReducer,
       bookCategories: bookCategoriesReducer,

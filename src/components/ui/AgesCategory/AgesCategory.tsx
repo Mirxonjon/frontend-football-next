@@ -56,19 +56,6 @@ const AgesCategory = ({ ageCategories }: Props) => {
           <span>{pickTitle(ac)}</span>
         </button>
       ))}
-
-      <Link to="/individualtraining" className={s.individualLink}>
-        <div className={s.chip}>
-          <UserOutlined />
-          <span>
-            {lang === "ru"
-              ? "Индивидуальное"
-              : lang === "en"
-                ? "Individual"
-                : "Individual"}
-          </span>
-        </div>
-      </Link>
     </div>
   );
 };

@@ -17,8 +17,6 @@ const STATIC_ROUTES: Array<{
   { path: "/books", changeFrequency: "weekly", priority: 0.8 },
   { path: "/masterclass", changeFrequency: "weekly", priority: 0.9 },
   { path: "/plans", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/individualtraining", changeFrequency: "weekly", priority: 0.7 },
-  { path: "/contests", changeFrequency: "weekly", priority: 0.6 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
