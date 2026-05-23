@@ -27,14 +27,17 @@ export const metadata: Metadata = {
     "coaching center",
     "futbol taktika",
   ],
-  alternates: {
-    canonical: "/",
-  },
+  // No site-wide canonical here — that would force every page to declare
+  // the homepage as its own canonical, which makes Google collapse them
+  // and rank /plans, /masterclass, etc. as the homepage. Each route
+  // page.tsx should set its own canonical if it needs one; otherwise
+  // Next.js leaves it absent and Google uses the request URL.
   openGraph: {
     title: "Coaching Center — Futbol murabbiylari platformasi",
     description:
       "Strategiyalar, taktika, masterclasslar va amaliy mashg'ulotlar.",
-    url: SITE_URL,
+    // Intentionally NO `url` here — same canonical reasoning as above. Per-page
+    // metadata can override it; otherwise crawlers use the request URL.
     siteName: "Coaching Center",
     type: "website",
     locale: "uz_UZ",
