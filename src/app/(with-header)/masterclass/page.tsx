@@ -1,7 +1,7 @@
 import MasterclassPage from "@/pages-legacy/MasterclassPage/MasterclassPage";
 
 export const metadata = {
-  title: "Masterclass — Coaching Zona",
+  title: "Masterclass",
   description: "Professional murabbiylardan masterklasslar.",
 };
 

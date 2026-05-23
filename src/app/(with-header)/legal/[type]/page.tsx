@@ -1,7 +1,7 @@
 import LegalDocumentPage from "@/pages-legacy/LegalDocumentPage/LegalDocumentPage";
 
 export const metadata = {
-  title: "Hujjat — Coaching Zona",
+  title: "Hujjat",
 };
 
 export default function Page() {

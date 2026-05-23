@@ -1,7 +1,7 @@
 import LoginPage from "@/pages-legacy/LoginPage/LoginPage";
 
 export const metadata = {
-  title: "Kirish — Coaching Zona",
+  title: "Kirish",
 };
 
 export default function Page() {

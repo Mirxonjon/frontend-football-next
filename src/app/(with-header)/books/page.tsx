@@ -1,7 +1,7 @@
 import BooksPage from "@/pages-legacy/BooksPage/BooksPage";
 
 export const metadata = {
-  title: "Kitoblar — Coaching Zona",
+  title: "Kitoblar",
   description: "Futbol murabbiylari uchun kitoblar to'plami.",
 };
 

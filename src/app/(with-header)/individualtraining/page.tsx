@@ -1,7 +1,7 @@
 import IndividualTrainingPage from "@/pages-legacy/IndividualTrainingPage/IndividualTrainingPage";
 
 export const metadata = {
-  title: "Individual mashg'ulotlar — Coaching Zona",
+  title: "Individual mashg'ulotlar",
   description: "Yakkama-yakka va kichik guruh mashg'ulotlari.",
 };
 
