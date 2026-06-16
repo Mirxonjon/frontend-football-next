@@ -8,6 +8,7 @@ import {
   ArrowLeftOutlined,
   BookOutlined,
   DownloadOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 
 import Container from "../../components/ui/Container/Container";
@@ -137,17 +138,26 @@ const MyBooksPage = () => {
                         </span>
                       )}
                     </div>
-                    <button
-                      type="button"
-                      className={s.download}
-                      disabled={downloadingId === ub.bookId}
-                      onClick={() => handleDownload(ub.bookId)}
-                    >
-                      <DownloadOutlined />
-                      {downloadingId === ub.bookId
-                        ? "..."
-                        : t("Yuklab olish", "Скачать", "Download")}
-                    </button>
+                    <div className={s.cardActions}>
+                      <Link
+                        to={`/me/books/${ub.bookId}/ai-chat`}
+                        className={s.aiChat}
+                      >
+                        <MessageOutlined />
+                        {t("AI chat", "AI чат", "AI chat")}
+                      </Link>
+                      <button
+                        type="button"
+                        className={s.download}
+                        disabled={downloadingId === ub.bookId}
+                        onClick={() => handleDownload(ub.bookId)}
+                      >
+                        <DownloadOutlined />
+                        {downloadingId === ub.bookId
+                          ? "..."
+                          : t("Yuklab olish", "Скачать", "Download")}
+                      </button>
+                    </div>
                   </div>
                 </div>
               );

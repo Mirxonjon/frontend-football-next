@@ -17,6 +17,7 @@ import {
   ThunderboltFilled,
   FileTextOutlined,
   AimOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 
 import Container from "../../components/ui/Container/Container";
@@ -325,7 +326,19 @@ const BookSinglePage = () => {
 
             <div className={s.actions}>
               {ownedBookIds[book.id] ? (
-                <button
+                <>
+                  <Link
+                    to={`/me/books/${book.id}/ai-chat`}
+                    className={`${s.buyBtn} ${s.aiChatBtn}`}
+                  >
+                    <MessageOutlined />
+                    {t(
+                      "AI bilan suhbat",
+                      "Чат с AI",
+                      "Chat with AI"
+                    )}
+                  </Link>
+                  <button
                   type="button"
                   className={s.buyBtn}
                   disabled={downloading}
@@ -348,6 +361,7 @@ const BookSinglePage = () => {
                     ? t("Yuklanmoqda...", "Загрузка...", "Loading…")
                     : t("Yuklab olish", "Скачать", "Download")}
                 </button>
+                </>
               ) : (
                 <button
                   type="button"

@@ -195,15 +195,22 @@ const VideoPlayer = ({
   const handleError = () => {
     const v = videoRef.current;
     const code = v?.error?.code;
+    // If we still have an auto-refresh budget, kick it off and stay in
+    // "loading" — don't flash a scary error message at the user. The
+    // expired-signed-URL case (403) is silently recovered: parent will
+    // refetch the lesson and a fresh signed URL flows back in.
+    if (!autoRetriedRef.current && onUrlExpired) {
+      autoRetriedRef.current = true;
+      setError(null);
+      setLoading(true);
+      setWaiting(false);
+      onUrlExpired();
+      return;
+    }
+    // No more retries — show the user something real.
     setError(code ? `Video yuklanmadi (xato ${code})` : "Video yuklanmadi");
     setLoading(false);
     setWaiting(false);
-    // Auto-refresh signed URL ONCE per src — this covers expired-URL case (403).
-    // Subsequent errors on the same refreshed URL stop here so we don't loop.
-    if (!autoRetriedRef.current && onUrlExpired) {
-      autoRetriedRef.current = true;
-      onUrlExpired();
-    }
   };
 
   // Control actions

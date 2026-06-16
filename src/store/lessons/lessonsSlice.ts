@@ -267,11 +267,19 @@ const slice = createSlice({
         state.listLoading = false;
         state.listError = action.payload || "Error";
       })
-      .addCase(fetchLessonById.pending, (state) => {
+      .addCase(fetchLessonById.pending, (state, action) => {
         state.currentLoading = true;
         state.currentError = "";
-        // Keep `current` in place during refetch so embedded VideoPlayer
-        // doesn't unmount and reset its retry guard, causing an infinite loop.
+        // When SWITCHING to a different lesson, clear `current` so the
+        // page doesn't briefly render the previous lesson's blocks — that
+        // includes signed video URLs which expire after 2h and produce
+        // 403s the moment the user hits play. For a SAME-id refetch we
+        // keep `current` so the embedded VideoPlayer doesn't unmount and
+        // lose its retry guard, which would loop forever on broken files.
+        const incomingId = String(action.meta.arg);
+        if (state.current && String(state.current.id) !== incomingId) {
+          state.current = null;
+        }
       })
       .addCase(fetchLessonById.fulfilled, (state, action) => {
         state.currentLoading = false;

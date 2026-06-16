@@ -146,8 +146,38 @@ $brand-deep: #15803d;
   margin: 24px 0 8px;
 }
 
-.download {
+// Two side-by-side actions per card: AI chat (purple) + Download (green).
+// Wrap so they wrap nicely on very narrow phones instead of overflowing.
+.cardActions {
   margin-top: auto;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.aiChat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: inherit;
+  transition: all 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4);
+  }
+}
+
+.download {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -161,7 +191,6 @@ $brand-deep: #15803d;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
-  align-self: flex-start;
   transition: all 0.15s ease;
 
   &:hover:not(:disabled) {

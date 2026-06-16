@@ -436,6 +436,18 @@ $brand-deep: #15803d;
   }
 }
 
+// Headline action for the new AI chat feature — purple gradient sets it
+// apart from the green "Download" button next to it so the AI feature
+// reads as the marquee CTA, not an afterthought.
+.aiChatBtn {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  box-shadow: 0 6px 14px rgba(79, 70, 229, 0.32);
+
+  &:hover {
+    box-shadow: 0 10px 22px rgba(79, 70, 229, 0.42);
+  }
+}
+
 .previewBtn {
   background: rgba(22, 163, 74, 0.08);
   color: $brand-deep;
