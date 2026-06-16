@@ -38,18 +38,90 @@
   height: 100%;
 }
 
-// LEFT column: the reader. Hidden on phones — bottom sheet covers that
-// use case there.
+// LEFT column on desktop, full-screen tab panel on mobile. The tabbed
+// mobile behaviour is wired through the parent's .mobileTabChat /
+// .mobileTabSources class — see the rules below the responsive
+// breakpoint.
 .readerCol {
-  display: none;
+  display: flex;
   flex-direction: column;
   min-width: 0;
   min-height: 0;
   background: #f8fafc;
   border-right: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+// ─── Mobile tab bar (hidden on desktop) ────────────────────────────────
+// NotebookLM-style segmented control pinned to the top: [Manbalar][Suhbat]
+// On phones it controls which column the user sees. On desktop the grid
+// already lays both columns side-by-side, so the tabs are hidden.
+.mobileTabs {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  flex: 0 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 5;
 
   @media (min-width: 980px) {
+    display: none;
+  }
+}
+
+.mobileTab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 12px;
+  background: transparent;
+  color: #64748b;
+  border: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover:not(.mobileTabActive) {
+    color: #0f172a;
+    background: #f8fafc;
+  }
+}
+
+.mobileTabActive {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+}
+
+// ─── Mobile: show one column at a time ────────────────────────────────
+// Below 980 px the shell rearranges to a vertical layout: top tabs,
+// then ONE of the two columns full-width. .mobileTabChat / Sources
+// classes on the parent decide which one is mounted-visible.
+@media (max-width: 979px) {
+  .shellSplit {
     display: flex;
+    flex-direction: column;
+  }
+
+  .mobileTabChat {
+    .readerCol { display: none; }
+    .chatCol { display: flex; }
+  }
+
+  .mobileTabSources {
+    .chatCol { display: none; }
+    .readerCol {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
   }
 }
 

@@ -16,7 +16,6 @@ import { Spin, message as antdMessage } from "antd";
 import {
   ArrowLeftOutlined,
   BookOutlined,
-  CloseOutlined,
   DeleteOutlined,
   FileTextOutlined,
   MessageOutlined,
@@ -114,10 +113,12 @@ const BookAiChatPage = () => {
   const [langFilter, setLangFilter] = useState<LangFilter>("all");
   const [highlightKey, setHighlightKey] = useState<number | null>(null);
 
-  // Mobile (< 980 px) keeps the bottom-sheet preview from before — a
-  // full split-screen reader on a phone is too cramped.
-  const [sheetOpen, setSheetOpen] = useState(false);
-  const [sheetSource, setSheetSource] = useState<SourceCitation | null>(null);
+  // Mobile (< 980 px) layout: NotebookLM-style tabs at the top swap
+  // between the chat and the reader. Default tab is `chat`; tapping a
+  // citation auto-switches to `sources` and scrolls to the chunk, same
+  // way it works on desktop but with the panel taking the full screen
+  // instead of sitting alongside the chat.
+  const [mobileTab, setMobileTab] = useState<"chat" | "sources">("chat");
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -423,15 +424,16 @@ const BookAiChatPage = () => {
   // books: ask in UZ → reader shows the UZ pass; ask in RU → reader
   // shows the RU pass; user always reads the source in one language.
   const onSourceClick = async (citation: SourceCitation) => {
-    if (typeof window !== "undefined" && window.innerWidth < 980) {
-      setSheetSource(citation);
-      setSheetOpen(true);
-      return;
-    }
     // Lock the reader to the citation's language. Books embedded in
     // two languages produce two parallel chunk streams; surfacing the
     // wrong one defeats the deep-link.
     setLangFilter(citation.language);
+    // Mobile: bring the Sources tab to the front so the user sees the
+    // book panel they just deep-linked into. The same scroll +
+    // highlight code below works for both layouts.
+    if (typeof window !== "undefined" && window.innerWidth < 980) {
+      setMobileTab("sources");
+    }
     await ensureChunkLoaded(citation.chunkIndex);
     setHighlightKey(citation.chunkIndex);
     if (highlightTimerRef.current !== null) {
@@ -491,11 +493,53 @@ const BookAiChatPage = () => {
   const splitOn = chunks.length > 0 || chunksLoading;
   const showLangFilter = langCounts.uz > 0 && langCounts.ru > 0;
 
+  // CSS class that controls which mobile tab is "in front". When the
+  // shell is in split mode and we're below 980 px, only one column is
+  // visible at a time; on desktop both classes are no-ops because the
+  // grid lays them out side-by-side.
+  const mobileTabClass = splitOn
+    ? mobileTab === "chat"
+      ? s.mobileTabChat
+      : s.mobileTabSources
+    : "";
+
   return (
-    <div className={`${s.shell} ${splitOn ? s.shellSplit : ""}`}>
+    <div
+      className={`${s.shell} ${splitOn ? s.shellSplit : ""} ${mobileTabClass}`}
+    >
       {contextHolder}
 
-      {/* ─── Reader column (LEFT on desktop, hidden on mobile) ─── */}
+      {/* ─── Mobile tab bar (hidden ≥ 980 px) ────────────────── */}
+      {splitOn && (
+        <nav className={s.mobileTabs} role="tablist" aria-label="panel switcher">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mobileTab === "sources"}
+            className={`${s.mobileTab} ${
+              mobileTab === "sources" ? s.mobileTabActive : ""
+            }`}
+            onClick={() => setMobileTab("sources")}
+          >
+            <BookOutlined />
+            {t("Manbalar", "Источники", "Sources")}
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mobileTab === "chat"}
+            className={`${s.mobileTab} ${
+              mobileTab === "chat" ? s.mobileTabActive : ""
+            }`}
+            onClick={() => setMobileTab("chat")}
+          >
+            <MessageOutlined />
+            {t("Suhbat", "Чат", "Chat")}
+          </button>
+        </nav>
+      )}
+
+      {/* ─── Reader column (LEFT on desktop, tab=sources on mobile) ─── */}
       {splitOn && (
         <aside className={s.readerCol} aria-label="book reader">
           <div className={s.readerHeader}>
@@ -944,49 +988,6 @@ const BookAiChatPage = () => {
         </div>
       </section>
 
-      {/* ─── Mobile bottom sheet (single citation preview) ────── */}
-      {sheetOpen && sheetSource && (
-        <div
-          className={s.sheetBackdrop}
-          onClick={() => setSheetOpen(false)}
-        >
-          <div className={s.sheet} onClick={(e) => e.stopPropagation()}>
-            <div className={s.sheetHandle} />
-            <div className={s.sheetHeader}>
-              <span className={s.citeNum}>{sheetSource.n}</span>
-              <span>
-                {t(
-                  `Parcha #${sheetSource.chunkIndex}`,
-                  `Фрагмент #${sheetSource.chunkIndex}`,
-                  `Chunk #${sheetSource.chunkIndex}`
-                )}
-                <span className={s.langBadge}>
-                  {sheetSource.language.toUpperCase()}
-                </span>
-              </span>
-              <button
-                type="button"
-                className={s.headerBtn}
-                onClick={() => setSheetOpen(false)}
-                aria-label={t("Yopish", "Закрыть", "Close")}
-              >
-                <CloseOutlined />
-              </button>
-            </div>
-            <div className={s.sheetSnippet}>{sheetSource.preview}</div>
-            {bookFileUrl && (
-              <a
-                href={bookFileUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={s.sheetOpenBtn}
-              >
-                {t("Kitobni ochish", "Открыть книгу", "Open book")}
-              </a>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
