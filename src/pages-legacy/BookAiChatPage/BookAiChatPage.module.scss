@@ -57,9 +57,11 @@
 // already lays both columns side-by-side, so the tabs are hidden.
 .mobileTabs {
   display: flex;
-  gap: 6px;
-  padding: 8px;
-  background: #ffffff;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(241, 245, 249, 0.7);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
   flex: 0 0 auto;
   position: sticky;
@@ -77,27 +79,33 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 9px 12px;
+  padding: 7px 10px;
   background: transparent;
-  color: #64748b;
+  color: #475569;
   border: none;
-  border-radius: 10px;
-  font-size: 13.5px;
+  border-radius: 9px;
+  font-size: 13px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.1s ease;
 
   &:hover:not(.mobileTabActive) {
     color: #0f172a;
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  &:active {
+    transform: scale(0.97);
   }
 }
 
 .mobileTabActive {
-  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+  background: #ffffff;
+  color: #6d28d9;
+  box-shadow:
+    0 1px 3px rgba(15, 23, 42, 0.08),
+    0 1px 2px rgba(124, 58, 237, 0.18);
 }
 
 // ─── Mobile: show one column at a time ────────────────────────────────
@@ -128,11 +136,16 @@
 .readerHeader {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background: #ffffff;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
   flex: 0 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
 // Independent scroll for the left column.
@@ -416,40 +429,54 @@
 }
 
 // ─── Top bar ───────────────────────────────────────────────────────────
+// Slim, glassy header. NotebookLM-style — the book title is the hero,
+// no "AI assistant" eyebrow because the mobile tab bar above already
+// tells the user where they are. Sticky + backdrop blur so it stays
+// present while the thread scrolls underneath.
 .header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background: #ffffff;
+  gap: 6px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  flex: 0 0 auto;
 }
 
 .headerActions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   flex: 0 0 auto;
 }
 
 .headerBtn {
   flex: 0 0 auto;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   color: #475569;
   border: none;
-  border-radius: 10px;
+  border-radius: 9px;
   cursor: pointer;
-  font-size: 18px;
-  transition: background 0.15s ease, color 0.15s ease;
+  font-size: 16px;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
 
   &:hover:not(:disabled) {
-    background: #f1f5f9;
-    color: #0f172a;
+    background: rgba(124, 58, 237, 0.08);
+    color: #5b21b6;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.94);
   }
 
   &:disabled {
@@ -469,34 +496,53 @@
 }
 
 .headerBtnPlaceholder {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   flex: 0 0 auto;
 }
 
+// Single-line title region between the back button and the actions:
+//   AI suhbati · pep kitobi
+// The label ("AI suhbati") is muted, the book name is bold so it reads
+// as the primary identifier without taking a whole second row.
 .headerTitle {
   flex: 1;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 0 4px;
+  font-size: 13.5px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.headerEyebrow {
-  font-size: 11px;
-  color: #7c3aed;
+.headerLabel {
+  flex: 0 0 auto;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.headerSep {
+  flex: 0 0 auto;
+  color: #cbd5e1;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .headerBook {
-  font-size: 15px;
+  flex: 1;
+  min-width: 0;
   font-weight: 700;
-  color: #0f172a;
+  color: #0b1220;
+  letter-spacing: -0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+// Legacy compile-safety: keep the spacer class around in case any
+// stale snapshot still references it. No-op visually.
+.headerSpacer {
+  flex: 1;
 }
 
 // ─── Thread ────────────────────────────────────────────────────────────
@@ -914,9 +960,9 @@
 }
 
 // ─── Citation chips inline in AI text ──────────────────────────────────
-// The `[1]` markers in the answer get replaced with one of these — a
-// small purple chip that, when clicked, jumps the side viewer to the
-// source page. Kept tight so it doesn't disrupt the reading rhythm.
+// Soft rounded purple pill — the original design users preferred. Bottom
+// sources row is gone now; these inline markers are the ONLY citation
+// affordance, so they need to read as obviously clickable.
 .cite {
   display: inline-flex;
   align-items: center;
@@ -1104,9 +1150,209 @@
 
 // "All sources" pill — first in the citeList row, opens panel with all
 // citations and no specific highlight.
-// Small inline notice under an AI message when every cited source comes
-// back in a different language than the user asked in. Backend has
-// already translated the answer; this just explains the seam.
+// ─── Compact sources row under an AI message ───────────────────────────
+// One line: a label, numbered pills, an optional language hint chip,
+// and a ⋯ button that toggles full previews. Replaces the noisy
+// preview-text-per-row layout — citations are click targets, not a
+// content section.
+.sourcesRow {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(124, 58, 237, 0.16);
+}
+
+.sourcesBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sourcesLabel {
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sourcesNums {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+// Squared-off citation tag — Notion/Linear style. Small rounded
+// rectangle, tight padding, subtle border, light hairline divider on
+// the left side (academic-paper feel without the full `[1]` brackets).
+.sourcePill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  min-width: 26px;
+  padding: 0 8px;
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease, transform 0.1s ease;
+
+  // Thin purple bar on the left edge as a tiny brand cue.
+  &::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: #a78bfa;
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+
+  &:hover {
+    background: #faf5ff;
+    color: #5b21b6;
+    border-color: rgba(124, 58, 237, 0.35);
+
+    &::before { opacity: 1; }
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+}
+
+// Tiny inline pill: "🌐 RU" — replaces the old multi-line mismatch
+// banner. Hover/long-press shows the full hint via title attribute.
+.langHint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  background: rgba(59, 130, 246, 0.10);
+  color: #1d4ed8;
+  border: 1px solid rgba(59, 130, 246, 0.22);
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sourcesMore {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  color: #64748b;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    background: rgba(124, 58, 237, 0.08);
+    color: #5b21b6;
+    border-color: rgba(124, 58, 237, 0.3);
+  }
+}
+
+.sourcesMoreActive {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  color: #ffffff;
+  border-color: transparent;
+
+  &:hover {
+    background: linear-gradient(135deg, #6d28d9 0%, #4338ca 100%);
+    color: #ffffff;
+  }
+}
+
+.sourcesDetails {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sourceDetailRow {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 10px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: #c4b5fd;
+    background: #faf5ff;
+  }
+}
+
+.sourceDetailNum {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+.sourceDetailText {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #1e293b;
+}
+
+.sourceDetailLang {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  background: rgba(124, 58, 237, 0.12);
+  color: #6d28d9;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+// Legacy compile-safety — old class used until compact pills replaced it.
 .langMismatch {
   display: flex;
   align-items: flex-start;

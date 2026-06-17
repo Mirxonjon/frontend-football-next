@@ -543,6 +543,14 @@ const BookAiChatPage = () => {
       {splitOn && (
         <aside className={s.readerCol} aria-label="book reader">
           <div className={s.readerHeader}>
+            <button
+              type="button"
+              className={s.headerBtn}
+              onClick={() => router.back()}
+              aria-label={t("Orqaga", "Назад", "Back")}
+            >
+              <ArrowLeftOutlined />
+            </button>
             <div className={s.viewerTitle}>
               <BookOutlined />
               <span>
@@ -724,11 +732,14 @@ const BookAiChatPage = () => {
           >
             <ArrowLeftOutlined />
           </button>
-          <div className={s.headerTitle}>
-            <span className={s.headerEyebrow}>
-              {t("AI yordamchi", "AI помощник", "AI assistant")}
+          <div className={s.headerTitle} title={bookTitle}>
+            <span className={s.headerLabel}>
+              {t("AI suhbati", "AI чат", "AI chat")}
             </span>
-            <span className={s.headerBook} title={bookTitle}>
+            <span className={s.headerSep} aria-hidden="true">
+              ·
+            </span>
+            <span className={s.headerBook}>
               {bookTitle || t("Kitob", "Книга", "Book")}
             </span>
           </div>
@@ -863,55 +874,9 @@ const BookAiChatPage = () => {
                               {linked}
                             </ReactMarkdown>
                           </div>
-                          {/* Language mismatch banner: shown when ALL the
-                              cited sources are in a different language
-                              than the user's question. Backend already
-                              auto-translates the answer to the question
-                              language; this just sets expectations about
-                              where the snippets come from. */}
-                          {(() => {
-                            if (sources.length === 0) return null;
-                            const sourceLangs = new Set(
-                              sources.map((sx) => sx.language)
-                            );
-                            const qLang = m.language;
-                            if (!qLang) return null;
-                            if (sourceLangs.has(qLang)) return null;
-                            const otherLangs = Array.from(sourceLangs)
-                              .map((l) => l.toUpperCase())
-                              .join("/");
-                            return (
-                              <div className={s.langMismatch} role="note">
-                                <span aria-hidden="true">ℹ️</span>
-                                <span>
-                                  {t(
-                                    `Manbalar ${otherLangs} tilida. Javob siz uchun tarjima qilingan.`,
-                                    `Источники на ${otherLangs}. Ответ переведён для вас.`,
-                                    `Sources are in ${otherLangs}. The answer was translated for you.`
-                                  )}
-                                </span>
-                              </div>
-                            );
-                          })()}
-                          {sources.length > 0 && (
-                            <div className={s.citeList}>
-                              {sources.slice(0, 6).map((c) => (
-                                <button
-                                  key={c.n}
-                                  type="button"
-                                  className={s.citeChip}
-                                  onClick={() => onSourceClick(c)}
-                                  title={c.preview.slice(0, 220)}
-                                >
-                                  <span className={s.citeNum}>{c.n}</span>
-                                  <span className={s.citePreview}>
-                                    {c.preview.slice(0, 70)}
-                                    {c.preview.length > 70 ? "…" : ""}
-                                  </span>
-                                </button>
-                              ))}
-                            </div>
-                          )}
+                          {/* No bottom sources row — the inline [N]
+                              markers in the answer text are the only
+                              affordance. Cleaner, less visual repeat. */}
                         </div>
                       </li>
                     );
