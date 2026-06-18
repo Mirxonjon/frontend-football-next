@@ -333,9 +333,9 @@ const BookSinglePage = () => {
                   >
                     <MessageOutlined />
                     {t(
-                      "AI bilan suhbat",
-                      "Чат с AI",
-                      "Chat with AI"
+                      "AI murabbiy bilan suhbat",
+                      "Чат с AI тренером",
+                      "Chat with AI coach"
                     )}
                   </Link>
                   <button

@@ -20,6 +20,7 @@ import {
   FileTextOutlined,
   MessageOutlined,
   SendOutlined,
+  ThunderboltFilled,
 } from "@ant-design/icons";
 
 import { bookChatApi } from "../../api/bookChat";
@@ -129,6 +130,16 @@ const BookAiChatPage = () => {
   // Guards against parallel page loads (mount, scroll, citation jump
   // can all fire at once).
   const chunksInFlightRef = useRef<boolean>(false);
+  // Abort controller for the in-flight SSE stream. Lets a Stop button
+  // cut a reply mid-flight without leaving the assistant bubble stuck.
+  const streamAbortRef = useRef<AbortController | null>(null);
+
+  // Abort any active stream when the user navigates away.
+  useEffect(() => {
+    return () => {
+      streamAbortRef.current?.abort();
+    };
+  }, []);
 
   // Initial load — fetch book metadata + chat history + first page of
   // reader chunks in parallel. The persisted history already carries
@@ -221,6 +232,9 @@ const BookAiChatPage = () => {
     const text = input.trim();
     if (!text || sending) return;
 
+    // Optimistic user bubble + an empty assistant placeholder that the
+    // SSE stream will fill in. Splitting the temp ids by 1 keeps React
+    // keys stable while the stream runs.
     const tempId = Date.now();
     const userMsg: AiBookMessage = {
       id: tempId,
@@ -232,29 +246,99 @@ const BookAiChatPage = () => {
       tokensOut: null,
       createdAt: new Date().toISOString(),
     };
-    setMessages((m) => [...m, userMsg]);
+    const aiTempId = tempId + 1;
+    const aiPlaceholder: AiBookMessage = {
+      id: aiTempId,
+      chatId: 0,
+      role: "assistant",
+      language: null,
+      content: "",
+      tokensIn: null,
+      tokensOut: null,
+      createdAt: new Date().toISOString(),
+      sources: [],
+      streaming: true,
+    };
+    setMessages((m) => [...m, userMsg, aiPlaceholder]);
     setInput("");
     resetTextareaHeight();
     setSending(true);
 
+    // Reuse a helper for the merge so token + sources updates don't have
+    // to know about array layout.
+    const patchAi = (patch: Partial<AiBookMessage>) =>
+      setMessages((m) =>
+        m.map((x) => (x.id === aiTempId ? { ...x, ...patch } : x))
+      );
+    const appendContent = (delta: string) =>
+      setMessages((m) =>
+        m.map((x) =>
+          x.id === aiTempId ? { ...x, content: x.content + delta } : x
+        )
+      );
+
+    const ctrl = new AbortController();
+    streamAbortRef.current = ctrl;
+
+    let errored: { code: string; message: string } | null = null;
+
     try {
-      const res = await bookChatApi.sendMessage(bookId, text);
-      const sources = normaliseSources(res.sources);
-      const aiMsg: AiBookMessage = {
-        id: tempId + 1,
-        chatId: res.chatId,
-        role: "assistant",
-        language: res.language,
-        content: res.answer,
-        tokensIn: sources.length,
-        tokensOut: null,
-        createdAt: new Date().toISOString(),
-        sources,
-      };
-      setMessages((m) => [...m, aiMsg]);
-    } catch (err: any) {
-      const status = err?.response?.status;
-      if (status === 403) {
+      await bookChatApi.sendMessageStream(
+        bookId,
+        text,
+        {
+          onMeta: (meta) => {
+            patchAi({ chatId: meta.chatId, language: meta.language });
+          },
+          onToken: (chunk) => {
+            appendContent(chunk);
+          },
+          onSources: (sources) => {
+            patchAi({ sources, tokensIn: sources.length });
+          },
+          onDone: (info) => {
+            patchAi({
+              streaming: false,
+              tokensOut: info.tokensOut ?? null,
+            });
+            // Stream finished but nothing arrived — surface this as an
+            // error so the bubble can roll back instead of dangling
+            // empty. Common when the backend stream endpoint returns
+            // 200 + no events (deploy mid-flight, model rate-limited).
+            setMessages((m) => {
+              const placeholder = m.find((x) => x.id === aiTempId);
+              if (placeholder && !placeholder.content) {
+                errored = {
+                  code: "empty",
+                  message:
+                    t(
+                      "AI javob bermadi. Qaytadan urinib ko'ring.",
+                      "AI не дал ответа. Попробуйте ещё раз.",
+                      "AI gave no response. Try again."
+                    ) || "Empty response",
+                };
+              }
+              return m;
+            });
+          },
+          onError: (err) => {
+            errored = err;
+          },
+        },
+        ctrl.signal
+      );
+    } finally {
+      if (streamAbortRef.current === ctrl) {
+        streamAbortRef.current = null;
+      }
+    }
+
+    if (errored !== null) {
+      const errCode = (errored as { code: string }).code;
+      const errMessage = (errored as { message: string }).message;
+      // Translate the well-known codes; fall through to a generic
+      // toast for anything else.
+      if (errCode === "forbidden") {
         messageApi.error(
           t(
             "Bu kitobga ruxsatingiz yo'q",
@@ -262,15 +346,11 @@ const BookAiChatPage = () => {
             "You don't have access to this book"
           )
         );
-      } else if (status === 400) {
+      } else if (errCode === "not_found") {
         messageApi.error(
-          t(
-            "Xabar juda uzun yoki bo'sh",
-            "Сообщение слишком длинное или пустое",
-            "Message is too long or empty"
-          )
+          t("Topilmadi", "Не найдено", "Not found")
         );
-      } else if (status === 500) {
+      } else if (errCode === "upstream") {
         messageApi.error(
           t(
             "AI hozirda javob bera olmadi. Qaytadan urinib ko'ring.",
@@ -280,19 +360,49 @@ const BookAiChatPage = () => {
         );
       } else {
         messageApi.error(
-          t(
-            "Xato. Qaytadan urinib ko'ring.",
-            "Ошибка. Попробуйте ещё раз.",
-            "Error. Try again."
-          )
+          errMessage ||
+            t(
+              "Xato. Qaytadan urinib ko'ring.",
+              "Ошибка. Попробуйте ещё раз.",
+              "Error. Try again."
+            )
         );
       }
-      setMessages((m) => m.filter((x) => x.id !== tempId));
-      setInput(text);
-    } finally {
-      setSending(false);
-      window.setTimeout(() => textareaRef.current?.focus(), 50);
+      // If no tokens arrived at all, roll the bubble back so the chat
+      // doesn't show an awkward empty assistant reply. If we got partial
+      // content, keep it visible and flag the error inline.
+      setMessages((m) => {
+        const placeholder = m.find((x) => x.id === aiTempId);
+        if (!placeholder || !placeholder.content) {
+          // Hard rollback (user message AND placeholder) so the user
+          // can re-send unchanged.
+          setInput(text);
+          return m.filter((x) => x.id !== tempId && x.id !== aiTempId);
+        }
+        return m.map((x) =>
+          x.id === aiTempId
+            ? { ...x, streaming: false, streamError: errMessage }
+            : x
+        );
+      });
     }
+
+    setSending(false);
+    window.setTimeout(() => textareaRef.current?.focus(), 50);
+  };
+
+  // User-facing stop button: hard-abort the SSE stream and freeze the
+  // partial reply in place. We don't roll back content the user has
+  // already seen — feels more honest than wiping it.
+  const onStop = () => {
+    streamAbortRef.current?.abort();
+    streamAbortRef.current = null;
+    setMessages((m) =>
+      m.map((x) =>
+        x.streaming ? { ...x, streaming: false } : x
+      )
+    );
+    setSending(false);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -734,7 +844,7 @@ const BookAiChatPage = () => {
           </button>
           <div className={s.headerTitle} title={bookTitle}>
             <span className={s.headerLabel}>
-              {t("AI suhbati", "AI чат", "AI chat")}
+              {t("AI murabbiy", "AI тренер", "AI coach")}
             </span>
             <span className={s.headerSep} aria-hidden="true">
               ·
@@ -769,7 +879,7 @@ const BookAiChatPage = () => {
             {messages.length === 0 ? (
               <div className={s.empty}>
                 <div className={s.emptyIcon}>
-                  <MessageOutlined />
+                  <ThunderboltFilled />
                 </div>
                 <h2 className={s.emptyTitle}>
                   {t(
@@ -826,57 +936,101 @@ const BookAiChatPage = () => {
                               : whole
                         )
                       : m.content;
+                    const isStreaming = !!m.streaming;
+                    // Belt-and-braces: show the typing dots whenever the
+                    // assistant bubble is empty AND a request is in
+                    // flight. This catches edge cases where the stream
+                    // hits `done` without ever emitting a token (e.g.
+                    // backend issue, no chunks matched) and our flag
+                    // would otherwise leave a blank bubble.
+                    const isEmptyStreaming =
+                      !m.content && (isStreaming || sending);
                     return (
                       <li key={m.id} className={`${s.row} ${s.rowAi}`}>
                         <div className={s.aiHead}>
                           <span className={s.aiAvatar} aria-hidden="true">
-                            <MessageOutlined />
+                            <ThunderboltFilled />
                           </span>
                           <span className={s.aiLabel}>
-                            {t("AI yordamchi", "AI помощник", "AI assistant")}
+                            {t("AI murabbiy", "AI тренер", "AI coach")}
                           </span>
                         </div>
-                        <div className={s.aiBlock}>
-                          <div className={s.markdown}>
-                            <ReactMarkdown
-                              components={{
-                                a: ({ href, children }) => {
-                                  const mm = /^#cite-(\d+)$/.exec(href || "");
-                                  if (mm) {
-                                    const n = Number(mm[1]);
-                                    const src = sources.find(
-                                      (sx) => sx.n === n
+                        <div
+                          className={`${s.aiBlock} ${
+                            isEmptyStreaming ? s.typingBlock : ""
+                          }`}
+                        >
+                          {isEmptyStreaming ? (
+                            <>
+                              <span className={s.typingDots}>
+                                <span />
+                                <span />
+                                <span />
+                              </span>
+                              <span className={s.typingLabel}>
+                                {t(
+                                  "AI o'ylayapti...",
+                                  "AI думает...",
+                                  "AI is thinking..."
+                                )}
+                              </span>
+                            </>
+                          ) : (
+                            <div className={s.markdown}>
+                              <ReactMarkdown
+                                components={{
+                                  a: ({ href, children }) => {
+                                    const mm = /^#cite-(\d+)$/.exec(
+                                      href || ""
                                     );
-                                    if (!src) return <>{children}</>;
+                                    if (mm) {
+                                      const n = Number(mm[1]);
+                                      const src = sources.find(
+                                        (sx) => sx.n === n
+                                      );
+                                      if (!src) return <>{children}</>;
+                                      return (
+                                        <button
+                                          type="button"
+                                          className={s.cite}
+                                          title={src.preview.slice(0, 220)}
+                                          onClick={() => onSourceClick(src)}
+                                        >
+                                          {children}
+                                        </button>
+                                      );
+                                    }
                                     return (
-                                      <button
-                                        type="button"
-                                        className={s.cite}
-                                        title={src.preview.slice(0, 220)}
-                                        onClick={() => onSourceClick(src)}
+                                      <a
+                                        href={href}
+                                        target="_blank"
+                                        rel="noreferrer"
                                       >
                                         {children}
-                                      </button>
+                                      </a>
                                     );
-                                  }
-                                  return (
-                                    <a
-                                      href={href}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                    >
-                                      {children}
-                                    </a>
-                                  );
-                                },
-                              }}
-                            >
-                              {linked}
-                            </ReactMarkdown>
-                          </div>
-                          {/* No bottom sources row — the inline [N]
-                              markers in the answer text are the only
-                              affordance. Cleaner, less visual repeat. */}
+                                  },
+                                }}
+                              >
+                                {linked}
+                              </ReactMarkdown>
+                              {isStreaming && (
+                                <span
+                                  className={s.typingCursor}
+                                  aria-hidden="true"
+                                />
+                              )}
+                            </div>
+                          )}
+                          {m.streamError && !isStreaming && (
+                            <div className={s.streamError}>
+                              {t(
+                                "Javob to'liq kelmadi — qaytadan urinib ko'ring.",
+                                "Ответ оборвался — попробуйте ещё раз.",
+                                "Reply was cut short — try again."
+                              )}
+                            </div>
+                          )}
                         </div>
                       </li>
                     );
@@ -889,28 +1043,10 @@ const BookAiChatPage = () => {
                     </li>
                   );
                 })}
-                {sending && (
-                  <li className={`${s.row} ${s.rowAi}`}>
-                    <div className={s.aiHead}>
-                      <span className={s.aiAvatar} aria-hidden="true">
-                        <MessageOutlined />
-                      </span>
-                      <span className={s.aiLabel}>
-                        {t("AI yordamchi", "AI помощник", "AI assistant")}
-                      </span>
-                    </div>
-                    <div className={`${s.aiBlock} ${s.typingBlock}`}>
-                      <span className={s.typingDots}>
-                        <span />
-                        <span />
-                        <span />
-                      </span>
-                      <span className={s.typingLabel}>
-                        {t("AI o'ylayapti...", "AI думает...", "AI is thinking...")}
-                      </span>
-                    </div>
-                  </li>
-                )}
+                {/* No standalone "AI is thinking" bubble here — the
+                    streaming placeholder above renders the same indicator
+                    inside the assistant bubble itself, then transitions
+                    into actual content as tokens arrive. */}
                 <div ref={bottomRef} />
               </ul>
             )}
@@ -941,14 +1077,26 @@ const BookAiChatPage = () => {
               rows={1}
               aria-label={t("Xabar", "Сообщение", "Message")}
             />
-            <button
-              type="submit"
-              className={s.sendBtn}
-              disabled={!input.trim() || sending}
-              aria-label={t("Yuborish", "Отправить", "Send")}
-            >
-              <SendOutlined />
-            </button>
+            {sending ? (
+              <button
+                type="button"
+                className={`${s.sendBtn} ${s.stopBtn}`}
+                onClick={onStop}
+                aria-label={t("To'xtatish", "Остановить", "Stop")}
+                title={t("To'xtatish", "Остановить", "Stop")}
+              >
+                <span className={s.stopSquare} aria-hidden="true" />
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className={s.sendBtn}
+                disabled={!input.trim()}
+                aria-label={t("Yuborish", "Отправить", "Send")}
+              >
+                <SendOutlined />
+              </button>
+            )}
           </form>
         </div>
       </section>

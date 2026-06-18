@@ -27,6 +27,13 @@ export interface AiBookMessage {
   /** Present on assistant messages (live + persisted history). null/[]
    *  on user messages or when the model found nothing in the book. */
   sources?: SourceCitation[] | null;
+  /** Frontend-only — true while a SSE stream is filling this message's
+   *  content. Drives the typing-cursor indicator and stops follow-up
+   *  edits like sources arrival from rendering as "new" messages. */
+  streaming?: boolean;
+  /** Frontend-only — true if the stream ended with an error (we still
+   *  keep whatever partial content arrived so the user sees the cut). */
+  streamError?: string;
 }
 
 export interface AiBookChat {

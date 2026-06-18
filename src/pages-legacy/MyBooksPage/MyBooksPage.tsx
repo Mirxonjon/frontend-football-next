@@ -144,7 +144,7 @@ const MyBooksPage = () => {
                         className={s.aiChat}
                       >
                         <MessageOutlined />
-                        {t("AI chat", "AI чат", "AI chat")}
+                        {t("AI murabbiy", "AI тренер", "AI coach")}
                       </Link>
                       <button
                         type="button"
