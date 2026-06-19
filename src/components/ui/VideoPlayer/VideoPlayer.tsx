@@ -459,8 +459,6 @@ const VideoPlayer = ({
         poster={poster}
         playsInline
         preload="metadata"
-        crossOrigin="anonymous"
-        {...({ referrerPolicy: "no-referrer" } as any)}
         controlsList="nodownload"
         onLoadedMetadata={handleLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
