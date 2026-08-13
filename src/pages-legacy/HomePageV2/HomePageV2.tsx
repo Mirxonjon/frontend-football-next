@@ -148,7 +148,7 @@ const TESTIMONIALS: Testimonial[] = [
     roleUz: "Bolalar futbol murabbiysi, Toshkent",
     roleRu: "Детский футбольный тренер, Ташкент",
     quoteUz:
-      "Bepul darslardan boshladim, keyin obuna bo‘ldim. Endi har hafta yangi mashg‘ulotlarni o‘zimning komandam bilan ishlatyapman.",
+      "Bepul darslardan boshladim, keyin obuna boʻldim. Endi har hafta yangi mashgʻulotlarni oʻzimning komandam bilan ishlatyapman.",
     quoteRu:
       "Начал с бесплатных уроков, потом оформил подписку. Теперь каждую неделю применяю новые тренировки со своей командой.",
     rating: 5,
@@ -161,7 +161,7 @@ const TESTIMONIALS: Testimonial[] = [
     roleUz: "U-15 jamoasi murabbiysi",
     roleRu: "Тренер команды U-15",
     quoteUz:
-      "Masterclasslar juda chuqur tushuntirilgan. Taktika qismida ko‘p narsa o‘rgandim. O‘zbek tilida bo‘lishi katta yutuq.",
+      "Masterclasslar juda chuqur tushuntirilgan. Taktika qismida koʻp narsa oʻrgandim. Oʻzbek tilida boʻlishi katta yutuq.",
     quoteRu:
       "Мастер-классы очень глубоко поданы. Особенно тактический блок — много нового. И главное — на узбекском языке.",
     rating: 5,
@@ -174,7 +174,7 @@ const TESTIMONIALS: Testimonial[] = [
     roleUz: "Akademiya murabbiysi, Samarqand",
     roleRu: "Тренер академии, Самарканд",
     quoteUz:
-      "Kutubxonadagi konspektlar juda foydali. Mashg‘ulot rejasi tuzishda menga vaqtni 2 barobar tejaydi.",
+      "Kutubxonadagi konspektlar juda foydali. Mashgʻulot rejasi tuzishda menga vaqtni 2 barobar tejaydi.",
     quoteRu:
       "Конспекты в библиотеке очень полезные. Сэкономили мне в 2 раза больше времени при подготовке плана.",
     rating: 5,
@@ -184,10 +184,10 @@ const TESTIMONIALS: Testimonial[] = [
     id: 4,
     nameUz: "Jasur Nazarov",
     nameRu: "Жасур Назаров",
-    roleUz: "Yosh o‘yinchi, 17 yosh",
+    roleUz: "Yosh oʻyinchi, 17 yosh",
     roleRu: "Молодой игрок, 17 лет",
     quoteUz:
-      "Yakkama-yakka mashg‘ulotlar orqali o‘zimni rivojlantiryapman. Hatto bepul qismda ham juda ko‘p narsa bor.",
+      "Yakkama-yakka mashgʻulotlar orqali oʻzimni rivojlantiryapman. Hatto bepul qismda ham juda koʻp narsa bor.",
     quoteRu:
       "Развиваюсь с помощью индивидуальных тренировок. Даже в бесплатной части много полезного контента.",
     rating: 4,
@@ -213,7 +213,7 @@ const TESTIMONIALS: Testimonial[] = [
     roleUz: "Xotin-qizlar futboli murabbiysi",
     roleRu: "Тренер женского футбола",
     quoteUz:
-      "Ayol murabbiy sifatida shu platformada o‘zimga mos materiallarni topdim. Kategoriyalar yaxshi tashkil qilingan.",
+      "Ayol murabbiy sifatida shu platformada oʻzimga mos materiallarni topdim. Kategoriyalar yaxshi tashkil qilingan.",
     quoteRu:
       "Как женщина-тренер, нашла здесь подходящие материалы. Категории отлично организованы.",
     rating: 5,
@@ -375,7 +375,7 @@ const HomePageV2 = () => {
                 <>
                   Eng yaxshi futbol <br />
                   <span className={s.heroTitleAccent}>
-                    murabbiylaridan o‘rganing
+                    murabbiylaridan oʻrganing
                   </span>
                 </>
               )}
@@ -383,7 +383,7 @@ const HomePageV2 = () => {
 
             <p className={s.heroSubtitle}>
               {t(
-                "Mashg‘ulotlar, masterclasslar va kitoblar — murabbiy va o‘yinchilar uchun. Bepul boshlang, hech qanday majburiyatsiz.",
+                "Mashgʻulotlar, masterclasslar va kitoblar — murabbiy va oʻyinchilar uchun. Bepul boshlang, hech qanday majburiyatsiz.",
                 "Тренировки, мастер-классы и книги для тренеров и игроков. Начните бесплатно — без обязательств.",
                 "Trainings, masterclasses and books — for coaches and players. Start free, no commitments."
               )}
@@ -393,7 +393,7 @@ const HomePageV2 = () => {
               <Link to="/training" className={s.heroBtnPrimary}>
                 <PlayCircleFilled />
                 {t(
-                  "Bepul ko‘rishni boshlash",
+                  "Bepul koʻrishni boshlash",
                   "Смотреть бесплатно",
                   "Watch for free"
                 )}
@@ -408,7 +408,7 @@ const HomePageV2 = () => {
               <li>
                 <CheckCircleFilled />
                 {t(
-                  "Ro‘yxatdan o‘tish bepul",
+                  "Roʻyxatdan oʻtish bepul",
                   "Регистрация бесплатна",
                   "Sign up is free"
                 )}
@@ -439,7 +439,7 @@ const HomePageV2 = () => {
               width={1280}
               height={720}
               ariaLabel={t(
-                "Futbol mashg'uloti namoyishi",
+                "Futbol mashgʻuloti namoyishi",
                 "Демонстрация футбольной тренировки",
                 "Football training demo"
               )}
@@ -481,7 +481,7 @@ const HomePageV2 = () => {
               </strong>
               <span>
                 {t(
-                  "murabbiy va o‘yinchi",
+                  "murabbiy va oʻyinchi",
                   "тренеров и игроков",
                   "coaches & players"
                 )}
@@ -495,7 +495,7 @@ const HomePageV2 = () => {
                 <CountUp value={100} />
               </strong>
               <span>
-                {t("mashg‘ulotlar", "тренировок", "trainings")}
+                {t("mashgʻulotlar", "тренировок", "trainings")}
               </span>
             </div>
           </div>
@@ -532,11 +532,11 @@ const HomePageV2 = () => {
           <header className={s.sectionHeader}>
             <div>
               <h2 className={s.sectionTitle}>
-                {t("Mashg‘ulotlar", "Тренировки", "Trainings")}
+                {t("Mashgʻulotlar", "Тренировки", "Trainings")}
               </h2>
               <p className={s.sectionSub}>
                 {t(
-                  "Yosh va mavzu bo‘yicha kategoriyalar — bepullari ham bor.",
+                  "Yosh va mavzu boʻyicha kategoriyalar — bepullari ham bor.",
                   "Категории по возрастам и темам — есть бесплатные.",
                   "Categories by age and topic — free ones included."
                 )}
@@ -681,7 +681,7 @@ const HomePageV2 = () => {
                               )}
                               <span className={s.bookPriceNow}>
                                 {formatPrice(final)}{" "}
-                                {t("so‘m", "сум", "UZS")}
+                                {t("soʻm", "сум", "UZS")}
                               </span>
                             </>
                           )}
@@ -778,7 +778,7 @@ const HomePageV2 = () => {
               </div>
               <h2 className={s.sectionTitleCenter}>
                 {t(
-                  "Yana ko‘proq kerakmi? Barcha materiallarni oching",
+                  "Yana koʻproq kerakmi? Barcha materiallarni oching",
                   "Хотите больше? Откройте все материалы",
                   "Want more? Unlock all the content"
                 )}
@@ -863,7 +863,7 @@ const HomePageV2 = () => {
                       {discounted && (
                         <span className={s.planPriceOld}>
                           {formatPlanPrice(p.basePrice)}{" "}
-                          {t("so‘m", "сум", "UZS")}
+                          {t("soʻm", "сум", "UZS")}
                         </span>
                       )}
                       <div className={s.planPriceRow}>
@@ -871,7 +871,7 @@ const HomePageV2 = () => {
                           {formatPlanPrice(finalP)}
                         </span>
                         <span className={s.planPriceCur}>
-                          {t("so‘m", "сум", "UZS")}
+                          {t("soʻm", "сум", "UZS")}
                         </span>
                       </div>
                       <span className={s.planDur}>/ {dur}</span>
@@ -904,7 +904,7 @@ const HomePageV2 = () => {
                       }`}
                     >
                       <CrownOutlined />
-                      {t("Obuna bo‘lish", "Подписаться", "Subscribe")}
+                      {t("Obuna boʻlish", "Подписаться", "Subscribe")}
                     </Link>
                   </div>
                 );
@@ -966,7 +966,7 @@ const HomePageV2 = () => {
             </h2>
             <p className={s.sectionSubCenter}>
               {t(
-                "Uch oddiy qadam — siz allaqachon o‘rganyapsiz.",
+                "Uch oddiy qadam — siz allaqachon oʻrganyapsiz.",
                 "Три простых шага — и вы уже учитесь.",
                 "Three simple steps and you're already learning."
               )}
@@ -986,7 +986,7 @@ const HomePageV2 = () => {
               </h3>
               <p className={s.stepDesc}>
                 {t(
-                  "Ro‘yxatdan o‘tish bepul va bir daqiqa oladi.",
+                  "Roʻyxatdan oʻtish bepul va bir daqiqa oladi.",
                   "Регистрация бесплатна и занимает минуту.",
                   "Sign up is free and takes a minute."
                 )}
@@ -997,14 +997,14 @@ const HomePageV2 = () => {
               <PlayCircleFilled className={s.stepIcon} />
               <h3 className={s.stepTitle}>
                 {t(
-                  "Bepul darslarni ko‘ring",
+                  "Bepul darslarni koʻring",
                   "Смотрите бесплатные уроки",
                   "Watch the free lessons"
                 )}
               </h3>
               <p className={s.stepDesc}>
                 {t(
-                  "Bir qator mashg‘ulot va materiallar obunasiz ochiq.",
+                  "Bir qator mashgʻulot va materiallar obunasiz ochiq.",
                   "Часть тренировок и материалов открыта без подписки.",
                   "Many trainings and materials are open without a subscription."
                 )}
@@ -1022,7 +1022,7 @@ const HomePageV2 = () => {
               </h3>
               <p className={s.stepDesc}>
                 {t(
-                  "Tayyor bo‘lganingizda — mos tarifni ulang.",
+                  "Tayyor boʻlganingizda — mos tarifni ulang.",
                   "Когда будете готовы — подключите подходящий тариф.",
                   "When you're ready, pick a plan that fits."
                 )}
@@ -1045,14 +1045,14 @@ const HomePageV2 = () => {
             </div>
             <h2 className={s.sectionTitleCenter}>
               {t(
-                "Murabbiylar va o‘yinchilar nima deyishadi",
+                "Murabbiylar va oʻyinchilar nima deyishadi",
                 "Что говорят тренеры и игроки",
                 "What coaches and players say"
               )}
             </h2>
             <p className={s.sectionSubCenter}>
               {t(
-                "Platforma O‘zbekiston bo‘ylab minglab murabbiylarga yordam beryapti.",
+                "Platforma Oʻzbekiston boʻylab minglab murabbiylarga yordam beryapti.",
                 "Платформа уже помогает тысячам тренеров по всему Узбекистану.",
                 "The platform already helps thousands of coaches across Uzbekistan."
               )}
@@ -1120,14 +1120,14 @@ const HomePageV2 = () => {
         >
           <h2 className={s.finalTitle}>
             {t(
-              "Bugun o‘rganishni boshlang",
+              "Bugun oʻrganishni boshlang",
               "Начните учиться сегодня",
               "Start learning today"
             )}
           </h2>
           <p className={s.finalSub}>
             {t(
-              "Ro‘yxatdan o‘tish bepul. Hech qanday karta yoki majburiyat yo‘q.",
+              "Roʻyxatdan oʻtish bepul. Hech qanday karta yoki majburiyat yoʻq.",
               "Регистрация бесплатна. Никаких карт и обязательств.",
               "Sign up is free. No cards, no commitments."
             )}
@@ -1138,7 +1138,7 @@ const HomePageV2 = () => {
               <ArrowRightOutlined />
             </Link>
             <Link to="/training" className={s.heroBtnGhostInverse}>
-              {t("Darslarni ko‘rish", "Посмотреть уроки", "Browse lessons")}
+              {t("Darslarni koʻrish", "Посмотреть уроки", "Browse lessons")}
             </Link>
           </div>
         </section>

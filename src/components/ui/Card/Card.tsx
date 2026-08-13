@@ -10,11 +10,11 @@ const Card = ({ data, withOutBtn }: { data?: any; withOutBtn?: any }) => {
   const changaLang = useLocalizedText();
 
   const content = {
-    view: "Ko`rish",
+    view: "Koʻrish",
     view_ru: "Смотреть",
     ru: "Ruscha",
     ru_ru: "Русский",
-    uz: "O`zbekcha",
+    uz: "Oʻzbekcha",
     uz_ru: "Узбекский",
   };
   return (

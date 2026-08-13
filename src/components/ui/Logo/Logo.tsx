@@ -15,18 +15,19 @@ const Logo = (props) => (
       textDecoration: "none",
       color: "inherit",
     }}
+    aria-label="Coach Hub"
   >
-    <img width={40} src={(img as any).src ?? img} alt="logo" />
+    <img width={40} height={40} src={(img as any).src ?? img} alt="Coach Hub" />
     <span
       style={{
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: 700,
         lineHeight: 1.1,
         color: "#000",
-        maxWidth: 110,
+        whiteSpace: "nowrap",
       }}
     >
-      Coaching Center
+      Coach Hub
     </span>
   </Link>
 );

@@ -7,7 +7,7 @@ import { langActions } from "../../../store/slice/lang";
 import { syncUserLanguage } from "../../../api/userLanguage";
 
 const LANGS: { code: "uz" | "ru" | "en"; label: string; flag: string }[] = [
-  { code: "uz", label: "O‘zbek", flag: "🇺🇿" },
+  { code: "uz", label: "Oʻzbek", flag: "🇺🇿" },
   { code: "ru", label: "Русский", flag: "🇷🇺" },
   { code: "en", label: "English", flag: "🇬🇧" },
 ];

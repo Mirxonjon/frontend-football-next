@@ -203,7 +203,7 @@ const LegalDocumentPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>{title} — Coaching Zona</title>
+        <title>{title} — Coach Hub</title>
       </Helmet>
 
       <article className={s.wrapper}>

@@ -145,9 +145,9 @@ const TraningVideoPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>{`${title} — CoachingZona`}</title>
+        <title>{`${title} — Coach Hub`}</title>
         <meta name="description" content={description} />
-        <link rel="canonical" href="https://coachingzona.uz/training" />
+        <link rel="canonical" href="https://coaching-center.uz/training" />
       </Helmet>
 
       {contextHolder}
@@ -166,7 +166,7 @@ const TraningVideoPage = () => {
                 <LockOutlined className={s.authIcon} />
                 <h3>
                   {t(
-                    "Darslarni ko‘rish uchun tizimga kiring",
+                    "Darslarni koʻrish uchun tizimga kiring",
                     "Войдите, чтобы смотреть уроки",
                     "Sign in to watch the lessons"
                   )}
@@ -182,7 +182,7 @@ const TraningVideoPage = () => {
             ) : lessons.length === 0 ? (
               <div className={s.placeholder}>
                 {t(
-                  "Darslar tez orada qo‘shiladi",
+                  "Darslar tez orada qoʻshiladi",
                   "Уроки скоро появятся",
                   "Lessons coming soon"
                 )}
@@ -266,7 +266,7 @@ const TraningVideoPage = () => {
               <PlayCircleOutlined />
               <span>
                 {t(
-                  "Video darslar to‘plami",
+                  "Video darslar toʻplami",
                   "Сборник видеоуроков",
                   "Video lessons collection"
                 )}
@@ -311,7 +311,7 @@ const TraningVideoPage = () => {
                           <span
                             className={s.lessonMeta}
                             title={t(
-                              `${progress!.lastBlockSequence} blok ko‘rilgan`,
+                              `${progress!.lastBlockSequence} blok koʻrilgan`,
                               `Просмотрено ${progress!.lastBlockSequence} блоков`,
                               `${progress!.lastBlockSequence} block(s) watched`
                             )}

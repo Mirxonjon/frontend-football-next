@@ -152,13 +152,13 @@ const AddCardModal = ({ open, onClose }: Props) => {
 
         <h2 className={s.title}>
           {step === "card"
-            ? tt("Karta qo‘shish", "Добавить карту", "Add card")
+            ? tt("Karta qoʻshish", "Добавить карту", "Add card")
             : tt("Tasdiqlash", "Подтверждение", "Confirm")}
         </h2>
         <p className={s.subtitle}>
           {step === "card"
             ? tt(
-                "Bank kartasi ma'lumotlarini kiriting",
+                "Bank kartasi maʼlumotlarini kiriting",
                 "Введите данные банковской карты",
                 "Enter your bank card details"
               )
@@ -169,7 +169,7 @@ const AddCardModal = ({ open, onClose }: Props) => {
                   `SMS code sent to ${pending.phoneNumber}`
                 )
               : tt(
-                  "SMS dan kelgan kodni kiriting",
+                  "SMS orqali kelgan kodni kiriting",
                   "Введите код из СМС",
                   "Enter the SMS code"
                 )}

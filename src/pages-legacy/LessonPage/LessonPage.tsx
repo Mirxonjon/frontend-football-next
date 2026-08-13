@@ -89,7 +89,7 @@ const LessonPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>{`${title} — CoachingZona`}</title>
+        <title>{`${title} — Coach Hub`}</title>
       </Helmet>
 
       {contextHolder}

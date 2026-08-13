@@ -65,7 +65,7 @@ export const initCard = createAsyncThunk<
       err?.response?.data?.error?.message ||
         err?.response?.data?.message ||
         err?.message ||
-        "Karta noto‘g‘ri"
+        "Karta notoʻgʻri"
     );
   }
 });
@@ -86,7 +86,7 @@ export const verifyCard = createAsyncThunk<
       err?.response?.data?.error?.message ||
         err?.response?.data?.message ||
         err?.message ||
-        "Kod noto‘g‘ri"
+        "Kod notoʻgʻri"
     );
   }
 });
@@ -104,7 +104,7 @@ export const deleteCard = createAsyncThunk<
       err?.response?.data?.error?.message ||
         err?.response?.data?.message ||
         err?.message ||
-        "Kartani o‘chirib bo‘lmadi"
+        "Kartani oʻchirib boʻlmadi"
     );
   }
 });

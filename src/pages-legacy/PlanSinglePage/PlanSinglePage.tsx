@@ -106,7 +106,7 @@ const PlanSinglePage = () => {
   return (
     <Container>
       <Helmet>
-        <title>{title} — Coaching Zona</title>
+        <title>{title} — Coach Hub</title>
       </Helmet>
 
       {contextHolder}
@@ -179,7 +179,7 @@ const PlanSinglePage = () => {
               {discounted && (
                 <span className={s.priceOld}>
                   {formatPrice(plan.basePrice)}{" "}
-                  {t("so‘m", "сум", "UZS")}
+                  {t("soʻm", "сум", "UZS")}
                 </span>
               )}
               <div className={s.priceNow}>
@@ -187,7 +187,7 @@ const PlanSinglePage = () => {
                   {formatPrice(finalPrice)}
                 </span>
                 <span className={s.priceCurrency}>
-                  {t("so‘m", "сум", "UZS")}
+                  {t("soʻm", "сум", "UZS")}
                 </span>
               </div>
               <span className={s.priceMeta}>
@@ -196,7 +196,7 @@ const PlanSinglePage = () => {
 
               <Link to="/me/subscriptions" className={s.subscribeBtn}>
                 <CrownOutlined />
-                {t("Obuna bo‘lish", "Подписаться", "Subscribe")}
+                {t("Obuna boʻlish", "Подписаться", "Subscribe")}
               </Link>
 
               <p className={s.priceNote}>

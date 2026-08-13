@@ -1,8 +1,8 @@
 import MyTransactionsPage from "@/pages-legacy/MyTransactionsPage/MyTransactionsPage";
 
 export const metadata = {
-  title: "To'lov tarixi — CoachingZona",
-  description: "Barcha to'lov tranzaksiyalari",
+  title: "Toʻlov tarixi — Coach Hub",
+  description: "Barcha toʻlov tranzaksiyalari",
 };
 
 export default function Page() {

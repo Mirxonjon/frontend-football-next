@@ -68,9 +68,9 @@ const PlansPage = () => {
       <Helmet>
         <title>
           {t(
-            "Tariflar — Coaching Zona",
-            "Тарифы — Coaching Zona",
-            "Plans — Coaching Zona"
+            "Tariflar — Coach Hub",
+            "Тарифы — Coach Hub",
+            "Plans — Coach Hub"
           )}
         </title>
       </Helmet>
@@ -85,14 +85,14 @@ const PlansPage = () => {
           </div>
           <h1 className={s.heroTitle}>
             {t(
-              "O‘zingizga mos tarifni tanlang",
+              "Oʻzingizga mos tarifni tanlang",
               "Выберите подходящий тариф",
               "Choose a plan that fits you"
             )}
           </h1>
           <p className={s.heroSubtitle}>
             {t(
-              "Barcha mashg‘ulotlar, masterclasslar va materiallar — cheklovsiz.",
+              "Barcha mashgʻulotlar, masterclasslar va materiallar — cheklovsiz.",
               "Все тренировки, мастер-классы и материалы платформы — без ограничений.",
               "All trainings, masterclasses and platform materials — no limits."
             )}
@@ -148,7 +148,7 @@ const PlansPage = () => {
                   <div className={s.priceBlock}>
                     {discounted && (
                       <span className={s.priceOld}>
-                        {formatPrice(p.basePrice)} {t("so‘m", "сум", "UZS")}
+                        {formatPrice(p.basePrice)} {t("soʻm", "сум", "UZS")}
                       </span>
                     )}
                     <div className={s.priceNow}>
@@ -156,7 +156,7 @@ const PlansPage = () => {
                         {formatPrice(finalPrice)}
                       </span>
                       <span className={s.priceCurrency}>
-                        {t("so‘m", "сум", "UZS")}
+                        {t("soʻm", "сум", "UZS")}
                       </span>
                     </div>
                     <span className={s.priceMeta}>
@@ -204,7 +204,7 @@ const PlansPage = () => {
                     }`}
                   >
                     <CrownOutlined />
-                    {t("Obuna bo‘lish", "Подписаться", "Subscribe")}
+                    {t("Obuna boʻlish", "Подписаться", "Subscribe")}
                   </Link>
                 </div>
               );

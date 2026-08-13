@@ -60,7 +60,7 @@ const MyTransactionsPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>To'lov tarixi — CoachingZona</title>
+        <title>Toʻlov tarixi — Coach Hub</title>
       </Helmet>
 
       {contextHolder}
@@ -73,7 +73,7 @@ const MyTransactionsPage = () => {
 
         <header className={s.header}>
           <h1 className={s.title}>
-            {t("To'lov tarixi", "История платежей", "Payment history")}
+            {t("Toʻlov tarixi", "История платежей", "Payment history")}
           </h1>
           <span className={s.count}>{pagination.total}</span>
         </header>
@@ -85,7 +85,7 @@ const MyTransactionsPage = () => {
         ) : list.length === 0 ? (
           <NotFound
             subTitle={t(
-              "Tranzaksiyalar yo'q",
+              "Tranzaksiyalar yoʻq",
               "Транзакций нет",
               "No transactions"
             )}
@@ -141,7 +141,7 @@ const MyTransactionsPage = () => {
                     >
                       {isFailed
                         ? "—"
-                        : `${formatAmount(tx.amount)} so'm`}
+                        : `${formatAmount(tx.amount)} soʻm`}
                     </div>
                   </div>
                 );

@@ -46,7 +46,7 @@ const SafeImage = ({ src, lang }: { src: string; lang: string }) => {
             ? "Файл не найден или ссылка не валидна"
             : lang === "en"
               ? "File not found or link is invalid"
-              : "Fayl topilmadi yoki havola noto‘g‘ri"}
+              : "Fayl topilmadi yoki havola notoʻgʻri"}
         </div>
       </div>
     );
@@ -158,7 +158,7 @@ const LessonBlockRenderer = ({
                 ? "Файл ещё не загружен или ссылка не валидна"
                 : lang === "en"
                   ? "File hasn't been uploaded yet or the link is invalid"
-                  : "Fayl hali yuklanmagan yoki havola noto‘g‘ri"}
+                  : "Fayl hali yuklanmagan yoki havola notoʻgʻri"}
             </div>
           </div>
         );
@@ -178,7 +178,7 @@ const LessonBlockRenderer = ({
                 ? "БЕСПЛАТНО"
                 : lang === "en"
                   ? "FREE PREVIEW"
-                  : "BEPUL PREVIEW"}
+                  : "BEPUL NAMOYISH"}
             </span>
           )}
         </div>

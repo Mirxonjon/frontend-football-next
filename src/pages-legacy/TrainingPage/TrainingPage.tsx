@@ -200,7 +200,7 @@ const TrainingPage = () => {
 
   const placeholder =
     viewMode === "categories"
-      ? t("Mashg‘ulot izlash…", "Поиск тренировок…", "Search trainings…")
+      ? t("Mashgʻulot izlash…", "Поиск тренировок…", "Search trainings…")
       : t("Dars izlash…", "Поиск уроков…", "Search lessons…");
 
   const isAuthError =
@@ -239,7 +239,7 @@ const TrainingPage = () => {
     },
     {
       value: "lessonCount:desc",
-      label: t("Ko‘p darslar", "Больше уроков", "More lessons"),
+      label: t("Koʻp darslar", "Больше уроков", "More lessons"),
     },
     {
       value: "lessonCount:asc",
@@ -261,12 +261,12 @@ const TrainingPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>CoachingZona Mashg‘ulotlar</title>
+        <title>Mashgʻulotlar — Coach Hub</title>
         <meta
           name="description"
-          content="Mashg‘ulotlar bo'limi Murabbiylar uchun Coachingzone futbol kurslar bo'limi"
+          content="Coach Hub — murabbiylar uchun futbol mashgʻulotlari boʻlimi. Yosh guruhlari, taktika, texnika va amaliy darslar."
         />
-        <link rel="canonical" href="https://coachingzona.uz/training" />
+        <link rel="canonical" href="https://coaching-center.uz/training" />
       </Helmet>
 
       <div className={s.wrapper}>
@@ -274,7 +274,7 @@ const TrainingPage = () => {
 
         <header className={s.pageHeader}>
           <h1 className={s.pageTitle}>
-            {t("Mashg‘ulotlar", "Тренировки", "Trainings")}
+            {t("Mashgʻulotlar", "Тренировки", "Trainings")}
           </h1>
           <div className={s.searchBox}>
             <Search
@@ -589,7 +589,7 @@ const TrainingPage = () => {
             <LockOutlined className={s.lockIcon} />
             <div>
               {t(
-                "Darslarni ko‘rish uchun tizimga kiring",
+                "Darslarni koʻrish uchun tizimga kiring",
                 "Войдите, чтобы увидеть уроки",
                 "Sign in to view the lessons"
               )}

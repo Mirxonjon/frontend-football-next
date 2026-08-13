@@ -16,8 +16,8 @@ type Props = {
 
 const PaywallOverlay = ({
   title = "Bu kontentni ochish uchun obuna oling",
-  description = "Pro obuna bilan barcha master-klasslar va darslarga to‘liq kirish.",
-  ctaLabel = "Obunalar bo‘limiga o‘tish",
+  description = "Pro obuna bilan barcha masterklasslar va darslarga toʻliq kirish.",
+  ctaLabel = "Obunalar boʻlimiga oʻtish",
   ctaHref = "/subscriptions",
   hasFreePreview,
   variant = "block",
@@ -39,8 +39,8 @@ const PaywallOverlay = ({
         </Link>
         {hasFreePreview && (
           <div className={s.previewNote}>
-            <span className={s.previewBadge}>BEPUL PREVIEW</span>
-            Bu kategoriyada bepul ko‘rsatma video bor
+            <span className={s.previewBadge}>BEPUL NAMOYISH</span>
+            Bu kategoriyada bepul namoyish video mavjud
           </div>
         )}
       </div>

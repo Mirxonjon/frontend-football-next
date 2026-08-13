@@ -64,7 +64,7 @@ const MyBooksPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>Mening kitoblarim — CoachingZona</title>
+        <title>Mening kitoblarim — Coach Hub</title>
       </Helmet>
 
       {contextHolder}

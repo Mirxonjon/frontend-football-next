@@ -124,12 +124,12 @@ const MasterclassPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>CoachingZona — Masterclasslar</title>
+        <title>Coach Hub — Masterclasslar</title>
         <meta
           name="description"
-          content="Taniqli murabbiylarning master-klasslari"
+          content="Taniqli murabbiylarning masterklasslari"
         />
-        <link rel="canonical" href="https://coachingzona.uz/masterclass" />
+        <link rel="canonical" href="https://coaching-center.uz/masterclass" />
       </Helmet>
 
       {contextHolder}
@@ -142,7 +142,7 @@ const MasterclassPage = () => {
           <div className={s.searchBox}>
             <Search
               placeholder={t(
-                "Master-klass izlash…",
+                "Masterklass izlash…",
                 "Поиск мастер-класса…",
                 "Search masterclass…"
               )}
@@ -224,7 +224,7 @@ const MasterclassPage = () => {
                 {
                   value: "createdAt:desc",
                   label: t(
-                    "Sana bo‘yicha (yangi)",
+                    "Sana boʻyicha (yangi)",
                     "По дате (новые)",
                     "By date (newest)"
                   ),
@@ -232,7 +232,7 @@ const MasterclassPage = () => {
                 {
                   value: "createdAt:asc",
                   label: t(
-                    "Sana bo‘yicha (eski)",
+                    "Sana boʻyicha (eski)",
                     "По дате (старые)",
                     "By date (oldest)"
                   ),
@@ -263,7 +263,7 @@ const MasterclassPage = () => {
             ) : list.length === 0 ? (
               <NotFound
                 subTitle={t(
-                  "Master-klasslar topilmadi",
+                  "Masterklasslar topilmadi",
                   "Мастер-классы не найдены",
                   "No masterclasses found"
                 )}

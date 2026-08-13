@@ -12,18 +12,19 @@ const SITE_URL =
 
 export const metadata: Metadata = {
   title: {
-    default: "Coaching Center — Futbol murabbiylari platformasi",
-    template: "%s — Coaching Center",
+    default: "Coach Hub — Futbol murabbiylari platformasi",
+    template: "%s — Coach Hub",
   },
   description:
-    "Yaxshi futbol murabbiyi bo'lish yo'li shu yerdan boshlanadi. Strategiyalar, taktika, masterclasslar va amaliy mashg'ulotlar.",
+    "Yaxshi futbol murabbiyi boʻlish yoʻli shu yerdan boshlanadi. Strategiyalar, taktika, masterklasslar va amaliy mashgʻulotlar.",
   metadataBase: new URL(SITE_URL),
-  applicationName: "Coaching Center",
+  applicationName: "Coach Hub",
   keywords: [
     "futbol murabbiy",
     "futbol akademiya",
-    "masterclass",
-    "mashg'ulot",
+    "masterklass",
+    "mashgʻulot",
+    "coach hub",
     "coaching center",
     "futbol taktika",
   ],
@@ -33,19 +34,19 @@ export const metadata: Metadata = {
   // page.tsx should set its own canonical if it needs one; otherwise
   // Next.js leaves it absent and Google uses the request URL.
   openGraph: {
-    title: "Coaching Center — Futbol murabbiylari platformasi",
+    title: "Coach Hub — Futbol murabbiylari platformasi",
     description:
-      "Strategiyalar, taktika, masterclasslar va amaliy mashg'ulotlar.",
+      "Strategiyalar, taktika, masterklasslar va amaliy mashgʻulotlar.",
     // Intentionally NO `url` here — same canonical reasoning as above. Per-page
     // metadata can override it; otherwise crawlers use the request URL.
-    siteName: "Coaching Center",
+    siteName: "Coach Hub",
     type: "website",
     locale: "uz_UZ",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Coaching Center",
-    description: "Futbol murabbiylari uchun ta'lim platformasi.",
+    title: "Coach Hub",
+    description: "Futbol murabbiylari uchun taʼlim platformasi.",
   },
   robots: {
     index: true,
@@ -63,17 +64,17 @@ const jsonLd = {
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "Coaching Center",
+      name: "Coach Hub",
       url: SITE_URL,
       logo: `${SITE_URL}/icon-512.png`,
       description:
-        "Futbol murabbiylari uchun strategiya, taktika va masterclasslar platformasi.",
+        "Futbol murabbiylari uchun strategiya, taktika va masterklasslar platformasi.",
     },
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "Coaching Center",
+      name: "Coach Hub",
       publisher: { "@id": `${SITE_URL}/#organization` },
       inLanguage: "uz",
     },

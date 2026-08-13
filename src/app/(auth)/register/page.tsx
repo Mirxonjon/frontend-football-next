@@ -1,7 +1,7 @@
 import RegisterPage from "@/pages-legacy/RegisterPage/RegisterPage";
 
 export const metadata = {
-  title: "Ro'yxatdan o'tish",
+  title: "Roʻyxatdan oʻtish",
 };
 
 export default function Page() {

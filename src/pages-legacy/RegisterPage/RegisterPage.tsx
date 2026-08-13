@@ -91,13 +91,13 @@ const RegisterPage = () => {
     title_ru: "Добро пожаловать!",
     title_en: "Welcome!",
     subtitle:
-      "Kuchli futbol mashg’ulotlari va taktikalardan foydalangan holda yuqori marralarni zabt eting!",
+      "Kuchli futbol mashgʻulotlari va taktikalardan foydalangan holda yuqori marralarni zabt eting!",
     subtitle_ru:
       "Доберитесь до вершины, используя мощную футбольную подготовку и тактику!",
     subtitle_en:
       "Reach the top with strong football training and tactics!",
     email: "Emailingizni kiriting",
-    email_ru: "Введите электронной почты",
+    email_ru: "Введите электронную почту",
     email_en: "Enter your email",
     password: "Parolni kiriting",
     password_ru: "Введите пароль",
@@ -109,7 +109,7 @@ const RegisterPage = () => {
     lastname_label_ru: "Фамилия",
     lastname_label_en: "Last name",
     name: "Ismingizni kiriting",
-    name_ru: "Введите свою имию",
+    name_ru: "Введите своё имя",
     name_en: "Enter your first name",
     name_label: "Ism",
     name_label_ru: "Имя",
@@ -118,12 +118,12 @@ const RegisterPage = () => {
     password_label_ru: "Пароль",
     password_label_en: "Password",
     login: "Kirish",
-    login_ru: "Ввойти",
+    login_ru: "Войти",
     login_en: "Sign in",
-    isodd: "Platformamizda ro‘yhatdan o‘tganmisiz?",
+    isodd: "Platformamizda roʻyxatdan oʻtganmisiz?",
     isodd_ru: "Вы зарегистрированы на нашей платформе?",
     isodd_en: "Already have an account?",
-    register: "Ro‘yhatdan o‘tish",
+    register: "Roʻyxatdan oʻtish",
     register_ru: "Регистрация",
     register_en: "Sign up",
   };
@@ -131,12 +131,12 @@ const RegisterPage = () => {
   return (
     <>
       <Helmet>
-        <title>CoachingZona registor</title>
+        <title>Roʻyxatdan oʻtish — Coach Hub</title>
         <meta
           name="description"
-          content="CoachingZona registor, Coaching Zona registor, CoachingZone registor, Coaching Zone registor"
+          content="Coach Hub platformasida roʻyxatdan oʻting va futbol murabbiylari uchun mashgʻulotlar, kurslar hamda masterklasslarga ega boʻling."
         />
-        <link rel="canonical" href="https://coachingzona.uz/register" />
+        <link rel="canonical" href="https://coaching-center.uz/register" />
       </Helmet>
 
       <FormWrapper

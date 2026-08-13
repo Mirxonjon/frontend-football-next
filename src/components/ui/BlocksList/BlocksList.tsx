@@ -119,7 +119,7 @@ const BlocksList = ({ lesson, loading, lang, onUrlExpired }: Props) => {
               ? "Прогресс не сохранён — нужна активная подписка"
               : lang === "en"
                 ? "Progress not saved — active subscription required"
-                : "Jarayon saqlanmadi — faol obuna kerak"
+                : "Yutuq saqlanmadi — faol obuna kerak"
           );
         } else if (status && status !== 401) {
           // 401 is handled by the global refresh interceptor; ignore.
@@ -129,7 +129,7 @@ const BlocksList = ({ lesson, loading, lang, onUrlExpired }: Props) => {
                 ? "Не удалось сохранить прогресс"
                 : lang === "en"
                   ? "Couldn't save progress"
-                  : "Jarayon saqlab bo'lmadi")
+                  : "Yutuqni saqlab boʻlmadi")
           );
         }
         // Roll back the local checkmark so the UI matches the server —
@@ -213,7 +213,7 @@ const BlocksList = ({ lesson, loading, lang, onUrlExpired }: Props) => {
             ? "Получите полный доступ ко всем урокам, видео и материалам."
             : lang === "en"
               ? "Get full access to all lessons, videos and materials."
-              : "Barcha darslar, video va materiallarga to‘liq kirishni qo‘lga kiriting."
+              : "Barcha darslar, video va materiallarga toʻliq kirishni qo‘lga kiriting."
         }
       />
     );
@@ -228,7 +228,7 @@ const BlocksList = ({ lesson, loading, lang, onUrlExpired }: Props) => {
             ? "Нет содержимого"
             : lang === "en"
               ? "No content"
-              : "Kontent yo‘q"}
+              : "Kontent yoʻq"}
         </div>
       ) : (
         blocks.map((block, idx) => {

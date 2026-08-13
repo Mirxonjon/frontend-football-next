@@ -195,7 +195,7 @@ const MasterclassSinglePage = () => {
           style={{ margin: "60px 0" }}
           subTitle={
             t(
-              "Master-klass topilmadi",
+              "Masterklass topilmadi",
               "Мастер-класс не найден",
               "Masterclass not found"
             )
@@ -226,7 +226,7 @@ const MasterclassSinglePage = () => {
           <ArrowLeftOutlined />
           <span>
             {t(
-              "Masterclasslarga",
+              "Masterklasslarga qaytish",
               "К мастер-классам",
               "Back to masterclasses"
             )}
@@ -262,7 +262,7 @@ const MasterclassSinglePage = () => {
             <div className={s.blocks}>
               {blocks.length === 0 ? (
                 <div className={s.empty}>
-                  {t("Kontent yo‘q", "Нет содержимого", "No content")}
+                  {t("Kontent yoʻq", "Нет содержимого", "No content")}
                 </div>
               ) : (
                 blocks.map((b) => <Block key={b.id} block={b} lang={lang} />)

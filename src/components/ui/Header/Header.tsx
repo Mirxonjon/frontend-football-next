@@ -236,7 +236,7 @@ function Header() {
                   >
                     <HistoryOutlined />
                     <span>
-                      {t("To'lov tarixim", "История платежей", "Payment history")}
+                      {t("Toʻlov tarixim", "История платежей", "Payment history")}
                     </span>
                   </Link>
                   <div className="account_menu_divider" />

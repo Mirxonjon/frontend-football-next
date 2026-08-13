@@ -183,7 +183,7 @@ const BookAiChatPage = () => {
         if (status === 403) {
           messageApi.error(
             t(
-              "Bu kitobga ruxsatingiz yo'q",
+              "Bu kitobga ruxsatingiz yoʻq",
               "У вас нет доступа к этой книге",
               "You don't have access to this book"
             )
@@ -312,7 +312,7 @@ const BookAiChatPage = () => {
                   code: "empty",
                   message:
                     t(
-                      "AI javob bermadi. Qaytadan urinib ko'ring.",
+                      "AI javob bermadi. Qaytadan urinib koʻring.",
                       "AI не дал ответа. Попробуйте ещё раз.",
                       "AI gave no response. Try again."
                     ) || "Empty response",
@@ -341,7 +341,7 @@ const BookAiChatPage = () => {
       if (errCode === "forbidden") {
         messageApi.error(
           t(
-            "Bu kitobga ruxsatingiz yo'q",
+            "Bu kitobga ruxsatingiz yoʻq",
             "У вас нет доступа к этой книге",
             "You don't have access to this book"
           )
@@ -353,7 +353,7 @@ const BookAiChatPage = () => {
       } else if (errCode === "upstream") {
         messageApi.error(
           t(
-            "AI hozirda javob bera olmadi. Qaytadan urinib ko'ring.",
+            "AI hozirda javob bera olmadi. Qaytadan urinib koʻring.",
             "AI сейчас не смог ответить. Попробуйте ещё раз.",
             "AI couldn't respond right now. Try again."
           )
@@ -362,7 +362,7 @@ const BookAiChatPage = () => {
         messageApi.error(
           errMessage ||
             t(
-              "Xato. Qaytadan urinib ko'ring.",
+              "Xato. Qaytadan urinib koʻring.",
               "Ошибка. Попробуйте ещё раз.",
               "Error. Try again."
             )
@@ -584,7 +584,7 @@ const BookAiChatPage = () => {
 
   const examples = [
     t(
-      "Bu kitobning asosiy g'oyasi nima?",
+      "Bu kitobning asosiy gʻoyasi nima?",
       "В чём главная идея этой книги?",
       "What is the main idea of this book?"
     ),
@@ -709,12 +709,12 @@ const BookAiChatPage = () => {
                 rel="noreferrer"
                 className={s.headerBtn}
                 title={t(
-                  "To'liq kitobni ochish",
+                  "Toʻliq kitobni ochish",
                   "Открыть всю книгу",
                   "Open full book"
                 )}
                 aria-label={t(
-                  "To'liq kitobni ochish",
+                  "Toʻliq kitobni ochish",
                   "Открыть всю книгу",
                   "Open full book"
                 )}
@@ -730,7 +730,7 @@ const BookAiChatPage = () => {
               </h2>
               <p className={s.readerHint}>
                 {t(
-                  "Suhbatda [N] bossangiz, parchaning ustiga sariq belgi bilan olib boradi.",
+                  "Suhbatda [N] ni bossangiz, tegishli parcha bu yerda sariq belgi bilan ajratiladi.",
                   "Нажмите [N] в чате — здесь жёлтым подсветится фрагмент.",
                   "Tap [N] in the chat to jump here with a yellow highlight."
                 )}
@@ -890,7 +890,7 @@ const BookAiChatPage = () => {
                 </h2>
                 <p className={s.emptySub}>
                   {t(
-                    "AI faqat shu kitob matnidan javob beradi. Manbalarni ko'rish uchun [1] kabi raqamlarni bosing.",
+                    "AI faqat shu kitob matnidan javob beradi. Manbalarni koʻrish uchun [1] kabi raqamlarni bosing.",
                     "AI отвечает только по тексту этой книги. Нажмите [1], чтобы увидеть источник.",
                     "The AI answers only from this book. Tap [1] to see the source."
                   )}
@@ -969,7 +969,7 @@ const BookAiChatPage = () => {
                               </span>
                               <span className={s.typingLabel}>
                                 {t(
-                                  "AI o'ylayapti...",
+                                  "AI oʻylayapti...",
                                   "AI думает...",
                                   "AI is thinking..."
                                 )}
@@ -1025,7 +1025,7 @@ const BookAiChatPage = () => {
                           {m.streamError && !isStreaming && (
                             <div className={s.streamError}>
                               {t(
-                                "Javob to'liq kelmadi — qaytadan urinib ko'ring.",
+                                "Javob toʻliq kelmadi — qaytadan urinib koʻring.",
                                 "Ответ оборвался — попробуйте ещё раз.",
                                 "Reply was cut short — try again."
                               )}

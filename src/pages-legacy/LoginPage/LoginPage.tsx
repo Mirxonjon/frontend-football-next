@@ -99,7 +99,7 @@ const LoginPage = () => {
     isnew: "Platformamizda yangimisiz?",
     isnew_ru: "Впервые на нашей платформе?",
     isnew_en: "New to our platform?",
-    register: "Ro‘yhatdan o‘tish",
+    register: "Roʻyxatdan oʻtish",
     register_ru: "Регистрация",
     register_en: "Sign up",
     password_label: "Parol",
@@ -110,12 +110,12 @@ const LoginPage = () => {
   return (
     <>
       <Helmet>
-        <title>CoachingZona Login</title>
+        <title>Kirish — Coach Hub</title>
         <meta
           name="description"
-          content="CoachingZona login, Coaching Zona login, CoachingZone login, Coaching Zone login"
+          content="Coach Hub hisobingizga kiring — futbol murabbiylari uchun mashgʻulotlar, kurslar va masterklasslar platformasi."
         />
-        <link rel="canonical" href="https://coachingzona.uz/login" />
+        <link rel="canonical" href="https://coaching-center.uz/login" />
       </Helmet>
       <FormWrapper
         title={content[changaLang("title")]}

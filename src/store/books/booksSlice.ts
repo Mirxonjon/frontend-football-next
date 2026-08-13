@@ -381,5 +381,5 @@ export const isFixedDiscountType = (t: DiscountType) => isFixedDiscount(t);
 export const formatPrice = (n: number, lang: string = "uz"): string => {
   if (n <= 0) return lang === "ru" ? "Бесплатно" : "Bepul";
   const formatted = n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  return `${formatted} so'm`;
+  return `${formatted} soʻm`;
 };

@@ -58,9 +58,9 @@ const MySubscriptionsPage = () => {
       ).unwrap();
       messageApi.success(
         enabled
-          ? t("Avto-to'lov yoqildi", "Автооплата включена", "Auto-pay enabled")
+          ? t("Avto-toʻlov yoqildi", "Автооплата включена", "Auto-pay enabled")
           : t(
-              "Avto-to'lov o'chirildi",
+              "Avto-toʻlov oʻchirildi",
               "Автооплата отключена",
               "Auto-pay disabled"
             )
@@ -126,7 +126,7 @@ const MySubscriptionsPage = () => {
             )}
           </div>
           <div className={s.price}>
-            {formatAmount(price)} so'm /{" "}
+            {formatAmount(price)} soʻm /{" "}
             {sub.subscriptionsPlan?.durationDays}{" "}
             {t("kun", "дн.", "days")}
           </div>
@@ -135,7 +135,7 @@ const MySubscriptionsPage = () => {
           <div className={s.autoPayWrap}>
             <span className={s.autoPayLabel}>
               <ReloadOutlined />
-              {t("Avto-to'lov", "Авто-оплата", "Auto-pay")}
+              {t("Avto-toʻlov", "Авто-оплата", "Auto-pay")}
             </span>
             <Switch
               checked={sub.autoPay}
@@ -153,7 +153,7 @@ const MySubscriptionsPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>Mening obunalarim — CoachingZona</title>
+        <title>Mening obunalarim — Coach Hub</title>
       </Helmet>
 
       {contextHolder}
@@ -177,7 +177,7 @@ const MySubscriptionsPage = () => {
           </div>
         ) : totalCount === 0 ? (
           <NotFound
-            subTitle={t("Obunalar yo'q", "Подписок нет", "No subscriptions")}
+            subTitle={t("Obunalar yoʻq", "Подписок нет", "No subscriptions")}
           />
         ) : (
           <>

@@ -38,7 +38,7 @@ const UserUpdatePage = () => {
     phone_ru: "Телефон",
     email: "Email",
     email_ru: "Email",
-    was_born_date: "Tug'ilgan sana",
+    was_born_date: "Tugʻilgan sana",
     was_born_date_ru: "Дата рождения",
     avatar: "Rasm URL",
     avatar_ru: "URL фото",
@@ -119,12 +119,12 @@ const UserUpdatePage = () => {
   return (
     <Container>
       <Helmet>
-        <title>CoachingZona Accaunt</title>
+        <title>Profilni tahrirlash — Coach Hub</title>
         <meta
           name="description"
-          content="CoachingZona accaunt , CoachingZona accaunt update"
+          content="Coach Hub profil maʼlumotlaringizni tahrirlang: ism, familiya, avatar va aloqa maʼlumotlari."
         />
-        <link rel="canonical" href="https://coachingzona.uz/user" />
+        <link rel="canonical" href="https://coaching-center.uz/user" />
       </Helmet>
       <div className={s.row}>
         <div className={s.img}>

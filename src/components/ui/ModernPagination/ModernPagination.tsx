@@ -47,7 +47,7 @@ const ModernPagination = ({
 
   const txt = {
     showing:
-      lang === "ru" ? "Показано" : lang === "en" ? "Showing" : "Ko‘rsatilmoqda",
+      lang === "ru" ? "Показано" : lang === "en" ? "Showing" : "Koʻrsatilmoqda",
     of: lang === "ru" ? "из" : lang === "en" ? "of" : "/",
     results:
       lang === "ru" ? "результатов" : lang === "en" ? "results" : "natija",

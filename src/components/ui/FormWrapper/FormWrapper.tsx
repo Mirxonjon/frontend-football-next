@@ -35,7 +35,7 @@ const FormWrapper = ({ img, title, subTitle, children }: FormWrapperProps) => {
           />
         </div>
       </div>
-      <div className={s.footer}>© 2024 FutbolLab.</div>
+      <div className={s.footer}>© 2026 Coach Hub.</div>
     </div>
   );
 };

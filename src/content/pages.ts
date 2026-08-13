@@ -1,8 +1,8 @@
 export const menu = [
   {
     id: 1,
-    name: "Mashg‘ulotlar",
-    name_ru: "Тренеровки",
+    name: "Mashgʻulotlar",
+    name_ru: "Тренировки",
     name_en: "Trainings",
     path: "/training",
   },
@@ -11,7 +11,7 @@ export const menu = [
     name: "Kurslar",
     name_ru: "Курсы",
     name_en: "Courses",
-    path: "https://lms.coachingzone.com",
+    path: "https://lms.coaching-center.uz",
     external: true,
   },
   {
@@ -23,16 +23,16 @@ export const menu = [
   },
   {
     id: 4,
-    name: "Masterclass",
-    name_ru: "Мастерклассы",
+    name: "Masterklass",
+    name_ru: "Мастер-классы",
     name_en: "Masterclass",
     path: "/masterclass",
   },
   {
     id: 5,
-    name: "Tariflar",
-    name_ru: "Тарифы",
-    name_en: "Plans",
+    name: "Obunalar",
+    name_ru: "Подписки",
+    name_en: "Subscriptions",
     path: "/plans",
   },
 ];

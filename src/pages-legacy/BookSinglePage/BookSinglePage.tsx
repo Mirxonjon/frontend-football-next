@@ -201,7 +201,7 @@ const BookSinglePage = () => {
   return (
     <Container>
       <Helmet>
-        <title>{`${title} — CoachingZona`}</title>
+        <title>{`${title} — Coach Hub`}</title>
         <meta name="description" content={description} />
       </Helmet>
 
@@ -388,7 +388,7 @@ const BookSinglePage = () => {
                 <LockOutlined />
                 <span>
                   {t(
-                    "Fayl sotib olgandan so‘ng yuklab olinadi",
+                    "Fayl sotib olgandan soʻng yuklab olinadi",
                     "Файл будет доступен после покупки",
                     "The file becomes available after purchase"
                   )}
@@ -445,7 +445,7 @@ const BookSinglePage = () => {
                 </div>
               )}
               <div className={s.metaRow}>
-                <dt>{t("Qo‘shilgan", "Добавлено", "Added")}</dt>
+                <dt>{t("Qoʻshilgan", "Добавлено", "Added")}</dt>
                 <dd>{formatDate(book.createdAt, lang)}</dd>
               </div>
               {book.updatedAt && book.updatedAt !== book.createdAt && (
@@ -504,7 +504,7 @@ const BookSinglePage = () => {
             </div>
             {recommended.length === 0 ? (
               <div className={s.recEmpty}>
-                {t("Hozircha bo‘sh", "Пока пусто", "Nothing yet")}
+                {t("Hozircha boʻsh", "Пока пусто", "Nothing yet")}
               </div>
             ) : (
               <div className={s.recList}>

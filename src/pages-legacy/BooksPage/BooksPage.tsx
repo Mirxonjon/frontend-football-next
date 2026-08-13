@@ -217,12 +217,12 @@ const BooksPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>CoachingZona — Kitoblar va Konspektlar</title>
+        <title>Coach Hub — Kitoblar va Konspektlar</title>
         <meta
           name="description"
-          content="Futbol kitoblari, konspektlari va o‘quv materiallari to‘plami."
+          content="Futbol kitoblari, konspektlari va oʻquv materiallari toʻplami."
         />
-        <link rel="canonical" href="https://coachingzona.uz/books" />
+        <link rel="canonical" href="https://coaching-center.uz/books" />
       </Helmet>
 
       {contextHolder}

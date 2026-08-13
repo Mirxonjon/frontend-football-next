@@ -116,7 +116,7 @@ const PurchaseModal = ({ open, book, onClose, onSuccess }: Props) => {
         const detail = err?.raw?.error?.errorMessage;
         messageApi.error(
           t(
-            "To‘lov amalga oshmadi: ",
+            "Toʻlov amalga oshmadi: ",
             "Платёж не прошёл: ",
             "Payment failed: "
           ) + (detail || msg)
@@ -177,7 +177,7 @@ const PurchaseModal = ({ open, book, onClose, onSuccess }: Props) => {
           {!isFree && (
             <div className={s.cardsSection}>
               <div className={s.sectionLabel}>
-                {t("To‘lov usuli", "Способ оплаты", "Payment method")}
+                {t("Toʻlov usuli", "Способ оплаты", "Payment method")}
               </div>
 
               {cardsLoading && verifiedCards.length === 0 ? (
@@ -189,7 +189,7 @@ const PurchaseModal = ({ open, book, onClose, onSuccess }: Props) => {
                   <CreditCardOutlined className={s.noCardsIcon} />
                   <div className={s.noCardsText}>
                     {t(
-                      "Saqlangan kartalar yo‘q",
+                      "Saqlangan kartalar yoʻq",
                       "Нет сохранённых карт",
                       "No saved cards"
                     )}
@@ -234,7 +234,7 @@ const PurchaseModal = ({ open, book, onClose, onSuccess }: Props) => {
                 onClick={() => setAddCardOpen(true)}
               >
                 <PlusOutlined />
-                {t("Yangi karta qo‘shish", "Новая карта", "Add new card")}
+                {t("Yangi karta qoʻshish", "Новая карта", "Add new card")}
               </button>
             </div>
           )}
@@ -249,7 +249,7 @@ const PurchaseModal = ({ open, book, onClose, onSuccess }: Props) => {
             {isFree
               ? t("Bepul olish", "Получить бесплатно", "Get for free")
               : t(
-                  `${formatPrice(finalPrice, lang)} to‘lash`,
+                  `${formatPrice(finalPrice, lang)} toʻlash`,
                   `Оплатить ${formatPrice(finalPrice, lang)}`,
                   `Pay ${formatPrice(finalPrice, lang)}`
                 )}

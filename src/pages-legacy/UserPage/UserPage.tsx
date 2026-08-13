@@ -109,25 +109,25 @@ const UserPage = () => {
     email: "Email",
     email_ru: "Email",
     email_en: "Email",
-    was_born_date: "Tug'ilgan sana",
+    was_born_date: "Tugʻilgan sana",
     was_born_date_ru: "Дата рождения",
     was_born_date_en: "Date of birth",
     avatar_url: "Rasm URL",
     avatar_url_ru: "URL фото",
     avatar_url_en: "Avatar URL",
-    change: "O'zgartirish",
+    change: "Oʻzgartirish",
     change_ru: "Изменить",
     change_en: "Edit",
     not_set: "Kiritilmagan",
     not_set_ru: "Не указано",
     not_set_en: "Not set",
-    profile_info: "Shaxsiy ma'lumotlar",
+    profile_info: "Shaxsiy maʼlumotlar",
     profile_info_ru: "Личные данные",
     profile_info_en: "Personal info",
     verified: "Tasdiqlangan",
     verified_ru: "Подтверждён",
     verified_en: "Verified",
-    member_since: "Ro'yxatdan o'tgan",
+    member_since: "Roʻyxatdan o'tgan",
     member_since_ru: "С нами с",
     member_since_en: "Member since",
     edit_profile: "Profilni tahrirlash",
@@ -214,9 +214,9 @@ const UserPage = () => {
       ).unwrap();
       cardMessageApi.success(
         enabled
-          ? t("Avto-to‘lov yoqildi", "Автооплата включена", "Auto-pay enabled")
+          ? t("Avto-toʻlov yoqildi", "Автооплата включена", "Auto-pay enabled")
           : t(
-              "Avto-to‘lov o‘chirildi",
+              "Avto-toʻlov oʻchirildi",
               "Автооплата отключена",
               "Auto-pay disabled"
             )
@@ -242,7 +242,7 @@ const UserPage = () => {
     try {
       await dispatch(deleteCard(cardId)).unwrap();
       cardMessageApi.success(
-        t("Karta o‘chirildi", "Карта удалена", "Card deleted")
+        t("Karta oʻchirildi", "Карта удалена", "Card deleted")
       );
     } catch (err: any) {
       cardMessageApi.error(err || "Xatolik");
@@ -288,12 +288,12 @@ const UserPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>CoachingZona Accaunt</title>
+        <title>Profil — Coach Hub</title>
         <meta
           name="description"
-          content="CoachingZona accaunt , CoachingZona accaunt update"
+          content="Coach Hub shaxsiy profilingizni boshqaring: obuna, toʻlov tarixi, saqlangan kartalar va shaxsiy maʼlumotlar."
         />
-        <link rel="canonical" href="https://coachingzona.uz/user" />
+        <link rel="canonical" href="https://coaching-center.uz/user" />
       </Helmet>
 
       <div className={s.wrap}>
@@ -435,7 +435,7 @@ const UserPage = () => {
                 </div>
                 <div className={s.cardsSubtitle}>
                   {t(
-                    "To‘lov uchun saqlangan kartalar",
+                    "Toʻlov uchun saqlangan kartalar",
                     "Сохранённые карты для оплаты",
                     "Saved cards for payments"
                   )}
@@ -452,7 +452,7 @@ const UserPage = () => {
                 }}
               >
                 <PlusOutlined />
-                {t("Qo‘shish", "Добавить", "Add")}
+                {t("Qoʻshish", "Добавить", "Add")}
               </button>
               <span
                 className={`${s.cardsChevron} ${cardsExpanded ? s.cardsChevronOpen : ""}`}
@@ -477,14 +477,14 @@ const UserPage = () => {
               <CreditCardOutlined className={s.cardsEmptyIcon} />
               <div className={s.cardsEmptyTitle}>
                 {t(
-                  "Kartalar qo‘shilmagan",
+                  "Kartalar qoʻshilmagan",
                   "Карты не добавлены",
                   "No cards added"
                 )}
               </div>
               <div className={s.cardsEmptyText}>
                 {t(
-                  "Bir bosishda xarid qilish uchun karta qo‘shing",
+                  "Bir bosishda xarid qilish uchun karta qoʻshing",
                   "Добавьте карту чтобы оформлять покупки в один клик",
                   "Add a card to check out in one click"
                 )}
@@ -528,12 +528,12 @@ const UserPage = () => {
                   </div>
                   <Popconfirm
                     title={t(
-                      "Kartani o‘chirilsinmi?",
+                      "Kartani oʻchirilsinmi?",
                       "Удалить карту?",
                       "Delete this card?"
                     )}
                     okText={t("Ha", "Да", "Yes")}
-                    cancelText={t("Yo‘q", "Нет", "No")}
+                    cancelText={t("Yoʻq", "Нет", "No")}
                     onConfirm={() => handleDeleteCard(c.id)}
                   >
                     <button
@@ -694,7 +694,7 @@ const UserPage = () => {
               {myBooks.length > 0 && (
                 <Link to="/me/books" className={s.viewAllLink}>
                   {t(
-                    `Batafsil ko'rish${myBooks.length > 3 ? ` (${myBooks.length})` : ""}`,
+                    `Batafsil koʻrish${myBooks.length > 3 ? ` (${myBooks.length})` : ""}`,
                     `Подробнее${myBooks.length > 3 ? ` (${myBooks.length})` : ""}`,
                     `View all${myBooks.length > 3 ? ` (${myBooks.length})` : ""}`
                   )}
@@ -731,7 +731,7 @@ const UserPage = () => {
                 </div>
                 <div className={s.cardsSubtitle}>
                   {t(
-                    "Faol tarif va avto-to‘lov",
+                    "Faol tarif va avto-toʻlov",
                     "Активный тариф и автооплата",
                     "Active plan and auto-pay"
                   )}
@@ -760,14 +760,14 @@ const UserPage = () => {
               <CrownFilled className={s.cardsEmptyIcon} />
               <div className={s.cardsEmptyTitle}>
                 {t(
-                  "Faol obuna yo‘q",
+                  "Faol obuna yoʻq",
                   "Подписка не активна",
                   "No active subscription"
                 )}
               </div>
               <div className={s.cardsEmptyText}>
                 {t(
-                  "To‘liq kirish uchun obuna oling",
+                  "Toʻliq kirish uchun obuna oling",
                   "Оформите подписку чтобы открыть полный доступ",
                   "Subscribe to unlock full access"
                 )}
@@ -824,7 +824,7 @@ const UserPage = () => {
                         </span>
                       </div>
                       <div className={s.subPrice}>
-                        {formatAmount(price)} so‘m /{" "}
+                        {formatAmount(price)} soʻm /{" "}
                         {sub.subscriptionsPlan?.durationDays}{" "}
                         {t("kun", "дн.", "days")}
                       </div>
@@ -833,7 +833,7 @@ const UserPage = () => {
                     <div className={s.subAutoPayWrap}>
                       <span className={s.subAutoPayLabel}>
                         <ReloadOutlined />
-                        {t("Avto-to‘lov", "Авто-оплата", "Auto-pay")}
+                        {t("Avto-toʻlov", "Авто-оплата", "Auto-pay")}
                       </span>
                       <Switch
                         checked={sub.autoPay}
@@ -877,7 +877,7 @@ const UserPage = () => {
               <HistoryOutlined className={s.cardsHeaderIcon} />
               <div>
                 <div className={s.infoTitle}>
-                  {t("To‘lov tarixi", "История платежей", "Payment history")}
+                  {t("Toʻlov tarixi", "История платежей", "Payment history")}
                   <span className={s.cardsHeaderCount}>
                     {transactions.length}
                   </span>
@@ -913,7 +913,7 @@ const UserPage = () => {
               <HistoryOutlined className={s.cardsEmptyIcon} />
               <div className={s.cardsEmptyTitle}>
                 {t(
-                  "Tranzaksiyalar yo‘q",
+                  "Tranzaksiyalar yoʻq",
                   "Транзакций нет",
                   "No transactions"
                 )}
@@ -969,7 +969,7 @@ const UserPage = () => {
                         isFailed ? s.txAmountFail : ""
                       }`}
                     >
-                      {isFailed ? "—" : `${formatAmount(tx.amount)} so‘m`}
+                      {isFailed ? "—" : `${formatAmount(tx.amount)} soʻm`}
                     </div>
                   </div>
                 );
@@ -977,7 +977,7 @@ const UserPage = () => {
               {transactions.length > 0 && (
                 <Link to="/me/transactions" className={s.viewAllLink}>
                   {t(
-                    `Batafsil ko'rish${transactions.length > 3 ? ` (${transactions.length})` : ""}`,
+                    `Batafsil koʻrish${transactions.length > 3 ? ` (${transactions.length})` : ""}`,
                     `Подробнее${transactions.length > 3 ? ` (${transactions.length})` : ""}`,
                     `View all${transactions.length > 3 ? ` (${transactions.length})` : ""}`
                   )}

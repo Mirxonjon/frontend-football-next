@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Coaching Center — Futbol murabbiylari platformasi",
-    short_name: "Coaching Center",
+    name: "Coach Hub — Futbol murabbiylari platformasi",
+    short_name: "Coach Hub",
     description:
       "Futbol murabbiylari uchun strategiya, taktika va masterclasslar.",
     start_url: "/",

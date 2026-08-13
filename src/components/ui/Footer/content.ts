@@ -5,20 +5,20 @@ import {
 } from "@ant-design/icons";
 const content = {
   description: {
-    uz: "futbol taktikasi va murabbiylar ta'riflari",
+    uz: "Futbol taktikasi va murabbiylar uchun taʼriflar",
     ru: "тактика и определения в футболе, тренировки",
     en: "football tactics and coach descriptions",
   },
   customerInfo: {
     title: {
-      uz: "Sotuvchilar uchun",
+      uz: "Mijozlar uchun",
       ru: "Для клиентов",
       en: "For customers",
     },
     links: [
       {
         label: {
-          uz: "Mahsulotni tanlash qanday",
+          uz: "Kursni qanday tanlash mumkin?",
           ru: "Как выбрать продукт",
           en: "How to choose a product",
         },
@@ -26,7 +26,7 @@ const content = {
       },
       {
         label: {
-          uz: "To'lov va yetkazib berish",
+          uz: "Toʻlov va foydalanish shartlari",
           ru: "Оплата и доставка",
           en: "Payment and delivery",
         },
@@ -38,7 +38,7 @@ const content = {
       },
       {
         label: {
-          uz: "Yuridik shaxslarga sotib olish",
+          uz: "Yuridik shaxslar uchun xarid",
           ru: "Покупка как юридическое лицо",
           en: "Purchase for legal entities",
         },
@@ -63,7 +63,7 @@ const content = {
       },
       {
         label: {
-          uz: "Filiyal dasturi",
+          uz: "Sheriklik dasturi",
           ru: "Партнерская программа",
           en: "Affiliate program",
         },
@@ -103,15 +103,15 @@ const content = {
       en: "Our main partners",
     },
     name: {
-      uz: "O'zbekiston Futbol Assotsiatsiyasi",
+      uz: "Oʻzbekiston Futbol Assotsiatsiyasi",
       ru: "Ассоциация Футбола Узбекистана",
       en: "Uzbekistan Football Association",
     },
   },
   end: {
-    ru: "Авторская права © 2024 Coaching. Все права защищены.",
-    uz: "Copyright © 2024 Coaching. Barcha huquqlar himoyalangan.",
-    en: "Copyright © 2024 Coaching. All rights reserved.",
+    ru: "Авторские права © 2026 Coach Hub. Все права защищены.",
+    uz: "Mualliflik huquqi © 2026 Coach Hub. Barcha huquqlar himoyalangan.",
+    en: "Copyright © 2026 Coach Hub. All rights reserved.",
   },
 };
 

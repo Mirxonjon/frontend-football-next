@@ -78,14 +78,14 @@ const ContinueWatching = ({ lang }: Props) => {
           </h2>
           <p className={s.sub}>
             {t(
-              "Tashlab ketgan darslaringiz",
+              "Boshlagan darslaringiz",
               "Уроки, которые вы начали",
               "Lessons you started"
             )}
           </p>
         </div>
         <Link to="/training" className={s.seeAll}>
-          {t("Barcha mashg‘ulotlar", "Все тренировки", "All trainings")}
+          {t("Barcha mashgʻulotlar", "Все тренировки", "All trainings")}
           <ArrowRightOutlined />
         </Link>
       </header>
@@ -113,7 +113,7 @@ const ContinueWatching = ({ lang }: Props) => {
                     <div className={s.meta}>
                       <CheckCircleFilled className={s.checkIcon} />
                       {t(
-                        `${p.lastBlockSequence} blok ko‘rilgan`,
+                        `${p.lastBlockSequence} blok koʻrilgan`,
                         `Просмотрено ${p.lastBlockSequence} блоков`,
                         `${p.lastBlockSequence} block${p.lastBlockSequence === 1 ? "" : "s"} watched`
                       )}
