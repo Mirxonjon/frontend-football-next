@@ -435,7 +435,7 @@ const HomePageV2 = () => {
           <div className={`${s.heroMedia} ${s.fadeUpDelay}`}>
             <LazyHeroVideo
               className={s.heroVideo}
-              src="/videos/hero.mp4"
+              src="https://minio.coaching-center.uz/coaching-site/hero.mp4"
               width={1280}
               height={720}
               ariaLabel={t(
