@@ -435,7 +435,7 @@ const HomePageV2 = () => {
           <div className={`${s.heroMedia} ${s.fadeUpDelay}`}>
             <LazyHeroVideo
               className={s.heroVideo}
-              src="https://storage.googleapis.com/telecom2003/video_for_site.mp4"
+              src="/videos/hero.mp4"
               width={1280}
               height={720}
               ariaLabel={t(

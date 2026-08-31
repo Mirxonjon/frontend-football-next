@@ -35,5 +35,13 @@ export const menu = [
     name_en: "Subscriptions",
     path: "/plans",
   },
+  {
+    id: 6,
+    name: "Market",
+    name_ru: "Маркет",
+    name_en: "Market",
+    path: "https://market.coaching-center.uz",
+    external: true,
+  },
 ];
 
