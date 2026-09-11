@@ -140,6 +140,43 @@ type Testimonial = {
   avatarBg: string; // gradient
 };
 
+type Founder = {
+  id: number;
+  nameUz: string;
+  nameRu: string;
+  roleUz: string;
+  roleRu: string;
+  roleEn: string;
+  /** `public/` ichidagi rasm yoʻli. Boʻsh boʻlsa — bosh harflar koʻrsatiladi. */
+  photo?: string;
+};
+
+const FOUNDERS: Founder[] = [
+  {
+    id: 1,
+    nameUz: "Xasanov Abdujalil Shuxrat oʻgʻli",
+    nameRu: "Хасанов Абдужалил Шухрат угли",
+    roleUz:
+      "Futbol mutaxassislarini tayyorlash markazi yetakchi mutaxassisi · murabbiy-instruktor",
+    roleRu:
+      "Ведущий специалист центра по подготовке футбольных специалистов · тренер-инструктор",
+    roleEn:
+      "Lead specialist at the football coach training centre · coach-instructor",
+    photo: "/founders/abdujalil.png",
+  },
+  {
+    id: 2,
+    nameUz: "Boʻrataliyev Mirjalol Abdulxay oʻgʻli",
+    nameRu: "Бораталиев Миржалол Абдулхай угли",
+    roleUz:
+      "Futbol mutaxassislarini tayyorlash boʻyicha mutaxassis · murabbiy-instruktor",
+    roleRu:
+      "Специалист по подготовке футбольных специалистов · тренер-инструктор",
+    roleEn: "Football coach training specialist · coach-instructor",
+    photo: "/founders/mirjalol.png",
+  },
+];
+
 const TESTIMONIALS: Testimonial[] = [
   {
     id: 1,
@@ -313,6 +350,7 @@ const HomePageV2 = () => {
   const plansReveal = useReveal<HTMLElement>();
   const stepsReveal = useReveal<HTMLElement>();
   const tReveal = useReveal<HTMLElement>();
+  const foundersReveal = useReveal<HTMLElement>();
   const finalReveal = useReveal<HTMLElement>();
 
   // Plans carousel — show N at a time on desktop / tablet / phone.
@@ -1108,6 +1146,82 @@ const HomePageV2 = () => {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        {/* ─────────── 7.8 FOUNDERS ─────────── */}
+        <section
+          ref={foundersReveal.ref}
+          className={`${s.section} ${s.reveal} ${
+            foundersReveal.revealed ? s.revealed : ""
+          }`}
+        >
+          <header className={s.sectionHeaderCenter}>
+            <div className={s.heroBadge}>
+              <TeamOutlined />
+              {t("Asoschilar", "Основатели", "Founders")}
+            </div>
+            <h2 className={s.sectionTitleCenter}>
+              {t(
+                "Platforma asoschilari",
+                "Основатели платформы",
+                "Platform founders"
+              )}
+            </h2>
+            <p className={s.sectionSubCenter}>
+              {t(
+                "Coach Hub Oʻzbekiston Futbol Assotsiatsiyasining ikki murabbiy-instruktori tashabbusi bilan tashkil etilgan.",
+                "Coach Hub основан по инициативе двух тренеров-инструкторов Ассоциации футбола Узбекистана.",
+                "Coach Hub was founded by two coach-instructors of the Uzbekistan Football Association."
+              )}
+            </p>
+          </header>
+
+          <div className={s.founderGrid}>
+            {FOUNDERS.map((f, idx) => {
+              const name = pick(f.nameUz, f.nameRu);
+              const initials = name
+                .split(/\s+/)
+                .map((w) => w[0])
+                .filter(Boolean)
+                .slice(0, 2)
+                .join("")
+                .toUpperCase();
+              return (
+                <article
+                  key={f.id}
+                  className={s.founderCard}
+                  style={{ ["--gi" as any]: idx }}
+                >
+                  <div className={s.founderPhoto}>
+                    {f.photo ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={f.photo} alt={name} loading="lazy" />
+                    ) : (
+                      <span className={s.founderInitials}>{initials}</span>
+                    )}
+                  </div>
+                  <div className={s.founderBody}>
+                    <h3 className={s.founderName}>{name}</h3>
+                    <p className={s.founderRole}>
+                      {lang === "ru"
+                        ? f.roleRu
+                        : lang === "en"
+                        ? f.roleEn
+                        : f.roleUz}
+                    </p>
+                    <div className={s.founderOrg}>
+                      <CheckCircleFilled />
+                      {t(
+                        "Oʻzbekiston Futbol Assotsiatsiyasi",
+                        "Ассоциация футбола Узбекистана",
+                        "Uzbekistan Football Association"
+                      )}
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 
