@@ -1,5 +1,6 @@
 $brand: #16a34a;
 $brand-deep: #15803d;
+$muted: #6b7280;
 
 .modal {
   :global(.ant-modal-content) {
@@ -200,4 +201,27 @@ $brand-deep: #15803d;
   background: linear-gradient(135deg, $brand 0%, $brand-deep 100%) !important;
   border: none !important;
   box-shadow: 0 6px 14px rgba(22, 163, 74, 0.3);
+}
+
+/* ───────── Obuna modali uchun qo'shimchalar ───────── */
+
+.priceMeta {
+  font-size: 14px;
+  color: $muted;
+  margin-left: 2px;
+}
+
+.autoPayRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.autoPayText {
+  font-size: 13px;
+  color: $muted;
+  line-height: 1.4;
 }

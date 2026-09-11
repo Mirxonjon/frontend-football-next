@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Spin, message } from "antd";
 import {
@@ -12,6 +12,7 @@ import {
 
 import Container from "../../components/ui/Container/Container";
 import NotFound from "../../components/ui/404/404";
+import SubscribeModal from "../../components/ui/SubscribeModal/SubscribeModal";
 import { Helmet } from "@/lib/helmet-compat";
 import { Link } from "@/lib/router-compat";
 import {
@@ -46,6 +47,8 @@ const PlansPage = () => {
   ) as "uz" | "ru" | "en";
   const t = (uz: string, ru: string, en: string): string =>
     lang === "ru" ? ru : lang === "en" ? en : uz;
+
+  const [subscribePlan, setSubscribePlan] = useState<SubscriptionPlan | null>(null);
 
   useEffect(() => {
     dispatch(fetchPlans());
@@ -197,15 +200,16 @@ const PlansPage = () => {
                     {t("Batafsil", "Подробнее", "Details")}
                   </Link>
 
-                  <Link
-                    to={`/plans/${p.id}`}
+                  <button
+                    type="button"
+                    onClick={() => setSubscribePlan(p)}
                     className={`${s.subscribeBtn} ${
                       isRecommended ? s.subscribeBtnPrimary : ""
                     }`}
                   >
                     <CrownOutlined />
                     {t("Obuna boʻlish", "Подписаться", "Subscribe")}
-                  </Link>
+                  </button>
                 </div>
               );
             })}
@@ -220,6 +224,12 @@ const PlansPage = () => {
           )}
         </footer>
       </div>
+
+      <SubscribeModal
+        open={subscribePlan !== null}
+        plan={subscribePlan}
+        onClose={() => setSubscribePlan(null)}
+      />
     </Container>
   );
 };

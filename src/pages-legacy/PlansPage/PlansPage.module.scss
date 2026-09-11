@@ -303,6 +303,10 @@ $brand-deep: #15803d;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+  // <a> emas, <button> — brauzer standartlarini bostirish kerak
+  width: 100%;
+  font-family: inherit;
+  cursor: pointer;
   transition: all 0.18s ease;
   margin-top: auto;
 

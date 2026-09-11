@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Spin, message } from "antd";
 import {
@@ -13,6 +13,7 @@ import {
 
 import Container from "../../components/ui/Container/Container";
 import NotFound from "../../components/ui/404/404";
+import SubscribeModal from "../../components/ui/SubscribeModal/SubscribeModal";
 import { Helmet } from "@/lib/helmet-compat";
 import { Link, useParams } from "@/lib/router-compat";
 import {
@@ -35,6 +36,7 @@ const PlanSinglePage = () => {
   const params = useParams<{ id: string }>();
   const id = Number(params?.id);
   const [messageApi, contextHolder] = message.useMessage();
+  const [subscribeOpen, setSubscribeOpen] = useState(false);
 
   const plan = useSelector(
     (state: any) => state.plans?.current as SubscriptionPlan | null
@@ -194,10 +196,14 @@ const PlanSinglePage = () => {
                 / {dur}
               </span>
 
-              <Link to="/me/subscriptions" className={s.subscribeBtn}>
+              <button
+                type="button"
+                onClick={() => setSubscribeOpen(true)}
+                className={s.subscribeBtn}
+              >
                 <CrownOutlined />
                 {t("Obuna boʻlish", "Подписаться", "Subscribe")}
-              </Link>
+              </button>
 
               <p className={s.priceNote}>
                 {t(
@@ -210,6 +216,12 @@ const PlanSinglePage = () => {
           </aside>
         </div>
       </div>
+
+      <SubscribeModal
+        open={subscribeOpen}
+        plan={plan}
+        onClose={() => setSubscribeOpen(false)}
+      />
     </Container>
   );
 };
