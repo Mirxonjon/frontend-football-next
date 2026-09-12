@@ -238,6 +238,11 @@ $brand-deep: #15803d;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
+  // <a> emas, <button> — brauzer standartlarini bostirish kerak
+  width: 100%;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
   box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 
