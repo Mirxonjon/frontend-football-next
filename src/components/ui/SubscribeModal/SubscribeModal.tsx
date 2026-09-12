@@ -131,6 +131,11 @@ const SubscribeModal = ({ open, plan, onClose, onSuccess }: Props) => {
         );
         onSuccess?.();
         onClose();
+      } else if (code === 400 && /card/i.test(msg || "")) {
+        // Backend: pullik tarifga karta majburiy. UI bu holatga yo'l
+        // qo'ymasligi kerak, lekin poyga bo'lsa — inglizcha xato o'rniga
+        // karta qo'shish oynasini ochamiz.
+        setAddCardOpen(true);
       } else {
         messageApi.error(msg || "Xatolik");
       }
@@ -262,6 +267,9 @@ const SubscribeModal = ({ open, plan, onClose, onSuccess }: Props) => {
             className={s.payBtn}
             onClick={handlePay}
             loading={paying}
+            // Kartalar hali yuklanmagan bo'lsa bosishga yo'l qo'ymaymiz —
+            // aks holda bo'sh ro'yxat "karta yo'q" deb noto'g'ri tushuniladi.
+            disabled={!isFree && cardsLoading && verifiedCards.length === 0}
             block
           >
             {isFree
